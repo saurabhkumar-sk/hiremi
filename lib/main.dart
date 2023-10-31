@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Layout',
         theme: ThemeData(
+          fontFamily: 'Poppins',
           useMaterial3: true,
         ),
         home: const SplashScreen(),
