@@ -5,4 +5,5 @@ class MyColor {
   static const borderColor = Color(0xFFCACACA);
   static const forgotcolor = Color(0xFF43485E);
   static const black = Color(0xFF000000);
+  static const checkBoxColor = Color(0xFFD9D9D9);
 }
