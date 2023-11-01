@@ -313,7 +313,7 @@ class RegisterScreen extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20),
+              padding: const EdgeInsets.only(left: 10, right: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -483,6 +483,289 @@ class RegisterScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 45),
+            const Padding(
+              padding: EdgeInsets.only(left: 34),
+              child: Text(
+                'Contact Number',
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 18,
+                  fontFamily: 'Poppins.bold',
+                  color: MyColor.black,
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.only(left: 37, right: 58),
+              child: TextFormField(
+                textInputAction: TextInputAction.done,
+                decoration: const InputDecoration(
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: MyColor.borderColor,
+                    ),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: MyColor.borderColor,
+                    ),
+                  ),
+                  hintText: 'Phone Number',
+                  hintStyle: TextStyle(
+                    color: MyColor.grey,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.only(left: 37, right: 58),
+              child: TextFormField(
+                textInputAction: TextInputAction.done,
+                decoration: const InputDecoration(
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: MyColor.borderColor,
+                    ),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: MyColor.borderColor,
+                    ),
+                  ),
+                  hintText: 'Whatsapp Number',
+                  hintStyle: TextStyle(
+                    color: MyColor.grey,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 35),
+            const Padding(
+              padding: EdgeInsets.only(left: 34),
+              child: Text(
+                'College',
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 18,
+                  fontFamily: 'Poppins.bold',
+                  color: MyColor.black,
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.only(left: 37, right: 58),
+              child: TextFormField(
+                textInputAction: TextInputAction.done,
+                decoration: const InputDecoration(
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: MyColor.borderColor,
+                    ),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: MyColor.borderColor,
+                    ),
+                  ),
+                  hintText: 'College State',
+                  hintStyle: TextStyle(
+                    color: MyColor.grey,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.only(left: 37, right: 58),
+              child: TextFormField(
+                textInputAction: TextInputAction.done,
+                decoration: const InputDecoration(
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: MyColor.borderColor,
+                    ),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: MyColor.borderColor,
+                    ),
+                  ),
+                  hintText: 'Collage Name',
+                  hintStyle: TextStyle(
+                    color: MyColor.grey,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.only(left: 37, right: 58),
+              child: TextFormField(
+                textInputAction: TextInputAction.done,
+                decoration: const InputDecoration(
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: MyColor.borderColor,
+                    ),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: MyColor.borderColor,
+                    ),
+                  ),
+                  hintText: 'Branch Name',
+                  hintStyle: TextStyle(
+                    color: MyColor.grey,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.only(left: 37, right: 58),
+              child: TextFormField(
+                textInputAction: TextInputAction.done,
+                decoration: const InputDecoration(
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: MyColor.borderColor,
+                    ),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: MyColor.borderColor,
+                    ),
+                  ),
+                  hintText: 'Passing Year',
+                  hintStyle: TextStyle(
+                    color: MyColor.grey,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 35),
+            const Padding(
+              padding: EdgeInsets.only(left: 34),
+              child: Text(
+                'Create Password',
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 18,
+                  fontFamily: 'Poppins.bold',
+                  color: MyColor.black,
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.only(left: 37, right: 58),
+              child: TextFormField(
+                textInputAction: TextInputAction.done,
+                decoration: const InputDecoration(
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: MyColor.borderColor,
+                    ),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: MyColor.borderColor,
+                    ),
+                  ),
+                  prefixIcon: Padding(
+                    padding: EdgeInsets.only(right: 25),
+                    child: Icon(
+                      Icons.lock,
+                      color: MyColor.grey,
+                      size: 22,
+                    ),
+                  ),
+                  hintText: 'Password',
+                  hintStyle: TextStyle(
+                    color: MyColor.grey,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.only(left: 37, right: 58),
+              child: TextFormField(
+                textInputAction: TextInputAction.done,
+                decoration: const InputDecoration(
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: MyColor.borderColor,
+                    ),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: MyColor.borderColor,
+                    ),
+                  ),
+                  prefixIcon: Padding(
+                    padding: EdgeInsets.only(right: 25),
+                    child: Icon(
+                      Icons.lock,
+                      color: MyColor.grey,
+                      size: 22,
+                    ),
+                  ),
+                  hintText: 'Confirm Password',
+                  hintStyle: TextStyle(
+                    color: MyColor.grey,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 45),
+            Center(
+              child: Container(
+                height: 55.0,
+                width: 230,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  gradient: const LinearGradient(
+                    transform: GradientRotation(180),
+                    colors: [
+                      Color(0xFFBD232B),
+                      Color(0xFFF13640),
+                      Color(0xFFBD2930),
+                    ],
+                  ),
+                ),
+                child: const Center(
+                  child: Text(
+                    "Sumbit",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 5),
           ],
         ),
       ),
