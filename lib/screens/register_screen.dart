@@ -321,23 +321,26 @@ class RegisterScreen extends StatelessWidget {
                     width: 80,
                     child: TextFormField(
                       textInputAction: TextInputAction.done,
-                      decoration: const InputDecoration(
-                        enabledBorder: UnderlineInputBorder(
+                      decoration: InputDecoration(
+                        enabledBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(
                             color: MyColor.borderColor,
                           ),
                         ),
-                        focusedBorder: UnderlineInputBorder(
+                        focusedBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(
                             color: MyColor.borderColor,
                           ),
                         ),
                         hintText: 'Day',
-                        suffixIcon: Icon(
-                          Icons.expand_more,
+                        suffixIcon: IconButton(
+                          onPressed: () {},
+                          icon: const Icon(
+                            Icons.expand_more,
+                          ),
                         ),
                         suffixIconColor: MyColor.grey,
-                        hintStyle: TextStyle(
+                        hintStyle: const TextStyle(
                           color: MyColor.grey,
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
@@ -349,23 +352,26 @@ class RegisterScreen extends StatelessWidget {
                     width: 100,
                     child: TextFormField(
                       textInputAction: TextInputAction.done,
-                      decoration: const InputDecoration(
-                        enabledBorder: UnderlineInputBorder(
+                      decoration: InputDecoration(
+                        enabledBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(
                             color: MyColor.borderColor,
                           ),
                         ),
-                        focusedBorder: UnderlineInputBorder(
+                        focusedBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(
                             color: MyColor.borderColor,
                           ),
                         ),
                         hintText: 'Month',
-                        suffixIcon: Icon(
-                          Icons.expand_more,
+                        suffixIcon: IconButton(
+                          onPressed: () {},
+                          icon: const Icon(
+                            Icons.expand_more,
+                          ),
                         ),
                         suffixIconColor: MyColor.grey,
-                        hintStyle: TextStyle(
+                        hintStyle: const TextStyle(
                           color: MyColor.grey,
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
@@ -377,23 +383,26 @@ class RegisterScreen extends StatelessWidget {
                     width: 100,
                     child: TextFormField(
                       textInputAction: TextInputAction.done,
-                      decoration: const InputDecoration(
-                        enabledBorder: UnderlineInputBorder(
+                      decoration: InputDecoration(
+                        enabledBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(
                             color: MyColor.borderColor,
                           ),
                         ),
-                        focusedBorder: UnderlineInputBorder(
+                        focusedBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(
                             color: MyColor.borderColor,
                           ),
                         ),
                         hintText: 'Year',
-                        suffixIcon: Icon(
-                          Icons.expand_more,
+                        suffixIcon: IconButton(
+                          onPressed: () {},
+                          icon: const Icon(
+                            Icons.expand_more,
+                          ),
                         ),
                         suffixIconColor: MyColor.grey,
-                        hintStyle: TextStyle(
+                        hintStyle: const TextStyle(
                           color: MyColor.grey,
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
@@ -426,23 +435,26 @@ class RegisterScreen extends StatelessWidget {
                     width: 148,
                     child: TextFormField(
                       textInputAction: TextInputAction.done,
-                      decoration: const InputDecoration(
-                        enabledBorder: UnderlineInputBorder(
+                      decoration: InputDecoration(
+                        enabledBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(
                             color: MyColor.borderColor,
                           ),
                         ),
-                        focusedBorder: UnderlineInputBorder(
+                        focusedBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(
                             color: MyColor.borderColor,
                           ),
                         ),
                         hintText: 'State',
-                        suffixIcon: Icon(
-                          Icons.expand_more,
+                        suffixIcon: IconButton(
+                          onPressed: () {},
+                          icon: const Icon(
+                            Icons.expand_more,
+                          ),
                         ),
                         suffixIconColor: MyColor.grey,
-                        hintStyle: TextStyle(
+                        hintStyle: const TextStyle(
                           color: MyColor.grey,
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
@@ -455,23 +467,26 @@ class RegisterScreen extends StatelessWidget {
                     width: 148,
                     child: TextFormField(
                       textInputAction: TextInputAction.done,
-                      decoration: const InputDecoration(
-                        enabledBorder: UnderlineInputBorder(
+                      decoration: InputDecoration(
+                        enabledBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(
                             color: MyColor.borderColor,
                           ),
                         ),
-                        focusedBorder: UnderlineInputBorder(
+                        focusedBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(
                             color: MyColor.borderColor,
                           ),
                         ),
                         hintText: 'City',
-                        suffixIcon: Icon(
-                          Icons.expand_more,
+                        suffixIcon: IconButton(
+                          onPressed: () {},
+                          icon: const Icon(
+                            Icons.expand_more,
+                          ),
                         ),
                         suffixIconColor: MyColor.grey,
-                        hintStyle: TextStyle(
+                        hintStyle: const TextStyle(
                           color: MyColor.grey,
                           fontSize: 16,
                           fontWeight: FontWeight.w500,

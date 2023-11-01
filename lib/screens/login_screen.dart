@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_layout/screens/forget_password_screen.dart';
 import 'package:flutter_layout/screens/register_screen.dart';
 import 'package:flutter_layout/utils/my_colors.dart';
 import 'package:flutter_layout/utils/my_images.dart';
@@ -29,7 +30,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 const Padding(
                   padding: EdgeInsets.only(
                     left: 76, top: 270,
-                    //  right: 117
+                    //  right: 117          crossAxisAlignment: CrossAxisAlignment.center,
+
                   ),
                   child: Text(
                     'Let\'s gets started.',
@@ -117,12 +119,22 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             const SizedBox(height: 44),
-            const Text(
-              'Forgot your password ?',
-              style: TextStyle(
-                fontSize: 13,
-                fontWeight: FontWeight.w500,
-                color: MyColor.forgotcolor,
+            InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ForgetPasswordScreen(),
+                  ),
+                );
+              },
+              child: const Text(
+                'Forgot your password ?',
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500,
+                  color: MyColor.forgotcolor,
+                ),
               ),
             ),
             const SizedBox(height: 50),
@@ -189,4 +201,3 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
-
