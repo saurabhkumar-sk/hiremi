@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_layout/screens/dashboard_screen.dart';
 import 'package:flutter_layout/screens/forget_password_screen.dart';
 import 'package:flutter_layout/screens/register_screen.dart';
 import 'package:flutter_layout/utils/my_colors.dart';
@@ -31,7 +32,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   padding: EdgeInsets.only(
                     left: 76, top: 270,
                     //  right: 117          crossAxisAlignment: CrossAxisAlignment.center,
-
                   ),
                   child: Text(
                     'Let\'s gets started.',
@@ -138,27 +138,37 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             const SizedBox(height: 50),
-            Container(
-              height: 55.0,
-              width: 230,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                gradient: const LinearGradient(
-                  transform: GradientRotation(180),
-                  colors: [
-                    Color(0xFFBD232B),
-                    Color(0xFFF13640),
-                    Color(0xFFBD2930),
-                  ],
+            InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const DashbordScreen(),
+                  ),
+                );
+              },
+              child: Container(
+                height: 55.0,
+                width: 230,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  gradient: const LinearGradient(
+                    transform: GradientRotation(180),
+                    colors: [
+                      Color(0xFFBD232B),
+                      Color(0xFFF13640),
+                      Color(0xFFBD2930),
+                    ],
+                  ),
                 ),
-              ),
-              child: const Center(
-                child: Text(
-                  "sign in",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 20,
+                child: const Center(
+                  child: Text(
+                    "sign in",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 20,
+                    ),
                   ),
                 ),
               ),

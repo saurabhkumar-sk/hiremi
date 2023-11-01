@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_layout/screens/login_screen.dart';
 import 'package:flutter_layout/utils/my_colors.dart';
 import 'package:flutter_layout/utils/my_images.dart';
 
@@ -172,7 +173,7 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const CreateNewPasswordScreen(),
+                    builder: (context) => const LoginScreen(),
                   ),
                 );
               },

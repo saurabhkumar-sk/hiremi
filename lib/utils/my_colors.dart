@@ -7,4 +7,5 @@ class MyColor {
   static const black = Color(0xFF000000);
   static const checkBoxColor = Color(0xFFD9D9D9);
   static const pink = Color(0xFFF13640);
+  static const greyBottomappBar = Color(0xFFEDEDED);
 }
