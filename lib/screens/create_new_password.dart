@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_layout/screens/otp_verification_screen.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_layout/utils/my_colors.dart';
 import 'package:flutter_layout/utils/my_images.dart';
 
-class ForgetPasswordScreen extends StatefulWidget {
-  const ForgetPasswordScreen({super.key});
+class CreateNewPasswordScreen extends StatefulWidget {
+  const CreateNewPasswordScreen({super.key});
 
   @override
-  State<ForgetPasswordScreen> createState() => _ForgetPasswordScreenState();
+  State<CreateNewPasswordScreen> createState() =>
+      _CreateNewPasswordScreenState();
 }
 
-class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
+class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,7 +64,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
             ),
             Image.asset(MyImages.forgetPasswordImage),
             const Text(
-              'Forget Password',
+              'Create New Password',
               style: TextStyle(
                 fontWeight: FontWeight.w700,
                 fontSize: 30,
@@ -76,7 +77,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
               ),
               child: const Text(
                 textAlign: TextAlign.center,
-                'Please Enter Your Email Address To Reeived a Verification Code ',
+                'Your New Password Must Be Different from previously used password',
                 style: TextStyle(
                   fontWeight: FontWeight.w400,
                   fontSize: 16,
@@ -87,7 +88,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 63),
               child: TextFormField(
-                keyboardType: TextInputType.emailAddress,
+                textInputAction: TextInputAction.done,
                 decoration: const InputDecoration(
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
@@ -99,7 +100,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                       color: MyColor.borderColor,
                     ),
                   ),
-                  hintText: 'Email Address',
+                  hintText: 'New Password',
                   hintStyle: TextStyle(
                     color: MyColor.grey,
                     fontSize: 20,
@@ -108,30 +109,72 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                   prefixIcon: Padding(
                     padding: EdgeInsets.only(right: 25),
                     child: Icon(
-                      Icons.person_2_sharp,
-                      size: 26,
+                      Icons.lock,
+                      size: 25,
+                      color: MyColor.grey,
+                    ),
+                  ),
+                  suffixIcon: Padding(
+                    padding: EdgeInsets.only(right: 0),
+                    child: Icon(
+                      Icons.remove_red_eye,
+                      size: 20,
                       color: MyColor.grey,
                     ),
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 75),
-            const Text(
-              'Try another way',
-              style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16,
-                  color: MyColor.pink),
+            const SizedBox(height: 24),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 63),
+              child: TextFormField(
+                textInputAction: TextInputAction.done,
+                decoration: const InputDecoration(
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: MyColor.borderColor,
+                    ),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: MyColor.borderColor,
+                    ),
+                  ),
+                  hintText: 'Confirm Password',
+                  hintStyle: TextStyle(
+                    color: MyColor.grey,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  prefixIcon: Padding(
+                    padding: EdgeInsets.only(right: 25),
+                    child: Icon(
+                      Icons.lock,
+                      size: 25,
+                      color: MyColor.grey,
+                    ),
+                  ),
+                  suffixIcon: Padding(
+                    padding: EdgeInsets.only(right: 0),
+                    child: Icon(
+                      Icons.remove_red_eye,
+                      size: 20,
+                      color: MyColor.grey,
+                    ),
+                  ),
+                ),
+              ),
             ),
             const SizedBox(height: 42),
             InkWell(
               onTap: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const OtpVerificationScreen(),
-                    ));
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const CreateNewPasswordScreen(),
+                  ),
+                );
               },
               child: Container(
                 height: 55.0,
@@ -149,7 +192,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                 ),
                 child: const Center(
                   child: Text(
-                    "Send",
+                    "Save",
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w700,

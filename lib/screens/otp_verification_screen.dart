@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_layout/screens/create_new_password.dart';
 import 'package:flutter_layout/utils/my_colors.dart';
 import 'package:flutter_layout/utils/my_images.dart';
 
@@ -26,18 +27,35 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                   onTap: () {
                     Navigator.pop(context);
                   },
-                  child: Card(
-                    color: Colors.red,
-                    elevation: 12,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                    child: const Padding(
-                      padding: EdgeInsets.only(right: 5),
-                      child: Icon(
-                        Icons.arrow_back_ios_new,
-                        size: 30,
-                        color: Colors.white,
+                  child: ClipOval(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(1),
+                            spreadRadius: 5,
+                            blurRadius: 7,
+                            offset: const Offset(
+                                0, 3), // changes position of shadow
+                          ),
+                        ],
+                        gradient: const LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.topRight,
+                          transform: GradientRotation(20),
+                          colors: [
+                            Color(0xFFF13640),
+                            Color(0xFFBD2930),
+                          ],
+                        ),
+                      ),
+                      child: const Padding(
+                        padding: EdgeInsets.only(right: 5),
+                        child: Icon(
+                          Icons.arrow_back_ios_new,
+                          size: 30,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),
@@ -224,27 +242,37 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                   color: MyColor.pink),
             ),
             const SizedBox(height: 42),
-            Container(
-              height: 55.0,
-              width: 230,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                gradient: const LinearGradient(
-                  transform: GradientRotation(180),
-                  colors: [
-                    Color(0xFFBD232B),
-                    Color(0xFFF13640),
-                    Color(0xFFBD2930),
-                  ],
+            InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const CreateNewPasswordScreen(),
+                  ),
+                );
+              },
+              child: Container(
+                height: 55.0,
+                width: 230,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  gradient: const LinearGradient(
+                    transform: GradientRotation(180),
+                    colors: [
+                      Color(0xFFBD232B),
+                      Color(0xFFF13640),
+                      Color(0xFFBD2930),
+                    ],
+                  ),
                 ),
-              ),
-              child: const Center(
-                child: Text(
-                  "Verify",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 20,
+                child: const Center(
+                  child: Text(
+                    "Verify",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 20,
+                    ),
                   ),
                 ),
               ),

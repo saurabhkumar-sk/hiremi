@@ -20,18 +20,35 @@ class RegisterScreen extends StatelessWidget {
                   onTap: () {
                     Navigator.pop(context);
                   },
-                  child: Card(
-                    color: Colors.red,
-                    elevation: 12,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                    child: const Padding(
-                      padding: EdgeInsets.only(right: 5),
-                      child: Icon(
-                        Icons.arrow_back_ios_new,
-                        size: 30,
-                        color: Colors.white,
+                  child: ClipOval(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(1),
+                            spreadRadius: 5,
+                            blurRadius: 7,
+                            offset: const Offset(
+                                0, 3), // changes position of shadow
+                          ),
+                        ],
+                        gradient: const LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.topRight,
+                          transform: GradientRotation(20),
+                          colors: [
+                            Color(0xFFF13640),
+                            Color(0xFFBD2930),
+                          ],
+                        ),
+                      ),
+                      child: const Padding(
+                        padding: EdgeInsets.only(right: 5),
+                        child: Icon(
+                          Icons.arrow_back_ios_new,
+                          size: 30,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),
