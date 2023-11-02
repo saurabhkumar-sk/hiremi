@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Layout',
+        title: 'Hiremi',
         theme: ThemeData(
           fontFamily: 'Poppins',
           useMaterial3: true,
