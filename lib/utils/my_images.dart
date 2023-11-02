@@ -4,6 +4,7 @@ class MyImages {
   static const fresherjob = 'assets/images/software-engineer 1.png';
   static const experience = 'assets/images/suitcase 5.png';
   static const mentorship = 'assets/images/mortarboard 1.png';
+  static const profileImage = 'assets/images/Ellipse 1.png';
   static const forgetPasswordImage =
       'assets/images/wepik-export-202310211110200bE2 1.png';
 }

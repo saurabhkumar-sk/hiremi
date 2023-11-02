@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_layout/screens/login_screen.dart';
 import 'package:flutter_layout/utils/my_colors.dart';
 import 'package:flutter_layout/utils/my_images.dart';
@@ -22,25 +21,17 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
             Padding(
               padding: const EdgeInsets.only(top: 39, left: 27, right: 300),
               child: SizedBox(
-                height: 49,
-                width: 49,
+                height: 38,
+                width: 32,
                 child: GestureDetector(
                   onTap: () {
                     Navigator.pop(context);
                   },
                   child: ClipOval(
                     child: Container(
-                      decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(1),
-                            spreadRadius: 5,
-                            blurRadius: 7,
-                            offset: const Offset(
-                                0, 3), // changes position of shadow
-                          ),
-                        ],
-                        gradient: const LinearGradient(
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(25)),
+                        gradient: LinearGradient(
                           begin: Alignment.topLeft,
                           end: Alignment.topRight,
                           transform: GradientRotation(20),
@@ -51,7 +42,7 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
                         ),
                       ),
                       child: const Padding(
-                        padding: EdgeInsets.only(right: 5),
+                        padding: EdgeInsets.only(right: 10),
                         child: Icon(
                           Icons.arrow_back_ios_new,
                           size: 30,
@@ -87,7 +78,7 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
             ),
             const SizedBox(height: 25),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 63),
+              padding: const EdgeInsets.symmetric(horizontal: 50),
               child: TextFormField(
                 textInputAction: TextInputAction.done,
                 decoration: const InputDecoration(
@@ -128,7 +119,7 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
             ),
             const SizedBox(height: 24),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 63),
+              padding: const EdgeInsets.symmetric(horizontal: 50),
               child: TextFormField(
                 textInputAction: TextInputAction.done,
                 decoration: const InputDecoration(

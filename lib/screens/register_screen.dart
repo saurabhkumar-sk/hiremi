@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_layout/utils/my_colors.dart';
 
-class RegisterScreen extends StatelessWidget {
+enum Gender { male, female }
+
+class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
+
+  @override
+  State<RegisterScreen> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
+  Gender? _gender;
 
   @override
   Widget build(BuildContext context) {
@@ -15,25 +24,17 @@ class RegisterScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 39, left: 27, right: 300),
                 child: SizedBox(
-                  height: 49,
-                  width: 49,
+                  height: 38,
+                  width: 32,
                   child: GestureDetector(
                     onTap: () {
                       Navigator.pop(context);
                     },
                     child: ClipOval(
                       child: Container(
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(1),
-                              spreadRadius: 5,
-                              blurRadius: 7,
-                              offset: const Offset(
-                                  0, 3), // changes position of shadow
-                            ),
-                          ],
-                          gradient: const LinearGradient(
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                          gradient: LinearGradient(
                             begin: Alignment.topLeft,
                             end: Alignment.topRight,
                             transform: GradientRotation(20),
@@ -44,7 +45,7 @@ class RegisterScreen extends StatelessWidget {
                           ),
                         ),
                         child: const Padding(
-                          padding: EdgeInsets.only(right: 5),
+                          padding: EdgeInsets.only(right: 10),
                           child: Icon(
                             Icons.arrow_back_ios_new,
                             size: 30,
@@ -246,43 +247,50 @@ class RegisterScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 23),
-              Padding(
-                padding: const EdgeInsets.only(left: 37, right: 58),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      'Male',
-                      style: TextStyle(
-                        color: MyColor.grey,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                      ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  const Text(
+                    'Male',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 18,
+                      fontFamily: 'Poppins.bold',
+                      color: MyColor.borderColor,
                     ),
-                    ClipOval(
-                      child: Container(
-                        height: 12,
-                        width: 12,
-                        color: MyColor.checkBoxColor,
+                  ),
+                  Radio(
+                      fillColor: const MaterialStatePropertyAll(
+                        MyColor.borderColor,
                       ),
+                      value: Gender.male,
+                      groupValue: _gender,
+                      onChanged: (value) {
+                        setState(() {
+                          _gender = value;
+                        });
+                      }),
+                  const Text(
+                    'Female',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 18,
+                      fontFamily: 'Poppins.bold',
+                      color: MyColor.radioButtonColor,
                     ),
-                    const Text(
-                      'Female',
-                      style: TextStyle(
-                        color: MyColor.grey,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
+                  ),
+                  Radio(
+                      fillColor: const MaterialStatePropertyAll(
+                        MyColor.grey,
                       ),
-                    ),
-                    ClipOval(
-                      child: Container(
-                        height: 12,
-                        width: 12,
-                        color: MyColor.checkBoxColor,
-                      ),
-                    ),
-                  ],
-                ),
+                      value: Gender.female,
+                      groupValue: _gender,
+                      onChanged: (value) {
+                        setState(() {
+                          _gender = value;
+                        });
+                      }),
+                ],
               ),
               const SizedBox(height: 45),
               const Padding(
