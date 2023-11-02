@@ -138,32 +138,26 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             const SizedBox(height: 50),
-            InkWell(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const DashbordScreen(),
-                  ),
-                );
-              },
-              child: Container(
+            Center(
+              child: SizedBox(
                 height: 55.0,
                 width: 230,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  gradient: const LinearGradient(
-                    transform: GradientRotation(180),
-                    colors: [
-                      Color(0xFFBD232B),
-                      Color(0xFFF13640),
-                      Color(0xFFBD2930),
-                    ],
-                  ),
-                ),
-                child: const Center(
-                  child: Text(
-                    "sign in",
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const DashbordScreen(),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFFF13640),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      )),
+                  child: const Text(
+                    "Sign in",
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w700,

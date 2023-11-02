@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_layout/provider/provider.dart';
 import 'package:flutter_layout/screens/otp_verification_screen.dart';
 import 'package:flutter_layout/utils/my_colors.dart';
 import 'package:flutter_layout/utils/my_images.dart';
@@ -11,6 +12,12 @@ class ForgetPasswordScreen extends StatefulWidget {
 }
 
 class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
+  @override
+  void initState() {
+    super.initState();
+    final provider = UserProvider();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,8 +41,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                             color: Colors.black.withOpacity(1),
                             spreadRadius: 5,
                             blurRadius: 7,
-                            offset: const Offset(
-                                0, 3), // changes position of shadow
+                            offset: const Offset(0, 3),
                           ),
                         ],
                         gradient: const LinearGradient(
@@ -125,36 +131,29 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                   color: MyColor.pink),
             ),
             const SizedBox(height: 42),
-            InkWell(
-              onTap: () {
-                Navigator.push(
+            SizedBox(
+              height: 55.0,
+              width: 230,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => const OtpVerificationScreen(),
-                    ));
-              },
-              child: Container(
-                height: 55.0,
-                width: 230,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  gradient: const LinearGradient(
-                    transform: GradientRotation(180),
-                    colors: [
-                      Color(0xFFBD232B),
-                      Color(0xFFF13640),
-                      Color(0xFFBD2930),
-                    ],
-                  ),
-                ),
-                child: const Center(
-                  child: Text(
-                    "Send",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 20,
                     ),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFFF13640),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    )),
+                child: const Text(
+                  "Send",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 20,
                   ),
                 ),
               ),

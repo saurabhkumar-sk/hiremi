@@ -780,22 +780,17 @@ class RegisterScreen extends StatelessWidget {
               ),
               const SizedBox(height: 45),
               Center(
-                child: Container(
+                child: SizedBox(
                   height: 55.0,
                   width: 230,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    gradient: const LinearGradient(
-                      transform: GradientRotation(180),
-                      colors: [
-                        Color(0xFFBD232B),
-                        Color(0xFFF13640),
-                        Color(0xFFBD2930),
-                      ],
-                    ),
-                  ),
-                  child: const Center(
-                    child: Text(
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFFF13640),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        )),
+                    child: const Text(
                       "Sumbit",
                       style: TextStyle(
                         color: Colors.white,

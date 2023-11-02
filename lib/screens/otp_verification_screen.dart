@@ -85,155 +85,158 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
               ),
             ),
             const SizedBox(height: 25),
-            Row(
-              children: [
-                const SizedBox(width: 86),
-                SizedBox(
-                  height: 48,
-                  width: 46,
-                  child: TextFormField(
-                    onSaved: (newValue) {},
-                    onChanged: (value) {
-                      if (value.length == 1) {
-                        FocusScope.of(context).nextFocus();
-                      }
-                    },
-                    style: Theme.of(context).textTheme.headlineSmall,
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(11),
-                        borderSide: const BorderSide(
-                          width: 4,
-                          color: MyColor.borderColor,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 50),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  SizedBox(
+                    height: 48,
+                    width: 46,
+                    child: TextFormField(
+                      onSaved: (newValue) {},
+                      onChanged: (value) {
+                        if (value.length == 1) {
+                          FocusScope.of(context).nextFocus();
+                        }
+                      },
+                      style: Theme.of(context).textTheme.headlineSmall,
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(11),
+                          borderSide: const BorderSide(
+                            width: 4,
+                            color: MyColor.borderColor,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(11),
+                          borderSide: const BorderSide(
+                            width: 4,
+                            color: MyColor.borderColor,
+                          ),
                         ),
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(11),
-                        borderSide: const BorderSide(
-                          width: 4,
-                          color: MyColor.borderColor,
-                        ),
-                      ),
+                      keyboardType: TextInputType.number,
+                      textAlign: TextAlign.center,
+                      inputFormatters: [
+                        LengthLimitingTextInputFormatter(1),
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
                     ),
-                    keyboardType: TextInputType.number,
-                    textAlign: TextAlign.center,
-                    inputFormatters: [
-                      LengthLimitingTextInputFormatter(1),
-                      FilteringTextInputFormatter.digitsOnly,
-                    ],
                   ),
-                ),
-                const SizedBox(width: 24),
-                SizedBox(
-                  height: 48,
-                  width: 46,
-                  child: TextFormField(
-                    onSaved: (newValue) {},
-                    onChanged: (value) {
-                      if (value.length == 1) {
-                        FocusScope.of(context).nextFocus();
-                      }
-                    },
-                    style: Theme.of(context).textTheme.headlineSmall,
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(11),
-                        borderSide: const BorderSide(
-                          width: 4,
-                          color: MyColor.borderColor,
+                  const SizedBox(width: 24),
+                  SizedBox(
+                    height: 48,
+                    width: 46,
+                    child: TextFormField(
+                      onSaved: (newValue) {},
+                      onChanged: (value) {
+                        if (value.length == 1) {
+                          FocusScope.of(context).nextFocus();
+                        }
+                      },
+                      style: Theme.of(context).textTheme.headlineSmall,
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(11),
+                          borderSide: const BorderSide(
+                            width: 4,
+                            color: MyColor.borderColor,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(11),
+                          borderSide: const BorderSide(
+                            width: 4,
+                            color: MyColor.borderColor,
+                          ),
                         ),
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(11),
-                        borderSide: const BorderSide(
-                          width: 4,
-                          color: MyColor.borderColor,
-                        ),
-                      ),
+                      keyboardType: TextInputType.number,
+                      textAlign: TextAlign.center,
+                      inputFormatters: [
+                        LengthLimitingTextInputFormatter(1),
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
                     ),
-                    keyboardType: TextInputType.number,
-                    textAlign: TextAlign.center,
-                    inputFormatters: [
-                      LengthLimitingTextInputFormatter(1),
-                      FilteringTextInputFormatter.digitsOnly,
-                    ],
                   ),
-                ),
-                const SizedBox(width: 24),
-                SizedBox(
-                  height: 48,
-                  width: 46,
-                  child: TextFormField(
-                    onSaved: (newValue) {},
-                    onChanged: (value) {
-                      if (value.length == 1) {
-                        FocusScope.of(context).nextFocus();
-                      }
-                    },
-                    style: Theme.of(context).textTheme.headlineSmall,
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(11),
-                        borderSide: const BorderSide(
-                          width: 4,
-                          color: MyColor.borderColor,
+                  const SizedBox(width: 24),
+                  SizedBox(
+                    height: 48,
+                    width: 46,
+                    child: TextFormField(
+                      onSaved: (newValue) {},
+                      onChanged: (value) {
+                        if (value.length == 1) {
+                          FocusScope.of(context).nextFocus();
+                        }
+                      },
+                      style: Theme.of(context).textTheme.headlineSmall,
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(11),
+                          borderSide: const BorderSide(
+                            width: 4,
+                            color: MyColor.borderColor,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(11),
+                          borderSide: const BorderSide(
+                            width: 4,
+                            color: MyColor.borderColor,
+                          ),
                         ),
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(11),
-                        borderSide: const BorderSide(
-                          width: 4,
-                          color: MyColor.borderColor,
-                        ),
-                      ),
+                      keyboardType: TextInputType.number,
+                      textAlign: TextAlign.center,
+                      inputFormatters: [
+                        LengthLimitingTextInputFormatter(1),
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
                     ),
-                    keyboardType: TextInputType.number,
-                    textAlign: TextAlign.center,
-                    inputFormatters: [
-                      LengthLimitingTextInputFormatter(1),
-                      FilteringTextInputFormatter.digitsOnly,
-                    ],
                   ),
-                ),
-                const SizedBox(width: 24),
-                SizedBox(
-                  height: 48,
-                  width: 46,
-                  child: TextFormField(
-                    onSaved: (newValue) {},
-                    onChanged: (value) {
-                      if (value.length == 1) {
-                        FocusScope.of(context).nextFocus();
-                      }
-                    },
-                    style: Theme.of(context).textTheme.headlineSmall,
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(11),
-                        borderSide: const BorderSide(
-                          width: 4,
-                          color: MyColor.borderColor,
+                  const SizedBox(width: 24),
+                  SizedBox(
+                    height: 48,
+                    width: 46,
+                    child: TextFormField(
+                      onSaved: (newValue) {},
+                      onChanged: (value) {
+                        if (value.length == 1) {
+                          FocusScope.of(context).nextFocus();
+                        }
+                      },
+                      style: Theme.of(context).textTheme.headlineSmall,
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(11),
+                          borderSide: const BorderSide(
+                            width: 4,
+                            color: MyColor.borderColor,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(11),
+                          borderSide: const BorderSide(
+                            width: 4,
+                            color: MyColor.borderColor,
+                          ),
                         ),
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(11),
-                        borderSide: const BorderSide(
-                          width: 4,
-                          color: MyColor.borderColor,
-                        ),
-                      ),
+                      keyboardType: TextInputType.number,
+                      textAlign: TextAlign.center,
+                      inputFormatters: [
+                        LengthLimitingTextInputFormatter(1),
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
                     ),
-                    keyboardType: TextInputType.number,
-                    textAlign: TextAlign.center,
-                    inputFormatters: [
-                      LengthLimitingTextInputFormatter(1),
-                      FilteringTextInputFormatter.digitsOnly,
-                    ],
-                  ),
-                )
-              ],
+                  )
+                ],
+              ),
             ),
-            const SizedBox(height: 75),
+            const SizedBox(height: 50),
             const Text(
               'Resend Code',
               style: TextStyle(
@@ -241,38 +244,30 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                   fontSize: 16,
                   color: MyColor.pink),
             ),
-            const SizedBox(height: 42),
-            InkWell(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const CreateNewPasswordScreen(),
-                  ),
-                );
-              },
-              child: Container(
-                height: 55.0,
-                width: 230,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  gradient: const LinearGradient(
-                    transform: GradientRotation(180),
-                    colors: [
-                      Color(0xFFBD232B),
-                      Color(0xFFF13640),
-                      Color(0xFFBD2930),
-                    ],
-                  ),
-                ),
-                child: const Center(
-                  child: Text(
-                    "Verify",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 20,
+            const SizedBox(height: 30),
+            SizedBox(
+              height: 55.0,
+              width: 236,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const CreateNewPasswordScreen(),
                     ),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFFF13640),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    )),
+                child: const Text(
+                  "Verify",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 20,
                   ),
                 ),
               ),
