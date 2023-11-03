@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_layout/provider/gender_provider.dart';
+import 'package:flutter_layout/provider/register_provider.dart';
 import 'package:flutter_layout/provider/provider.dart';
+import 'package:flutter_layout/screens/login_screen.dart';
 import 'package:flutter_layout/screens/profile.dart';
 import 'package:flutter_layout/screens/profile_screen.dart';
 import 'package:flutter_layout/screens/splash_screen.dart';
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => UserProvider()),
-        ChangeNotifierProvider(create: (context) => GenderProvider()),
+        ChangeNotifierProvider(create: (context) => RegisterProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Poppins',
           useMaterial3: true,
         ),
-        home: const ProfileScreen(),
+        home: const LoginScreen(),
       ),
     );
   }

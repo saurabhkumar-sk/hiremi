@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_layout/api_services/user_services.dart';
-import 'package:flutter_layout/provider/gender_provider.dart';
+import 'package:flutter_layout/provider/register_provider.dart';
 import 'package:flutter_layout/screens/login_screen.dart';
 import 'package:flutter_layout/utils/my_colors.dart';
 import 'package:provider/provider.dart';
@@ -19,30 +19,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   String genderSelector = "";
 
-  final firstnameController = TextEditingController();
-  final lastnameController = TextEditingController();
-  final fatherFirstController = TextEditingController();
-  final fatherLastController = TextEditingController();
-  final genderController = TextEditingController();
-  final emailController = TextEditingController();
-  final dateOfBirthDayController = TextEditingController();
-  final dateOfBirthMonthController = TextEditingController();
-  final dateOfBirthYearController = TextEditingController();
-  final birthStateController = TextEditingController();
-  final birthcityController = TextEditingController();
-  final phoneNumberController = TextEditingController();
-  final whatsAppNumberController = TextEditingController();
-  final collageStateController = TextEditingController();
-  final collageNameController = TextEditingController();
-  final branchNameController = TextEditingController();
-  final passingYearController = TextEditingController();
-  final passwordController = TextEditingController();
-  final conformPasswordController = TextEditingController();
-
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    final genderProvider = Provider.of<GenderProvider>(context);
+    final registerProvider = Provider.of<RegisterProvider>(context);
 
     return SafeArea(
         child: Scaffold(
@@ -149,7 +129,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.35,
                     child: TextFormField(
-                      controller: firstnameController,
+                      controller:
+                          registerProvider.firstnameController.controller,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please enter name';
@@ -181,7 +162,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.35,
                     child: TextFormField(
-                      controller: lastnameController,
+                      controller:
+                          registerProvider.lastnameController.controller,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please enter name';
@@ -235,7 +217,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                     // width: 148,
                     child: TextFormField(
-                      controller: fatherFirstController,
+                      controller:
+                          registerProvider.fatherFirstController.controller,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please enter name';
@@ -269,7 +252,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                     // width: 148,
                     child: TextFormField(
-                      controller: fatherLastController,
+                      controller:
+                          registerProvider.fatherLastController.controller,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please enter name';
@@ -322,7 +306,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   InkWell(
                       onTap: () {
                         genderSelector = "Male";
-                        genderProvider.toggleGenderSelectionmale();
+                        registerProvider.toggleGenderSelectionmale();
                       },
                       child: const Text(
                         'Male',
@@ -336,7 +320,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     child: Container(
                       height: 12,
                       width: 12,
-                      color: genderProvider.isMaleSelected
+                      color: registerProvider.isMaleSelected
                           ? MyColor.green
                           : MyColor.grey,
                     ),
@@ -344,7 +328,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   InkWell(
                       onTap: () {
                         genderSelector = 'Female';
-                        genderProvider.toggleGenderSelectionfemail();
+                        registerProvider.toggleGenderSelectionfemail();
                       },
                       child: const Text(
                         'Female',
@@ -358,7 +342,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     child: Container(
                       height: 12,
                       width: 12,
-                      color: genderProvider.isFemaleSelected
+                      color: registerProvider.isFemaleSelected
                           ? MyColor.green
                           : MyColor.grey,
                     ),
@@ -382,7 +366,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             Padding(
               padding: const EdgeInsets.only(left: 37, right: 58),
               child: TextFormField(
-                controller: emailController,
+                controller: registerProvider.emailController.controller,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter email address';
@@ -431,7 +415,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   SizedBox(
                     width: 80,
                     child: TextFormField(
-                      controller: dateOfBirthDayController,
+                      controller:
+                          registerProvider.dateOfBirthDayController.controller,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please enter date of birth';
@@ -450,7 +435,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             color: MyColor.borderColor,
                           ),
                         ),
-                        hintText: 'Day',
+                        hintText: 'Year',
                         suffixIcon: IconButton(
                           onPressed: () {},
                           icon: const Icon(
@@ -460,7 +445,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         suffixIconColor: MyColor.grey,
                         hintStyle: const TextStyle(
                           color: MyColor.grey,
-                          fontSize: 16,
+                          fontSize: 15,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -469,7 +454,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   SizedBox(
                     width: 100,
                     child: TextFormField(
-                      controller: dateOfBirthMonthController,
+                      controller: registerProvider
+                          .dateOfBirthMonthController.controller,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please enter date of birth';
@@ -507,7 +493,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   SizedBox(
                     width: 100,
                     child: TextFormField(
-                      controller: dateOfBirthYearController,
+                      controller:
+                          registerProvider.dateOfBirthYearController.controller,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please enter date of birth';
@@ -526,7 +513,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             color: MyColor.borderColor,
                           ),
                         ),
-                        hintText: 'Year',
+                        hintText: 'Day',
                         suffixIcon: IconButton(
                           onPressed: () {},
                           icon: const Icon(
@@ -568,7 +555,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                     width: MediaQuery.of(context).size.width * 0.35,
                     child: TextFormField(
-                      controller: birthStateController,
+                      controller:
+                          registerProvider.birthStateController.controller,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please enter birth state';
@@ -609,7 +597,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     width: MediaQuery.of(context).size.width * 0.35,
 
                     child: TextFormField(
-                      controller: birthcityController,
+                      controller:
+                          registerProvider.birthcityController.controller,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please enter birth city';
@@ -664,7 +653,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             Padding(
               padding: const EdgeInsets.only(left: 37, right: 58),
               child: TextFormField(
-                controller: phoneNumberController,
+                controller: registerProvider.phoneNumberController.controller,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter phone number';
@@ -696,7 +685,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
             Padding(
               padding: const EdgeInsets.only(left: 37, right: 58),
               child: TextFormField(
-                controller: whatsAppNumberController,
+                controller:
+                    registerProvider.whatsAppNumberController.controller,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter whatsapp number';
@@ -741,7 +731,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             Padding(
               padding: const EdgeInsets.only(left: 37, right: 58),
               child: TextFormField(
-                controller: collageStateController,
+                controller: registerProvider.collageStateController.controller,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter collage state';
@@ -773,7 +763,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             Padding(
               padding: const EdgeInsets.only(left: 37, right: 58),
               child: TextFormField(
-                controller: collageNameController,
+                controller: registerProvider.collageNameController.controller,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter collage name';
@@ -805,7 +795,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             Padding(
               padding: const EdgeInsets.only(left: 37, right: 58),
               child: TextFormField(
-                controller: branchNameController,
+                controller: registerProvider.branchNameController.controller,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter branch';
@@ -837,7 +827,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             Padding(
               padding: const EdgeInsets.only(left: 37, right: 58),
               child: TextFormField(
-                controller: passingYearController,
+                controller: registerProvider.passingYearController.controller,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter passing year.';
@@ -882,7 +872,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             Padding(
               padding: const EdgeInsets.only(left: 37, right: 58),
               child: TextFormField(
-                controller: passwordController,
+                controller: registerProvider.passwordController.controller,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter password';
@@ -922,7 +912,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
             Padding(
               padding: const EdgeInsets.only(left: 37, right: 58),
               child: TextFormField(
-                controller: conformPasswordController,
+                controller:
+                    registerProvider.conformPasswordController.controller,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter password';
@@ -964,38 +955,73 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 height: 55.0,
                 width: 230,
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
                       // If the form is valid, you can proceed with the input
-                      if (passwordController.text.toString() !=
-                          conformPasswordController.text.toString()) {
+                      if (registerProvider.passwordController.controller.text
+                              .toString() !=
+                          registerProvider
+                              .conformPasswordController.controller.text
+                              .toString()) {
                         return log('please enter correct password');
                       }
                       Map<String, dynamic> body = {
                         "full_name":
-                            "${firstnameController.text} ${lastnameController.text}",
+                            "${registerProvider.firstnameController.controller.text} ${registerProvider.lastnameController.controller.text}",
                         "father_name":
-                            "${fatherFirstController.text} ${fatherLastController.text}",
+                            "${registerProvider.fatherFirstController.controller.text} ${registerProvider.fatherLastController.controller.text}",
                         "gender": genderSelector.toString(),
-                        "email": emailController.text.toString(),
+                        "email": registerProvider
+                            .emailController.controller.text
+                            .toString(),
                         "date_of_birth":
-                            "${dateOfBirthDayController.text}-${dateOfBirthMonthController.text}-${dateOfBirthYearController.text}",
-                        "birth_place":
-                            "${birthStateController.text} ${birthcityController.text}",
-                        "phone_number": phoneNumberController.text.toString(),
-                        "whatsapp_number":
-                            whatsAppNumberController.text.toString(),
-                        "college_state": collageStateController.text.toString(),
-                        "college_name": collageNameController.text.toString(),
-                        "branch_name": branchNameController.text.toString(),
-                        "passing_year": passingYearController.text.toString(),
-                        "password": passwordController.text.toString(),
+                            "${registerProvider.dateOfBirthDayController.controller.text}-${registerProvider.dateOfBirthMonthController.controller.text}-${registerProvider.dateOfBirthYearController.controller.text}",
+                        "address":
+                            "${registerProvider.birthStateController.controller.text} ${registerProvider.birthcityController.controller.text}",
+                        "phone_number": registerProvider
+                            .phoneNumberController.controller.text
+                            .toString(),
+                        "whatsapp_number": registerProvider
+                            .whatsAppNumberController.controller.text
+                            .toString(),
+                        "college_state": registerProvider
+                            .collageStateController.controller.text
+                            .toString(),
+                        "college_name": registerProvider
+                            .collageNameController.controller.text
+                            .toString(),
+                        "branch_name": registerProvider
+                            .branchNameController.controller.text
+                            .toString(),
+                        "passing_year": registerProvider
+                            .passingYearController.controller.text
+                            .toString(),
+                        "password": registerProvider
+                            .passwordController.controller.text
+                            .toString(),
+                        // "verified": true,
+                        // "candidate_status": "Reject",
+                        // "payment_status": "Not Enroll",
+                        "uid": "11",
                       };
-                      ragisterApi.createPostApi(body).then((value) =>
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => LoginScreen())));
+
+                      Future<bool> ragistrationSuccess =
+                          ragisterApi.createPostApi(body);
+                      if (await ragistrationSuccess) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LoginScreen()));
+                      } else {
+                        SnackBar(
+                            content: Text(' please enter correct information'));
+                      }
+
+                      // ragisterApi.createPostApi(body).then((value) =>
+                      //     Navigator.push(
+                      //         context,
+                      //         MaterialPageRoute(
+                      //             builder: (context) => LoginScreen()))).onError((error, stackTrace) => SnackBar(content: Text(error.toString())));
                     }
                   },
                   style: ElevatedButton.styleFrom(

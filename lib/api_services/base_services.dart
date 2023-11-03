@@ -4,7 +4,6 @@ import 'dart:developer';
 import 'package:flutter_layout/utils/api.dart';
 import 'package:http/http.dart' as http;
 
-
 class BaseService {
   Future getHttp(String api) async {
     final url = ApiUrls.baseUrl + api;
@@ -14,11 +13,9 @@ class BaseService {
       Uri.parse(url),
       headers: {'content-type': 'application/json'},
     );
-    
+
     return response;
   }
-
-
 
   Future<http.Response> postHttp({
     required String api,
@@ -31,11 +28,12 @@ class BaseService {
 
     final response = await http.post(
       Uri.parse(url),
-      headers: {'content-type': 'application/json'},
+      headers: {
+        'content-type': 'application/json',
+      },
       body: body,
     );
 
     return response;
   }
-
 }
