@@ -7,6 +7,8 @@ import 'package:flutter_layout/screens/login_screen.dart';
 import 'package:flutter_layout/utils/my_colors.dart';
 import 'package:provider/provider.dart';
 
+enum Gender { male, female }
+
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
 
@@ -16,6 +18,7 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   UserService ragisterApi = UserService();
+  Gender? _gender;
 
   String genderSelector = "";
 
@@ -314,57 +317,58 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
             ),
             const SizedBox(height: 23),
-            Padding(
-              padding: const EdgeInsets.only(left: 37, right: 58),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  InkWell(
-                      onTap: () {
-                        genderSelector = "Male";
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                const Text(
+                  'Male',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 16,
+                    fontFamily: 'Poppins.bold',
+                    color: MyColor.borderColor,
+                  ),
+                ),
+                Radio(
+                    fillColor: MaterialStatePropertyAll(
+                      genderProvider.isMaleSelected
+                          ? MyColor.green
+                          : MyColor.grey,
+                    ),
+                    value: Gender.male,
+                    groupValue: _gender,
+                    onChanged: (value) {
+                      setState(() {
                         genderProvider.toggleGenderSelectionmale();
-                      },
-                      child: const Text(
-                        'Male',
-                        style: TextStyle(
-                          color: MyColor.grey,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      )),
-                  ClipOval(
-                    child: Container(
-                      height: 12,
-                      width: 12,
-                      color: genderProvider.isMaleSelected
+
+                        _gender = value;
+                      });
+                    }),
+                const Text(
+                  'Female',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 16,
+                    fontFamily: 'Poppins.bold',
+                    color: MyColor.radioButtonColor,
+                  ),
+                ),
+                Radio(
+                    fillColor: MaterialStatePropertyAll(
+                      genderProvider.isFemaleSelected
                           ? MyColor.green
                           : MyColor.grey,
                     ),
-                  ),
-                  InkWell(
-                      onTap: () {
-                        genderSelector = 'Female';
-                        genderProvider.toggleGenderSelectionfemail();
-                      },
-                      child: const Text(
-                        'Female',
-                        style: TextStyle(
-                          color: MyColor.grey,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      )),
-                  ClipOval(
-                    child: Container(
-                      height: 12,
-                      width: 12,
-                      color: genderProvider.isFemaleSelected
-                          ? MyColor.green
-                          : MyColor.grey,
-                    ),
-                  ),
-                ],
-              ),
+                    value: Gender.female,
+                    groupValue: _gender,
+                    onChanged: (value) {
+                      genderProvider.toggleGenderSelectionfemail();
+
+                      setState(() {
+                        _gender = value;
+                      });
+                    }),
+              ],
             ),
             const SizedBox(height: 45),
             const Padding(
