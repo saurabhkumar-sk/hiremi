@@ -117,7 +117,7 @@ class _DashbordScreenState extends State<DashbordScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 25),
+            const SizedBox(height: 50),
             Padding(
               padding: const EdgeInsets.only(
                 left: 30,

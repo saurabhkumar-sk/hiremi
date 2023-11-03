@@ -11,6 +11,7 @@ class ProfileScreen extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const SizedBox(height: 22),
           Padding(
             padding: const EdgeInsets.only(top: 39, left: 27, right: 300),
             child: SizedBox(
@@ -47,7 +48,7 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 51),
+          const SizedBox(height: 40),
           const Stack(
             children: [
               Row(
