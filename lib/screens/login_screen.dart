@@ -21,7 +21,6 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const Padding(
                   padding: EdgeInsets.only(
-                    left: 76, top: 270,
+                    left: 50, top: 270,
                     //  right: 117          crossAxisAlignment: CrossAxisAlignment.center,
                   ),
                   child: Text(
