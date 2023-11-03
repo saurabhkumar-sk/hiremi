@@ -15,7 +15,7 @@ class ProfileScreen extends StatelessWidget {
             padding: const EdgeInsets.only(top: 39, left: 27, right: 300),
             child: SizedBox(
               height: 38,
-              width: 32,
+              width: 38,
               child: GestureDetector(
                 onTap: () {
                   Navigator.pop(context);
@@ -128,7 +128,7 @@ class ProfileScreen extends StatelessWidget {
                       fontSize: 19,
                       color: MyColor.pink),
                 ),
-                const SizedBox(width: 90),
+                const SizedBox(width: 45),
                 IconButton(
                   onPressed: () {},
                   icon: const Icon(
@@ -163,7 +163,7 @@ class ProfileScreen extends StatelessWidget {
                       fontSize: 19,
                       color: MyColor.pink),
                 ),
-                const SizedBox(width: 130),
+                const SizedBox(width: 80),
                 IconButton(
                   onPressed: () {},
                   icon: const Icon(
@@ -198,7 +198,7 @@ class ProfileScreen extends StatelessWidget {
                       fontSize: 19,
                       color: MyColor.pink),
                 ),
-                const SizedBox(width: 78),
+                const SizedBox(width: 30),
                 IconButton(
                   onPressed: () {},
                   icon: const Icon(

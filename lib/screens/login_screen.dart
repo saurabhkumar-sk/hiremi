@@ -15,6 +15,13 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final userNameController = TextEditingController();
   final passwordController = TextEditingController();
+  pushToScreen(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (_) => const DashbordScreen()),
+    );
+  }
+
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -143,14 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 55.0,
                 width: 230,
                 child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const DashbordScreen(),
-                      ),
-                    );
-                  },
+                  onPressed: () => pushToScreen(context),
                   style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFFF13640),
                       shape: RoundedRectangleBorder(
