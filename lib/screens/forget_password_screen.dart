@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_layout/provider/provider.dart';
 import 'package:flutter_layout/screens/otp_verification_screen.dart';
 import 'package:flutter_layout/utils/my_colors.dart';
 import 'package:flutter_layout/utils/my_images.dart';
@@ -15,7 +14,6 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
   @override
   void initState() {
     super.initState();
-    final provider = UserProvider();
   }
 
   @override
@@ -27,43 +25,36 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
             Padding(
               padding: const EdgeInsets.only(top: 39, left: 27, right: 300),
               child: SizedBox(
-                height: 49,
-                width: 49,
+                height: 38,
+                  width: 32,
                 child: GestureDetector(
                   onTap: () {
                     Navigator.pop(context);
                   },
                   child: ClipOval(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(1),
-                            spreadRadius: 5,
-                            blurRadius: 7,
-                            offset: const Offset(0, 3),
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                          gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.topRight,
+                            transform: GradientRotation(20),
+                            colors: [
+                              Color(0xFFF13640),
+                              Color(0xFFBD2930),
+                            ],
                           ),
-                        ],
-                        gradient: const LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.topRight,
-                          transform: GradientRotation(20),
-                          colors: [
-                            Color(0xFFF13640),
-                            Color(0xFFBD2930),
-                          ],
                         ),
-                      ),
-                      child: const Padding(
-                        padding: EdgeInsets.only(right: 5),
-                        child: Icon(
-                          Icons.arrow_back_ios_new,
-                          size: 30,
-                          color: Colors.white,
+                        child: const Padding(
+                          padding: EdgeInsets.only(right: 10),
+                          child: Icon(
+                            Icons.arrow_back_ios_new,
+                            size: 30,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
-                  ),
                 ),
               ),
             ),
