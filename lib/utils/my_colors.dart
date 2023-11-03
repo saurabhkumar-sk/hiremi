@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class MyColor {
   static const grey = Color(0xFF9B9B9B);
+  static const green = Colors.green;
   static const borderColor = Color(0xFFCACACA);
   static const forgotcolor = Color(0xFF43485E);
   static const black = Color(0xFF000000);
