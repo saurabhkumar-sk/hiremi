@@ -2,6 +2,8 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_layout/screens/hello.dart';
+import 'package:flutter_layout/screens/profile_screen.dart';
+import 'package:flutter_layout/screens/user_verification_screen.dart';
 import 'package:flutter_layout/utils/my_colors.dart';
 import 'package:flutter_layout/utils/my_images.dart';
 
@@ -13,8 +15,8 @@ class DashbordScreen extends StatefulWidget {
 }
 
 class _DashbordScreenState extends State<DashbordScreen> {
-  final String user = '';
   final controller = TextEditingController();
+  late BuildContext oldDialogContext;
 
   int _currentIndex = 0;
   Color _iconColor = MyColor.grey;
@@ -25,6 +27,72 @@ class _DashbordScreenState extends State<DashbordScreen> {
       // Update the icon colors based on the selected index
       _iconColor = MyColor.grey;
     });
+  }
+
+  bool dialogShown = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (!dialogShown) {
+      Stream<int>.periodic(const Duration(milliseconds: 100), (t) => t)
+          .take(1)
+          .listen((t) {
+        showDialog(
+          barrierDismissible: true,
+          useSafeArea: true,
+          context: context,
+          builder: (BuildContext dialogContext) {
+            dialogShown = true;
+            return AlertDialog(
+              backgroundColor: Colors.white,
+              surfaceTintColor: Colors.transparent,
+              title: const Text(
+                'For the verification process',
+                textAlign: TextAlign.center,
+              ),
+              actionsPadding: const EdgeInsets.only(top: 15, bottom: 25),
+              actionsAlignment: MainAxisAlignment.center,
+              actions: [
+                SizedBox(
+                  height: 55.0,
+                  width: 236,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const UserVerificationScreen(),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFFF13640),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        )),
+                    child: const Text(
+                      "click here",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+              titleTextStyle: const TextStyle(
+                fontWeight: FontWeight.w800,
+                fontSize: 18,
+                color: MyColor.pink,
+              ),
+            );
+          },
+        );
+      });
+    }
   }
 
   @override
@@ -49,7 +117,7 @@ class _DashbordScreenState extends State<DashbordScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 50),
+            const SizedBox(height: 25),
             Padding(
               padding: const EdgeInsets.only(
                 left: 30,
@@ -145,8 +213,8 @@ class _DashbordScreenState extends State<DashbordScreen> {
                 Padding(
                   padding: const EdgeInsets.only(
                     top: 19,
-                    left: 45,
-                    right: 35,
+                    left: 35,
+                    right: 15,
                   ),
                   child: Container(
                     height: 134,
@@ -165,7 +233,7 @@ class _DashbordScreenState extends State<DashbordScreen> {
                   ),
                 ),
                 Positioned(
-                  left: 35,
+                  left: 25,
                   top: 5,
                   child: Image.asset(
                     'assets/images/wepik-export-202306100949116sFt 1.png',
@@ -174,7 +242,7 @@ class _DashbordScreenState extends State<DashbordScreen> {
                   ),
                 ),
                 Positioned(
-                  left: 115,
+                  left: 105,
                   top: 30,
                   child: ConstrainedBox(
                     constraints: BoxConstraints.tight(
@@ -191,7 +259,7 @@ class _DashbordScreenState extends State<DashbordScreen> {
                   ),
                 ),
                 Positioned(
-                  left: 117,
+                  left: 105,
                   top: 85,
                   child: ConstrainedBox(
                     constraints: BoxConstraints.tight(
@@ -294,7 +362,7 @@ class _DashbordScreenState extends State<DashbordScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const HelloScreen(),
+                                builder: (context) => const ProfileScreen(),
                               ),
                             );
                           },
@@ -420,194 +488,3 @@ class _DashbordScreenState extends State<DashbordScreen> {
     );
   }
 }
-
-
-
-
-
-  // Row(
-  //               // mainAxisAlignment: MainAxisAlignment.spaceAround,
-  //               children: [
-  //                 Column(
-  //                   children: [
-  //                     GestureDetector(
-  //                       onTap: () {
-  //                         Navigator.push(
-  //                           context,
-  //                           MaterialPageRoute(
-  //                             builder: (context) => const HelloScreen(),
-  //                           ),
-  //                         );
-  //                       },
-  //                       child: Container(
-  //                         height: 100,
-  //                         width: 100,
-  //                         decoration: const BoxDecoration(
-  //                           borderRadius: BorderRadius.all(Radius.circular(10)),
-  //                           gradient: LinearGradient(
-  //                             transform: GradientRotation(180),
-  //                             colors: [
-  //                               Color(0xFFBD2930),
-  //                               Color(0xFFF13640),
-  //                             ],
-  //                           ),
-  //                         ),
-  //                         child: Image.asset(
-  //                           MyImages.internship,
-  //                         ),
-  //                       ),
-  //                     ),
-  //                     const SizedBox(height: 15),
-  //                     Text(
-  //                       'Internship',
-  //                       style: TextStyle(
-  //                         fontWeight: FontWeight.w600,
-  //                         fontSize: 20,
-  //                       ),
-  //                     ),
-  //                     const SizedBox(height: 27),
-  //                   ],
-  //                 ),
-  //                 Column(
-  //                   children: [
-  //                     GestureDetector(
-  //                       onTap: () {
-  //                         Navigator.push(
-  //                           context,
-  //                           MaterialPageRoute(
-  //                             builder: (context) => const HelloScreen(),
-  //                           ),
-  //                         );
-  //                         log(controller.text);
-  //                       },
-  //                       child: Container(
-  //                         height: 100,
-  //                         width: 100,
-  //                         // color: Colors.red,
-  //                         decoration: const BoxDecoration(
-  //                           borderRadius: BorderRadius.all(Radius.circular(10)),
-  //                           gradient: LinearGradient(
-  //                             transform: GradientRotation(180),
-  //                             colors: [
-  //                               Color(0xFFBD2930),
-  //                               Color(0xFFF13640),
-  //                             ],
-  //                           ),
-  //                         ),
-  //                         child: Padding(
-  //                           padding: const EdgeInsets.all(10),
-  //                           child: Image.asset(
-  //                             MyImages.internship,
-  //                           ),
-  //                         ),
-  //                       ),
-  //                     ),
-  //                     Text(
-  //                       'Fresher Job',
-  //                       style: TextStyle(
-  //                         fontWeight: FontWeight.w600,
-  //                         fontSize: 20,
-  //                       ),
-  //                     ),
-  //                   ],
-  //                 ),
-  //               ],
-  //             ),
-  //             Row(
-  //               mainAxisAlignment: MainAxisAlignment.spaceAround,
-  //               children: [
-  //                 Column(
-  //                   children: [
-  //                     GestureDetector(
-  //                       onTap: () {
-  //                         Navigator.push(
-  //                           context,
-  //                           MaterialPageRoute(
-  //                             builder: (context) => const HelloScreen(),
-  //                           ),
-  //                         );
-  //                         log(controller.text);
-  //                       },
-  //                       child: Container(
-  //                         height: 100,
-  //                         width: 100,
-  //                         // color: Colors.red,
-  //                         decoration: const BoxDecoration(
-  //                           borderRadius: BorderRadius.all(Radius.circular(10)),
-  //                           gradient: LinearGradient(
-  //                             transform: GradientRotation(180),
-  //                             colors: [
-  //                               Color(0xFFBD2930),
-  //                               Color(0xFFF13640),
-  //                             ],
-  //                           ),
-  //                         ),
-  //                         child: Padding(
-  //                           padding: const EdgeInsets.all(10),
-  //                           child: Image.asset(
-  //                             MyImages.internship,
-  //                           ),
-  //                         ),
-  //                       ),
-  //                     ),
-  //                     const Padding(
-  //                       padding: EdgeInsets.all(15),
-  //                       child: Text(
-  //                         'Experience',
-  //                         style: TextStyle(
-  //                           fontWeight: FontWeight.w600,
-  //                           fontSize: 20,
-  //                         ),
-  //                       ),
-  //                     ),
-  //                   ],
-  //                 ),
-  //                 Column(
-  //                   children: [
-  //                     GestureDetector(
-  //                       onTap: () {
-  //                         Navigator.push(
-  //                           context,
-  //                           MaterialPageRoute(
-  //                             builder: (context) => const HelloScreen(),
-  //                           ),
-  //                         );
-  //                         log(controller.text);
-  //                       },
-  //                       child: Container(
-  //                         height: 100,
-  //                         width: 100,
-  //                         // color: Colors.red,
-  //                         decoration: const BoxDecoration(
-  //                           borderRadius: BorderRadius.all(Radius.circular(10)),
-  //                           gradient: LinearGradient(
-  //                             transform: GradientRotation(180),
-  //                             colors: [
-  //                               Color(0xFFBD2930),
-  //                               Color(0xFFF13640),
-  //                             ],
-  //                           ),
-  //                         ),
-  //                         child: Padding(
-  //                           padding: const EdgeInsets.all(10),
-  //                           child: Image.asset(
-  //                             MyImages.internship,
-  //                           ),
-  //                         ),
-  //                       ),
-  //                     ),
-  //                     const Padding(
-  //                       padding: EdgeInsets.all(15),
-  //                       child: Text(
-  //                         'Mentorship',
-  //                         style: TextStyle(
-  //                           fontWeight: FontWeight.w600,
-  //                           fontSize: 20,
-  //                         ),
-  //                       ),
-  //                     ),
-  //                   ],
-  //                 ),
-  //               ],
-  //             ),
-            
