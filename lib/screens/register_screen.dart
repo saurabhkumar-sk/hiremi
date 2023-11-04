@@ -7,6 +7,8 @@ import 'package:flutter_layout/screens/login_screen.dart';
 import 'package:flutter_layout/utils/my_colors.dart';
 import 'package:provider/provider.dart';
 
+enum Gender { male, female }
+
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
 
@@ -16,6 +18,7 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   UserService ragisterApi = UserService();
+  Gender? _gender;
 
   static String generateUid() {
     final uuid = Uuid();
@@ -315,7 +318,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   InkWell(
                       onTap: () {
                         genderSelector = "Male";
-                        registerProvider.toggleGenderSelectionmale();
+                        genderProvider.toggleGenderSelectionmale();
                       },
                       child: const Text(
                         'Male',
@@ -329,7 +332,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     child: Container(
                       height: 12,
                       width: 12,
-                      color: registerProvider.isMaleSelected
+                      color: genderProvider.isMaleSelected
                           ? MyColor.green
                           : MyColor.grey,
                     ),
@@ -337,7 +340,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   InkWell(
                       onTap: () {
                         genderSelector = 'Female';
-                        registerProvider.toggleGenderSelectionfemail();
+                        genderProvider.toggleGenderSelectionfemail();
                       },
                       child: const Text(
                         'Female',
@@ -351,13 +354,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     child: Container(
                       height: 12,
                       width: 12,
-                      color: registerProvider.isFemaleSelected
+                      color: genderProvider.isFemaleSelected
                           ? MyColor.green
                           : MyColor.grey,
                     ),
-                  ),
-                ],
-              ),
+                    value: Gender.female,
+                    groupValue: _gender,
+                    onChanged: (value) {
+                      genderProvider.toggleGenderSelectionfemail();
+
+                      setState(() {
+                        _gender = value;
+                      });
+                    }),
+              ],
             ),
             const SizedBox(height: 45),
             const Padding(
