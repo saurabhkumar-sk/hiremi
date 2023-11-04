@@ -1,5 +1,5 @@
 import 'dart:developer';
-
+import 'package:uuid/uuid.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_layout/api_services/user_services.dart';
 import 'package:flutter_layout/provider/register_provider.dart';
@@ -16,6 +16,15 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   UserService ragisterApi = UserService();
+
+  static String generateUid() {
+    final uuid = Uuid();
+    final fullUuid = uuid.v4(); // Generate a Version 4 (random) UUID
+    final shortUid = fullUuid.substring(0, 8); // Extract the first 8 characters
+    return shortUid;
+  }
+
+  String uuid = generateUid();
 
   String genderSelector = "";
 
@@ -956,6 +965,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 width: 230,
                 child: ElevatedButton(
                   onPressed: () async {
+                    print("our random id is " + uuid);
                     if (_formKey.currentState!.validate()) {
                       // If the form is valid, you can proceed with the input
                       if (registerProvider.passwordController.controller.text
@@ -963,7 +973,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           registerProvider
                               .conformPasswordController.controller.text
                               .toString()) {
-                        return log('please enter correct password');
+                        return showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title:
+                                  const Text('please enter correct password'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    log(uuid);
+                                    Navigator.of(context)
+                                        .pop(); // Close the dialog
+                                  },
+                                  child: Text('OK'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
                       }
                       Map<String, dynamic> body = {
                         "full_name":
@@ -1002,21 +1030,39 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         // "verified": true,
                         // "candidate_status": "Reject",
                         // "payment_status": "Not Enroll",
-                        "uid": "11",
+                        "uid": uuid,
                       };
 
                       Future<bool> ragistrationSuccess =
                           ragisterApi.createPostApi(body);
                       if (await ragistrationSuccess) {
+                        // ignore: use_build_context_synchronously
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => LoginScreen()));
+                                builder: (context) => const LoginScreen()));
                       } else {
-                        SnackBar(
-                            content: Text(' please enter correct information'));
+                        // ignore: use_build_context_synchronously
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: const Text(
+                                  'Register with this email already exists'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    log(uuid);
+                                    Navigator.of(context)
+                                        .pop(); // Close the dialog
+                                  },
+                                  child: Text('OK'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
                       }
-
                       // ragisterApi.createPostApi(body).then((value) =>
                       //     Navigator.push(
                       //         context,

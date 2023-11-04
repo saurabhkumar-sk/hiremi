@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:flutter_layout/models/login_model.dart';
 import 'package:flutter_layout/utils/api.dart';
 import 'package:flutter_layout/models/api_user.dart';
 import 'package:flutter_layout/api_services/base_services.dart';
@@ -24,6 +25,34 @@ class UserService extends BaseService {
     }
   }
 
+  List<userModel> responceData = [];
+
+  Future<List<userModel>> getapi() async {
+    final responce = await getHttp(ApiUrls.registration);
+    var data = jsonDecode(responce.body.toString());
+    print(responce.statusCode);
+    if (responce.statusCode == 200) {
+      for (Map<String, dynamic> i in data) {
+        responceData.add(userModel.fromJson(i));
+      }
+      print(responceData.toString());
+      return responceData;
+    } else {
+      return responceData;
+    }
+  }
+
+  bool loginUser(String fullName, String password) {
+    for (userModel user in responceData) {
+      if (user.fullName == fullName && user.password == password) {
+        // Successful login
+        return true;
+      }
+    }
+    // Login failed
+    return false;
+  }
+
 //post
 
   Future<bool> createPostApi(Map<String, dynamic> body) async {
@@ -34,6 +63,7 @@ class UserService extends BaseService {
       log('Post Created sucessfully', name: 'createPostApi');
       return true;
     } else {
+      final errorMessage = 'Some error occurred: ${response.reasonPhrase}';
       log('Some error occured', name: 'error createPostApi');
       return false;
     }
