@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:csc_picker/csc_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_layout/api_services/user_services.dart';
 import 'package:flutter_layout/provider/gender_provider.dart';
@@ -41,6 +42,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final passingYearController = TextEditingController();
   final passwordController = TextEditingController();
   final conformPasswordController = TextEditingController();
+
+  DateTime date = DateTime.now();
+  void selectDatePicker() async {
+    DateTime? datePicker = await showDatePicker(
+      context: context,
+      initialDate: date,
+      firstDate: DateTime(1980),
+      lastDate: DateTime(2025),
+    );
+    if (datePicker != null && datePicker != date) {
+      setState(() {
+        date = datePicker;
+      });
+    }
+  }
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
@@ -456,7 +472,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         hintText: 'Day',
                         suffixIcon: IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            selectDatePicker();
+                          },
                           icon: const Icon(
                             Icons.expand_more,
                           ),
@@ -494,7 +512,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         hintText: 'Month',
                         suffixIcon: IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            selectDatePicker();
+                          },
                           icon: const Icon(
                             Icons.expand_more,
                           ),
@@ -532,7 +552,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         hintText: 'Year',
                         suffixIcon: IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            selectDatePicker();
+                          },
                           icon: const Icon(
                             Icons.expand_more,
                           ),
@@ -562,95 +584,107 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
               ),
             ),
+            const SizedBox(height: 20),
             Padding(
-              padding: const EdgeInsets.only(left: 34, right: 12),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  SizedBox(
-                    // width: 148,
-
-                    width: MediaQuery.of(context).size.width * 0.35,
-                    child: TextFormField(
-                      controller: birthStateController,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please enter birth state';
-                        }
-                        return null; // Return null if the input is valid
-                      },
-                      textInputAction: TextInputAction.done,
-                      decoration: InputDecoration(
-                        enabledBorder: const UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: MyColor.borderColor,
-                          ),
-                        ),
-                        focusedBorder: const UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: MyColor.borderColor,
-                          ),
-                        ),
-                        hintText: 'State',
-                        suffixIcon: IconButton(
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.expand_more,
-                          ),
-                        ),
-                        suffixIconColor: MyColor.grey,
-                        hintStyle: const TextStyle(
-                          color: MyColor.grey,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 41),
-                  SizedBox(
-                    // width: 148,
-                    width: MediaQuery.of(context).size.width * 0.35,
-
-                    child: TextFormField(
-                      controller: birthcityController,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please enter birth city';
-                        }
-                        return null; // Return null if the input is valid
-                      },
-                      textInputAction: TextInputAction.done,
-                      decoration: InputDecoration(
-                        enabledBorder: const UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: MyColor.borderColor,
-                          ),
-                        ),
-                        focusedBorder: const UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: MyColor.borderColor,
-                          ),
-                        ),
-                        hintText: 'City',
-                        suffixIcon: IconButton(
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.expand_more,
-                          ),
-                        ),
-                        suffixIconColor: MyColor.grey,
-                        hintStyle: const TextStyle(
-                          color: MyColor.grey,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+              padding: const EdgeInsets.only(left: 34, right: 40),
+              child: CSCPicker(
+                flagState: CountryFlag.DISABLE,
+                onCountryChanged: (country) {},
+                onStateChanged: (state) {},
+                onCityChanged: (city) {},
               ),
             ),
+
+            // Padding(
+            //   padding: const EdgeInsets.only(left: 34, right: 12),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+            //     children: [
+            //       SizedBox(
+            //         // width: 148,
+
+            //         width: MediaQuery.of(context).size.width * 0.35,
+            //         child: TextFormField(
+            //           controller: birthStateController,
+            //           validator: (value) {
+            //             if (value!.isEmpty) {
+            //               return 'Please enter birth state';
+            //             }
+            //             return null; // Return null if the input is valid
+            //           },
+            //           textInputAction: TextInputAction.done,
+            //           decoration: InputDecoration(
+            //             enabledBorder: const UnderlineInputBorder(
+            //               borderSide: BorderSide(
+            //                 color: MyColor.borderColor,
+            //               ),
+            //             ),
+            //             focusedBorder: const UnderlineInputBorder(
+            //               borderSide: BorderSide(
+            //                 color: MyColor.borderColor,
+            //               ),
+            //             ),
+            //             hintText: 'State',
+            //             suffixIcon: IconButton(
+            //               onPressed: () {},
+            //               icon: const Icon(
+            //                 Icons.expand_more,
+            //               ),
+            //             ),
+            //             suffixIconColor: MyColor.grey,
+            //             hintStyle: const TextStyle(
+            //               color: MyColor.grey,
+            //               fontSize: 16,
+            //               fontWeight: FontWeight.w500,
+            //             ),
+            //           ),
+            //         ),
+            //       ),
+            //       const SizedBox(width: 41),
+            //       SizedBox(
+            //         // width: 148,
+            //         width: MediaQuery.of(context).size.width * 0.35,
+
+            //         child: TextFormField(
+            //           controller: birthcityController,
+            //           validator: (value) {
+            //             if (value!.isEmpty) {
+            //               return 'Please enter birth city';
+            //             }
+            //             return null; // Return null if the input is valid
+            //           },
+            //           textInputAction: TextInputAction.done,
+            //           decoration: InputDecoration(
+            //             enabledBorder: const UnderlineInputBorder(
+            //               borderSide: BorderSide(
+            //                 color: MyColor.borderColor,
+            //               ),
+            //             ),
+            //             focusedBorder: const UnderlineInputBorder(
+            //               borderSide: BorderSide(
+            //                 color: MyColor.borderColor,
+            //               ),
+            //             ),
+            //             hintText: 'City',
+            //             suffixIcon: IconButton(
+            //               onPressed: () {},
+            //               icon: const Icon(
+            //                 Icons.expand_more,
+            //               ),
+            //             ),
+            //             suffixIconColor: MyColor.grey,
+            //             hintStyle: const TextStyle(
+            //               color: MyColor.grey,
+            //               fontSize: 16,
+            //               fontWeight: FontWeight.w500,
+            //             ),
+            //           ),
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
+
             const SizedBox(height: 45),
             const Padding(
               padding: EdgeInsets.only(left: 34),
@@ -999,7 +1033,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => LoginScreen())));
+                                  builder: (context) => const LoginScreen())));
                     }
                   },
                   style: ElevatedButton.styleFrom(
