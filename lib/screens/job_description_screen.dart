@@ -150,7 +150,23 @@ class _JobDescriptionScreenState extends State<JobDescriptionScreen> {
             const Padding(
               padding: EdgeInsets.only(right: 45),
               child: Divider(),
-            )
+            ),
+            const Padding(
+              padding: EdgeInsets.only(left: 11),
+              child: Text(
+                'About the job',
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 18,
+                ),
+              ),
+            ),
+            ListView.builder(
+              itemCount: 1,
+              itemBuilder: (BuildContext context, int index) {
+                return ;
+              },
+            ),
           ],
         ),
       ),

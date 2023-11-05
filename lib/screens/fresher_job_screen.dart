@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_layout/components/database.dart';
-import 'package:flutter_layout/screens/job_description.dart';
+import 'package:flutter_layout/screens/job_description_screen.dart';
 import 'package:flutter_layout/utils/my_colors.dart';
 import 'package:flutter_layout/utils/my_images.dart';
 
@@ -14,6 +14,7 @@ class FresherJobScreen extends StatefulWidget {
 class _FresherJobScreenState extends State<FresherJobScreen> {
   @override
   Widget build(BuildContext context) {
+    const neverScrollableScrollPhysics = const NeverScrollableScrollPhysics();
     return Scaffold(
       body: SingleChildScrollView(
         // physics: const AlwaysScrollableScrollPhysics(),
@@ -71,14 +72,17 @@ class _FresherJobScreenState extends State<FresherJobScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 70),
+                  const SizedBox(height: 50),
                   ListView.builder(
                     shrinkWrap: true,
+                    physics: neverScrollableScrollPhysics,
                     itemCount: fresherJob.length,
                     itemBuilder: (BuildContext context, int index) {
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 20),
                         child: Card(
+                          color: const Color(0xFFF8F8F8),
+                          surfaceTintColor: Colors.transparent,
                           elevation: 3,
                           child: Padding(
                             padding: const EdgeInsets.only(
@@ -195,6 +199,7 @@ class _FresherJobScreenState extends State<FresherJobScreen> {
                                       top: 18,
                                       child: SizedBox(
                                         height: 30,
+                                        width: 145,
                                         child: ElevatedButton(
                                           style: const ButtonStyle(
                                               backgroundColor:
@@ -212,11 +217,9 @@ class _FresherJobScreenState extends State<FresherJobScreen> {
                                             );
                                           },
                                           child: const Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
-                                                'View details  ',
+                                                'View details',
                                                 style: TextStyle(
                                                   color: Colors.white,
                                                   fontWeight: FontWeight.w700,

@@ -30,8 +30,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final genderController = TextEditingController();
   final emailController = TextEditingController();
   final dateOfBirthDayController = TextEditingController();
-  final dateOfBirthMonthController = TextEditingController();
-  final dateOfBirthYearController = TextEditingController();
   final birthStateController = TextEditingController();
   final birthcityController = TextEditingController();
   final phoneNumberController = TextEditingController();

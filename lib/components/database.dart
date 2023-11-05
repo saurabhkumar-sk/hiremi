@@ -55,3 +55,7 @@ List<Fresherjob> fresherJob = [
     lpa: '10 LPA',
   ),
 ];
+
+
+//Job description List
+//Essential Details
