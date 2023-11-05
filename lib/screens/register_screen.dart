@@ -826,8 +826,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 "${fatherFirstController.text} ${fatherLastController.text}",
                             "gender": genderSelector.toString(),
                             "email": emailController.text.toString(),
-                            "date_of_birth":
-                                "${dateOfBirthDayController.text}-${dateOfBirthMonthController.text}-${dateOfBirthYearController.text}",
+                            "date_of_birth": dateOfBirthDayController.text,
                             "birth_place":
                                 "${birthStateController.text} ${birthcityController.text}",
                             "phone_number":
