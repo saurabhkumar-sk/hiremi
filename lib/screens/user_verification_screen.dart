@@ -1,10 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_layout/components/database.dart';
 import 'package:flutter_layout/screens/dashboard_screen.dart';
+import 'package:flutter_layout/screens/fresher_job_screen.dart';
 import 'package:flutter_layout/utils/my_colors.dart';
 import 'package:flutter_layout/utils/my_images.dart';
 
-class UserVerificationScreen extends StatelessWidget {
+class UserVerificationScreen extends StatefulWidget {
   const UserVerificationScreen({super.key});
+
+  @override
+  State<UserVerificationScreen> createState() => _UserVerificationScreenState();
+}
+
+class _UserVerificationScreenState extends State<UserVerificationScreen> {
+  TimeOfDay time = TimeOfDay.now();
+  String? times;
+  String? minutes;
+  String? year;
+
+  void selectTimePicker() async {
+    TimeOfDay? timeOfDay = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+
+    if (timeOfDay != null && timeOfDay != time) {
+      final finalTime = timeOfDay.hour;
+      final finalMinutes = timeOfDay.minute;
+
+      setState(() {
+        times = finalTime.toString();
+        minutes = finalMinutes.toString();
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +145,7 @@ class UserVerificationScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(width: 48),
+                      const SizedBox(width: 25),
                       Image.asset(
                         MyImages.hirmilogo,
                         height: 186,
@@ -126,7 +155,7 @@ class UserVerificationScreen extends StatelessWidget {
                   ),
                   const Positioned(
                     top: 130,
-                    left: 70,
+                    left: 55,
                     child: Text(
                       'Verify Your Details',
                       textAlign: TextAlign.center,
@@ -167,7 +196,7 @@ class UserVerificationScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 15),
               const Text(
                 'Your Skills',
                 style: TextStyle(
@@ -175,28 +204,19 @@ class UserVerificationScreen extends StatelessWidget {
                   fontSize: 18,
                 ),
               ),
-              TextFormField(
-                keyboardType: TextInputType.emailAddress,
-                decoration: const InputDecoration(
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: MyColor.borderColor,
-                    ),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: MyColor.borderColor,
-                    ),
-                  ),
-                  hintText: 'Ex-Developer',
-                  hintStyle: TextStyle(
-                    color: MyColor.grey,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
+              const SizedBox(height: 10),
+              DropdownMenu<String>(
+                hintText: 'Ex-Developer',
+                width: 340,
+                onSelected: (String? value) {
+                  setState(() {});
+                },
+                dropdownMenuEntries: exDeveloperlist
+                    .map<DropdownMenuEntry<String>>((String value) {
+                  return DropdownMenuEntry<String>(value: value, label: value);
+                }).toList(),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 15),
               const Text(
                 'Rate your Communication',
                 style: TextStyle(
@@ -221,7 +241,7 @@ class UserVerificationScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 15),
               const Text(
                 'Describe Yourself',
                 style: TextStyle(
@@ -253,7 +273,7 @@ class UserVerificationScreen extends StatelessWidget {
                 minLines: 2,
                 maxLines: 10,
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 5),
               const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -301,7 +321,14 @@ class UserVerificationScreen extends StatelessWidget {
                         ),
                         hintText: '30 Oct',
                         suffixIcon: IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2000),
+                              lastDate: DateTime(2030),
+                            );
+                          },
                           icon: const Icon(
                             Icons.expand_more,
                           ),
@@ -339,9 +366,22 @@ class UserVerificationScreen extends StatelessWidget {
                             color: MyColor.borderColor,
                           ),
                         ),
-                        hintText: '6 PM',
+                        prefixIcon: Padding(
+                            padding: const EdgeInsets.only(top: 15, left: 12),
+                            child: Text(
+                              times == null || minutes == null
+                                  ? '6 PM'
+                                  : '$times : $minutes',
+                              style: const TextStyle(
+                                color: MyColor.grey,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            )),
                         suffixIcon: IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            selectTimePicker();
+                          },
                           icon: const Icon(
                             Icons.expand_more,
                           ),
@@ -375,7 +415,14 @@ class UserVerificationScreen extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const DashbordScreen(),
+                          builder: (context) => const FresherJobScreen(),
+                        ),
+                      ).then(
+                        (value) => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const FresherJobScreen(),
+                          ),
                         ),
                       );
                     },
