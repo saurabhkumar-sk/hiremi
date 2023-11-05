@@ -16,17 +16,36 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   UserService ragisterApi = UserService();
-
-  static String generateUid() {
+ static String generateUid() {
     final uuid = Uuid();
     final fullUuid = uuid.v4(); // Generate a Version 4 (random) UUID
     final shortUid = fullUuid.substring(0, 8); // Extract the first 8 characters
     return shortUid;
   }
 
-  String uuid = generateUid();
+  Gender? _gender;
 
   String genderSelector = "";
+
+  final firstnameController = TextEditingController();
+  final lastnameController = TextEditingController();
+  final fatherFirstController = TextEditingController();
+  final fatherLastController = TextEditingController();
+  final genderController = TextEditingController();
+  final emailController = TextEditingController();
+  final dateOfBirthDayController = TextEditingController();
+  final dateOfBirthMonthController = TextEditingController();
+  final dateOfBirthYearController = TextEditingController();
+  final birthStateController = TextEditingController();
+  final birthcityController = TextEditingController();
+  final phoneNumberController = TextEditingController();
+  final whatsAppNumberController = TextEditingController();
+  final collageStateController = TextEditingController();
+  final collageNameController = TextEditingController();
+  final branchNameController = TextEditingController();
+  final passingYearController = TextEditingController();
+  final passwordController = TextEditingController();
+  final conformPasswordController = TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
@@ -446,7 +465,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         hintText: 'Year',
                         suffixIcon: IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            selectDatePicker();
+                          },
                           icon: const Icon(
                             Icons.expand_more,
                           ),
@@ -485,7 +506,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         hintText: 'Month',
                         suffixIcon: IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            selectDatePicker();
+                          },
                           icon: const Icon(
                             Icons.expand_more,
                           ),
@@ -524,7 +547,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         hintText: 'Day',
                         suffixIcon: IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            selectDatePicker();
+                          },
                           icon: const Icon(
                             Icons.expand_more,
                           ),
@@ -554,18 +579,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
               ),
             ),
+            const SizedBox(height: 20),
             Padding(
-              padding: const EdgeInsets.only(left: 34, right: 12),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  SizedBox(
-                    // width: 148,
+              padding: const EdgeInsets.only(left: 34, right: 40),
+              child: CSCPicker(
+                flagState: CountryFlag.DISABLE,
+                onCountryChanged: (country) {},
+                onStateChanged: (state) {},
+                onCityChanged: (city) {},
+              ),
+            ),
+
+            // Padding(
+            //   padding: const EdgeInsets.only(left: 34, right: 12),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+            //     children: [
+            //       SizedBox(
+            //         // width: 148,
 
                     width: MediaQuery.of(context).size.width * 0.35,
                     child: TextFormField(
-                      controller:
-                          registerProvider.birthStateController.controller,
+                      controller: birthStateController,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please enter birth state';
@@ -606,8 +641,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     width: MediaQuery.of(context).size.width * 0.35,
 
                     child: TextFormField(
-                      controller:
-                          registerProvider.birthcityController.controller,
+                      controller: birthcityController,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please enter birth city';
@@ -1003,71 +1037,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             .emailController.controller.text
                             .toString(),
                         "date_of_birth":
-                            "${registerProvider.dateOfBirthDayController.controller.text}-${registerProvider.dateOfBirthMonthController.controller.text}-${registerProvider.dateOfBirthYearController.controller.text}",
-                        "address":
-                            "${registerProvider.birthStateController.controller.text} ${registerProvider.birthcityController.controller.text}",
-                        "phone_number": registerProvider
-                            .phoneNumberController.controller.text
-                            .toString(),
-                        "whatsapp_number": registerProvider
-                            .whatsAppNumberController.controller.text
-                            .toString(),
-                        "college_state": registerProvider
-                            .collageStateController.controller.text
-                            .toString(),
-                        "college_name": registerProvider
-                            .collageNameController.controller.text
-                            .toString(),
-                        "branch_name": registerProvider
-                            .branchNameController.controller.text
-                            .toString(),
-                        "passing_year": registerProvider
-                            .passingYearController.controller.text
-                            .toString(),
-                        "password": registerProvider
-                            .passwordController.controller.text
-                            .toString(),
-                        // "verified": true,
-                        // "candidate_status": "Reject",
-                        // "payment_status": "Not Enroll",
-                        "uid": uuid,
+                            "${dateOfBirthDayController.text}-${dateOfBirthMonthController.text}-${dateOfBirthYearController.text}",
+                        "birth_place":
+                            "${birthStateController.text} ${birthcityController.text}",
+                        "phone_number": phoneNumberController.text.toString(),
+                        "whatsapp_number":
+                            whatsAppNumberController.text.toString(),
+                        "college_state": collageStateController.text.toString(),
+                        "college_name": collageNameController.text.toString(),
+                        "branch_name": branchNameController.text.toString(),
+                        "passing_year": passingYearController.text.toString(),
+                        "password": passwordController.text.toString(),
                       };
-
-                      Future<bool> ragistrationSuccess =
-                          ragisterApi.createPostApi(body);
-                      if (await ragistrationSuccess) {
-                        // ignore: use_build_context_synchronously
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const LoginScreen()));
-                      } else {
-                        // ignore: use_build_context_synchronously
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              title: const Text(
-                                  'Register with this email already exists'),
-                              actions: <Widget>[
-                                TextButton(
-                                  onPressed: () {
-                                    log(uuid);
-                                    Navigator.of(context)
-                                        .pop(); // Close the dialog
-                                  },
-                                  child: Text('OK'),
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                      }
-                      // ragisterApi.createPostApi(body).then((value) =>
-                      //     Navigator.push(
-                      //         context,
-                      //         MaterialPageRoute(
-                      //             builder: (context) => LoginScreen()))).onError((error, stackTrace) => SnackBar(content: Text(error.toString())));
+                      ragisterApi.createPostApi(body).then((value) =>
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LoginScreen())));
                     }
                   },
                   style: ElevatedButton.styleFrom(

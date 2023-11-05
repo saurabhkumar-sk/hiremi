@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_layout/provider/register_provider.dart';
 import 'package:flutter_layout/provider/provider.dart';
+import 'package:flutter_layout/screens/dashboard_screen.dart';
 import 'package:flutter_layout/screens/login_screen.dart';
-import 'package:flutter_layout/screens/profile.dart';
 import 'package:flutter_layout/screens/profile_screen.dart';
 import 'package:flutter_layout/screens/splash_screen.dart';
 import 'package:provider/provider.dart';
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Poppins',
           useMaterial3: true,
         ),
-        home: const LoginScreen(),
+        home: const SplashScreen(),
       ),
     );
   }
