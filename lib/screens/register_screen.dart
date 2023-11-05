@@ -17,14 +17,14 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   UserService ragisterApi = UserService();
- static String generateUid() {
+  static String generateUid() {
     final uuid = Uuid();
     final fullUuid = uuid.v4(); // Generate a Version 4 (random) UUID
     final shortUid = fullUuid.substring(0, 8); // Extract the first 8 characters
     return shortUid;
   }
 
-
+  var uuid = generateUid();
   String genderSelector = "";
 
   final firstnameController = TextEditingController();
@@ -46,6 +46,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final passingYearController = TextEditingController();
   final passwordController = TextEditingController();
   final conformPasswordController = TextEditingController();
+
+  DateTime date = DateTime.now();
+  String? day;
+  String? month;
+  String? year;
+
+  String? countryPicker;
+  String? statePicker;
+  String? cityPicker;
+
+  void selectDatePicker() async {
+    DateTime? datePicker = await showDatePicker(
+      context: context,
+      initialDate: date,
+      firstDate: DateTime(1980),
+      lastDate: DateTime(2025),
+    );
+    if (datePicker != null && datePicker != date) {
+      setState(() {
+        date = datePicker;
+      });
+    }
+  }
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
@@ -397,9 +420,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 controller: registerProvider.emailController.controller,
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return 'Please enter email address';
+                    return 'Please enter an email';
                   }
-                  return null; // Return null if the input is valid
+                  // Define a regular expression for email validation.
+                  final emailRegex =
+                      RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$');
+                  if (!emailRegex.hasMatch(value)) {
+                    return 'Please enter a valid email';
+                  }
+                  return null;
                 },
                 textInputAction: TextInputAction.done,
                 decoration: const InputDecoration(
@@ -413,7 +442,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       color: MyColor.borderColor,
                     ),
                   ),
-                  hintText: 'acharyarishi79@gmail.com',
+                  hintText: 'email@gmail.com',
                   hintStyle: TextStyle(
                     color: MyColor.grey,
                     fontSize: 16,
@@ -443,15 +472,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   SizedBox(
                     width: 80,
                     child: TextFormField(
-                      controller:
-                          registerProvider.dateOfBirthDayController.controller,
+                      cursorColor: MyColor.grey,
+                      controller: dateOfBirthDayController,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please enter date of birth';
                         }
                         return null; // Return null if the input is valid
                       },
-                      textInputAction: TextInputAction.done,
+                      keyboardType: TextInputType.none,
                       decoration: InputDecoration(
                         enabledBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(
@@ -463,10 +492,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             color: MyColor.borderColor,
                           ),
                         ),
-                        hintText: 'Year',
+                        prefixIcon: Padding(
+                          padding: const EdgeInsets.only(top: 15, left: 12),
+                          child: Text(
+                            day == null ? 'Day' : day.toString(),
+                            style: const TextStyle(
+                              color: MyColor.grey,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
                         suffixIcon: IconButton(
                           onPressed: () {
-                       
+                            selectDatePicker();
                           },
                           icon: const Icon(
                             Icons.expand_more,
@@ -484,15 +523,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   SizedBox(
                     width: 100,
                     child: TextFormField(
-                      controller: registerProvider
-                          .dateOfBirthMonthController.controller,
+                      cursorColor: MyColor.grey,
+                      controller: dateOfBirthMonthController,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please enter date of birth';
                         }
                         return null; // Return null if the input is valid
                       },
-                      textInputAction: TextInputAction.done,
+                      keyboardType: TextInputType.none,
                       decoration: InputDecoration(
                         enabledBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(
@@ -504,48 +543,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             color: MyColor.borderColor,
                           ),
                         ),
-                        hintText: 'Month',
-                        suffixIcon: IconButton(
-                          onPressed: () {
-                            selectgit DatePicker();
-                          },
-                          icon: const Icon(
-                            Icons.expand_more,
+                        prefixIcon: Padding(
+                          padding: const EdgeInsets.only(top: 15, left: 12),
+                          child: Text(
+                            day == null ? 'Month' : month.toString(),
+                            style: const TextStyle(
+                              color: MyColor.grey,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
-                        suffixIconColor: MyColor.grey,
-                        hintStyle: const TextStyle(
-                          color: MyColor.grey,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 100,
-                    child: TextFormField(
-                      controller:
-                          registerProvider.dateOfBirthYearController.controller,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please enter date of birth';
-                        }
-                        return null; // Return null if the input is valid
-                      },
-                      textInputAction: TextInputAction.done,
-                      decoration: InputDecoration(
-                        enabledBorder: const UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: MyColor.borderColor,
-                          ),
-                        ),
-                        focusedBorder: const UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: MyColor.borderColor,
-                          ),
-                        ),
-                        hintText: 'Day',
                         suffixIcon: IconButton(
                           onPressed: () {
                             selectDatePicker();
@@ -555,11 +563,52 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         ),
                         suffixIconColor: MyColor.grey,
-                        hintStyle: const TextStyle(
-                          color: MyColor.grey,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 100,
+                    child: TextFormField(
+                      cursorColor: MyColor.grey,
+                      controller: dateOfBirthYearController,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter date of birth';
+                        }
+                        return null; // Return null if the input is valid
+                      },
+                      keyboardType: TextInputType.none,
+                      decoration: InputDecoration(
+                        enabledBorder: const UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: MyColor.borderColor,
+                          ),
                         ),
+                        focusedBorder: const UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: MyColor.borderColor,
+                          ),
+                        ),
+                        prefixIcon: Padding(
+                          padding: const EdgeInsets.only(top: 15, left: 12),
+                          child: Text(
+                            day == null ? 'Year' : year.toString(),
+                            style: const TextStyle(
+                              color: MyColor.grey,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            selectDatePicker();
+                          },
+                          icon: const Icon(
+                            Icons.expand_more,
+                          ),
+                        ),
+                        suffixIconColor: MyColor.grey,
                       ),
                     ),
                   ),
@@ -584,9 +633,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
               padding: const EdgeInsets.only(left: 34, right: 40),
               child: CSCPicker(
                 flagState: CountryFlag.DISABLE,
-                onCountryChanged: (country) {},
-                onStateChanged: (state) {},
-                onCityChanged: (city) {},
+                onCountryChanged: (country) {
+                  countryPicker = country;
+                },
+                onStateChanged: (state) {
+                  statePicker = state;
+                },
+                onCityChanged: (city) {
+                  cityPicker = city;
+                },
               ),
             ),
 
@@ -598,87 +653,88 @@ class _RegisterScreenState extends State<RegisterScreen> {
             //       SizedBox(
             //         // width: 148,
 
-                    width: MediaQuery.of(context).size.width * 0.35,
-                    child: TextFormField(
-                      controller: birthStateController,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please enter birth state';
-                        }
-                        return null; // Return null if the input is valid
-                      },
-                      textInputAction: TextInputAction.done,
-                      decoration: InputDecoration(
-                        enabledBorder: const UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: MyColor.borderColor,
-                          ),
-                        ),
-                        focusedBorder: const UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: MyColor.borderColor,
-                          ),
-                        ),
-                        hintText: 'State',
-                        suffixIcon: IconButton(
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.expand_more,
-                          ),
-                        ),
-                        suffixIconColor: MyColor.grey,
-                        hintStyle: const TextStyle(
-                          color: MyColor.grey,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 41),
-                  SizedBox(
-                    // width: 148,
-                    width: MediaQuery.of(context).size.width * 0.35,
+            //         width: MediaQuery.of(context).size.width * 0.35,
+            //         child: TextFormField(
+            //           controller: birthStateController,
+            //           validator: (value) {
+            //             if (value!.isEmpty) {
+            //               return 'Please enter birth state';
+            //             }
+            //             return null; // Return null if the input is valid
+            //           },
+            //           textInputAction: TextInputAction.done,
+            //           decoration: InputDecoration(
+            //             enabledBorder: const UnderlineInputBorder(
+            //               borderSide: BorderSide(
+            //                 color: MyColor.borderColor,
+            //               ),
+            //             ),
+            //             focusedBorder: const UnderlineInputBorder(
+            //               borderSide: BorderSide(
+            //                 color: MyColor.borderColor,
+            //               ),
+            //             ),
+            //             hintText: 'State',
+            //             suffixIcon: IconButton(
+            //               onPressed: () {},
+            //               icon: const Icon(
+            //                 Icons.expand_more,
+            //               ),
+            //             ),
+            //             suffixIconColor: MyColor.grey,
+            //             hintStyle: const TextStyle(
+            //               color: MyColor.grey,
+            //               fontSize: 16,
+            //               fontWeight: FontWeight.w500,
+            //             ),
+            //           ),
+            //         ),
+            //       ),
+            //       const SizedBox(width: 41),
+            //       SizedBox(
+            //         // width: 148,
+            //         width: MediaQuery.of(context).size.width * 0.35,
 
-                    child: TextFormField(
-                      controller: birthcityController,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please enter birth city';
-                        }
-                        return null; // Return null if the input is valid
-                      },
-                      textInputAction: TextInputAction.done,
-                      decoration: InputDecoration(
-                        enabledBorder: const UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: MyColor.borderColor,
-                          ),
-                        ),
-                        focusedBorder: const UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: MyColor.borderColor,
-                          ),
-                        ),
-                        hintText: 'City',
-                        suffixIcon: IconButton(
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.expand_more,
-                          ),
-                        ),
-                        suffixIconColor: MyColor.grey,
-                        hintStyle: const TextStyle(
-                          color: MyColor.grey,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            //         child: TextFormField(
+            //           controller: birthcityController,
+            //           validator: (value) {
+            //             if (value!.isEmpty) {
+            //               return 'Please enter birth city';
+            //             }
+            //             return null; // Return null if the input is valid
+            //           },
+            //           textInputAction: TextInputAction.done,
+            //           decoration: InputDecoration(
+            //             enabledBorder: const UnderlineInputBorder(
+            //               borderSide: BorderSide(
+            //                 color: MyColor.borderColor,
+            //               ),
+            //             ),
+            //             focusedBorder: const UnderlineInputBorder(
+            //               borderSide: BorderSide(
+            //                 color: MyColor.borderColor,
+            //               ),
+            //             ),
+            //             hintText: 'City',
+            //             suffixIcon: IconButton(
+            //               onPressed: () {},
+            //               icon: const Icon(
+            //                 Icons.expand_more,
+            //               ),
+            //             ),
+            //             suffixIconColor: MyColor.grey,
+            //             hintStyle: const TextStyle(
+            //               color: MyColor.grey,
+            //               fontSize: 16,
+            //               fontWeight: FontWeight.w500,
+            //             ),
+            //           ),
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
+
             const SizedBox(height: 45),
             const Padding(
               padding: EdgeInsets.only(left: 34),
@@ -1000,6 +1056,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: ElevatedButton(
                   onPressed: () async {
                     print("our random id is " + uuid);
+                    //  String? day;
+                    // String? month;
+                    // String? year;
+
+                    // String? countryPicker;
+                    // String? statePicker;
+                    // String? cityPicker;
+                    // print(day);
+                    // print(month);
+                    // print(year);
+                    print(countryPicker);
+                    print(statePicker);
+                    print(cityPicker);
                     if (_formKey.currentState!.validate()) {
                       // If the form is valid, you can proceed with the input
                       if (registerProvider.passwordController.controller.text
@@ -1037,9 +1106,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             .emailController.controller.text
                             .toString(),
                         "date_of_birth":
-                            "${dateOfBirthDayController.text}-${dateOfBirthMonthController.text}-${dateOfBirthYearController.text}",
+                            "${year.toString()}-${month.toString()}-${day.toString()}",
                         "birth_place":
-                            "${birthStateController.text} ${birthcityController.text}",
+                            "${countryPicker} ${statePicker} ${cityPicker}",
                         "phone_number": phoneNumberController.text.toString(),
                         "whatsapp_number":
                             whatsAppNumberController.text.toString(),
