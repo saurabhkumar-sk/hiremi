@@ -6,6 +6,7 @@ import 'package:flutter_layout/provider/register_provider.dart';
 import 'package:flutter_layout/screens/login_screen.dart';
 import 'package:flutter_layout/utils/my_colors.dart';
 import 'package:provider/provider.dart';
+import 'package:csc_picker/csc_picker.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -23,7 +24,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return shortUid;
   }
 
-  Gender? _gender;
 
   String genderSelector = "";
 
@@ -466,7 +466,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         hintText: 'Year',
                         suffixIcon: IconButton(
                           onPressed: () {
-                            selectDatePicker();
+                       
                           },
                           icon: const Icon(
                             Icons.expand_more,
@@ -507,7 +507,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         hintText: 'Month',
                         suffixIcon: IconButton(
                           onPressed: () {
-                            selectDatePicker();
+                            selectgit DatePicker();
                           },
                           icon: const Icon(
                             Icons.expand_more,
