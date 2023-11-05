@@ -15,7 +15,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final userNameController = TextEditingController();
+  final emailController = TextEditingController();
   final passwordController = TextEditingController();
   pushToScreen(BuildContext context) {
     Navigator.of(context).push(
@@ -59,10 +59,10 @@ class _LoginScreenState extends State<LoginScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 63),
                 child: TextFormField(
-                  controller: userNameController,
+                  controller: emailController,
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'plese enter Username';
+                      return 'plese enter email';
                     }
                     return null; // Return null if the input is valid
                   },
@@ -172,8 +172,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         _userService.getapi();
                         // pushToScreen(context);
                         bool loginSuccess = _userService.loginUser(
-                            userNameController.text.toString(),
-                            passwordController.text.toString());
+                            emailController.text, passwordController.text);
 
                         if (loginSuccess) {
                           pushToScreen(context);

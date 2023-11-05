@@ -4,6 +4,7 @@ import 'package:flutter_layout/provider/textediting_controller.dart';
 class RegisterProvider extends ChangeNotifier {
   bool isMaleSelected = false;
   bool isFemaleSelected = false;
+  bool isotherSelected = false;
   void toggleGenderSelectionmale() {
     isMaleSelected = !isMaleSelected;
     notifyListeners();
@@ -14,15 +15,19 @@ class RegisterProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void toggleGenderSelectionOther() {
+    isotherSelected = !isotherSelected;
+    notifyListeners();
+  }
+
   MyTextEditingController _firstnameController = MyTextEditingController();
   MyTextEditingController _lastnameController = MyTextEditingController();
   MyTextEditingController _fatherFirstController = MyTextEditingController();
   MyTextEditingController _fatherLastController = MyTextEditingController();
   MyTextEditingController _genderController = MyTextEditingController();
   MyTextEditingController _emailController = MyTextEditingController();
-  MyTextEditingController _dateOfBirthDayController = MyTextEditingController();
-  MyTextEditingController _dateOfBirthMonthController =
-      MyTextEditingController();
+  MyTextEditingController _dateOfBirthController = MyTextEditingController();
+  MyTextEditingController _addressController = MyTextEditingController();
   MyTextEditingController _dateOfBirthYearController =
       MyTextEditingController();
   MyTextEditingController _birthStateController = MyTextEditingController();
@@ -43,12 +48,9 @@ class RegisterProvider extends ChangeNotifier {
   MyTextEditingController get fatherLastController => _fatherLastController;
   MyTextEditingController get genderController => _genderController;
   MyTextEditingController get emailController => _emailController;
-  MyTextEditingController get dateOfBirthDayController =>
-      _dateOfBirthDayController;
-  MyTextEditingController get dateOfBirthMonthController =>
-      _dateOfBirthMonthController;
-  MyTextEditingController get dateOfBirthYearController =>
-      _dateOfBirthYearController;
+
+  MyTextEditingController get dateOfBirthController => _dateOfBirthController;
+  MyTextEditingController get addressController => _addressController;
   MyTextEditingController get birthStateController => _birthStateController;
   MyTextEditingController get birthcityController => _birthcityController;
   MyTextEditingController get phoneNumberController => _phoneNumberController;
@@ -72,8 +74,8 @@ class RegisterProvider extends ChangeNotifier {
     _fatherLastController.controller.clear();
     _genderController.controller.clear();
     _emailController.controller.clear();
-    _dateOfBirthDayController.controller.clear();
-    _dateOfBirthMonthController.controller.clear();
+    _dateOfBirthController.controller.clear();
+    _addressController.controller.clear();
     _dateOfBirthYearController.controller.clear();
     _birthStateController.controller.clear();
     _birthcityController.controller.clear();

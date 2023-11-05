@@ -44,7 +44,7 @@ class UserService extends BaseService {
 
   bool loginUser(String fullName, String password) {
     for (userModel user in responceData) {
-      if (user.fullName == fullName && user.password == password) {
+      if (user.email == fullName.trim() && user.password == password.trim()) {
         // Successful login
         return true;
       }
