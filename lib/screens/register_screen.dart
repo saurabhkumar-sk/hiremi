@@ -55,17 +55,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String? countryPicker;
   String? statePicker;
   String? cityPicker;
-
   void selectDatePicker() async {
     DateTime? datePicker = await showDatePicker(
       context: context,
-      initialDate: date,
+      initialDate: DateTime.now(),
       firstDate: DateTime(1980),
       lastDate: DateTime(2025),
     );
-    if (datePicker != null && datePicker != date) {
+    if (datePicker != null) {
       setState(() {
-        date = datePicker;
+        dateOfBirthDayController.text = datePicker.toString().split(" ")[0];
       });
     }
   }
@@ -180,8 +179,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.35,
                     child: TextFormField(
-                      controller:
-                          registerProvider.firstnameController.controller,
+                      controller: firstnameController,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please enter name';
@@ -213,8 +211,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.35,
                     child: TextFormField(
-                      controller:
-                          registerProvider.lastnameController.controller,
+                      controller: lastnameController,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please enter name';
@@ -268,8 +265,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                     // width: 148,
                     child: TextFormField(
-                      controller:
-                          registerProvider.fatherFirstController.controller,
+                      controller: fatherFirstController,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please enter name';
@@ -303,8 +299,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                     // width: 148,
                     child: TextFormField(
-                      controller:
-                          registerProvider.fatherLastController.controller,
+                      controller: fatherLastController,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please enter name';
@@ -349,57 +344,58 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
             ),
             const SizedBox(height: 23),
-            Padding(
-              padding: const EdgeInsets.only(left: 37, right: 58),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  InkWell(
-                      onTap: () {
-                        genderSelector = "Male";
-                        registerProvider.toggleGenderSelectionmale();
-                      },
-                      child: const Text(
-                        'Male',
-                        style: TextStyle(
-                          color: MyColor.grey,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      )),
-                  ClipOval(
-                    child: Container(
-                      height: 12,
-                      width: 12,
-                      color: registerProvider.isMaleSelected
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                const Text(
+                  'Male',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 16,
+                    fontFamily: 'Poppins.bold',
+                    color: MyColor.borderColor,
+                  ),
+                ),
+                Radio(
+                    fillColor: MaterialStatePropertyAll(
+                      genderProvider.isMaleSelected
                           ? MyColor.green
                           : MyColor.grey,
                     ),
+                    value: Gender.male,
+                    groupValue: _gender,
+                    onChanged: (value) {
+                      setState(() {
+                        genderProvider.toggleGenderSelectionmale();
+
+                        _gender = value;
+                      });
+                    }),
+                const Text(
+                  'Female',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 16,
+                    fontFamily: 'Poppins.bold',
+                    color: MyColor.radioButtonColor,
                   ),
-                  InkWell(
-                      onTap: () {
-                        genderSelector = 'Female';
-                        registerProvider.toggleGenderSelectionfemail();
-                      },
-                      child: const Text(
-                        'Female',
-                        style: TextStyle(
-                          color: MyColor.grey,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      )),
-                  ClipOval(
-                    child: Container(
-                      height: 12,
-                      width: 12,
-                      color: registerProvider.isFemaleSelected
+                ),
+                Radio(
+                    fillColor: MaterialStatePropertyAll(
+                      genderProvider.isFemaleSelected
                           ? MyColor.green
                           : MyColor.grey,
                     ),
-                  ),
-                ],
-              ),
+                    value: Gender.female,
+                    groupValue: _gender,
+                    onChanged: (value) {
+                      genderProvider.toggleGenderSelectionfemail();
+
+                      setState(() {
+                        _gender = value;
+                      });
+                    }),
+              ],
             ),
             const SizedBox(height: 45),
             const Padding(
@@ -417,18 +413,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
             Padding(
               padding: const EdgeInsets.only(left: 37, right: 58),
               child: TextFormField(
-                controller: registerProvider.emailController.controller,
+                controller: emailController,
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return 'Please enter an email';
+                    return 'Please enter email address';
                   }
-                  // Define a regular expression for email validation.
-                  final emailRegex =
-                      RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$');
-                  if (!emailRegex.hasMatch(value)) {
-                    return 'Please enter a valid email';
-                  }
-                  return null;
+                  return null; // Return null if the input is valid
                 },
                 textInputAction: TextInputAction.done,
                 decoration: const InputDecoration(
@@ -512,11 +502,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         ),
                         suffixIconColor: MyColor.grey,
-                        hintStyle: const TextStyle(
-                          color: MyColor.grey,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500,
-                        ),
                       ),
                     ),
                   ),
@@ -633,108 +618,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
               padding: const EdgeInsets.only(left: 34, right: 40),
               child: CSCPicker(
                 flagState: CountryFlag.DISABLE,
-                onCountryChanged: (country) {
-                  countryPicker = country;
-                },
-                onStateChanged: (state) {
-                  statePicker = state;
-                },
-                onCityChanged: (city) {
-                  cityPicker = city;
-                },
+                onCountryChanged: (country) {},
+                onStateChanged: (state) {},
+                onCityChanged: (city) {},
               ),
             ),
-
-            // Padding(
-            //   padding: const EdgeInsets.only(left: 34, right: 12),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-            //     children: [
-            //       SizedBox(
-            //         // width: 148,
-
-            //         width: MediaQuery.of(context).size.width * 0.35,
-            //         child: TextFormField(
-            //           controller: birthStateController,
-            //           validator: (value) {
-            //             if (value!.isEmpty) {
-            //               return 'Please enter birth state';
-            //             }
-            //             return null; // Return null if the input is valid
-            //           },
-            //           textInputAction: TextInputAction.done,
-            //           decoration: InputDecoration(
-            //             enabledBorder: const UnderlineInputBorder(
-            //               borderSide: BorderSide(
-            //                 color: MyColor.borderColor,
-            //               ),
-            //             ),
-            //             focusedBorder: const UnderlineInputBorder(
-            //               borderSide: BorderSide(
-            //                 color: MyColor.borderColor,
-            //               ),
-            //             ),
-            //             hintText: 'State',
-            //             suffixIcon: IconButton(
-            //               onPressed: () {},
-            //               icon: const Icon(
-            //                 Icons.expand_more,
-            //               ),
-            //             ),
-            //             suffixIconColor: MyColor.grey,
-            //             hintStyle: const TextStyle(
-            //               color: MyColor.grey,
-            //               fontSize: 16,
-            //               fontWeight: FontWeight.w500,
-            //             ),
-            //           ),
-            //         ),
-            //       ),
-            //       const SizedBox(width: 41),
-            //       SizedBox(
-            //         // width: 148,
-            //         width: MediaQuery.of(context).size.width * 0.35,
-
-            //         child: TextFormField(
-            //           controller: birthcityController,
-            //           validator: (value) {
-            //             if (value!.isEmpty) {
-            //               return 'Please enter birth city';
-            //             }
-            //             return null; // Return null if the input is valid
-            //           },
-            //           textInputAction: TextInputAction.done,
-            //           decoration: InputDecoration(
-            //             enabledBorder: const UnderlineInputBorder(
-            //               borderSide: BorderSide(
-            //                 color: MyColor.borderColor,
-            //               ),
-            //             ),
-            //             focusedBorder: const UnderlineInputBorder(
-            //               borderSide: BorderSide(
-            //                 color: MyColor.borderColor,
-            //               ),
-            //             ),
-            //             hintText: 'City',
-            //             suffixIcon: IconButton(
-            //               onPressed: () {},
-            //               icon: const Icon(
-            //                 Icons.expand_more,
-            //               ),
-            //             ),
-            //             suffixIconColor: MyColor.grey,
-            //             hintStyle: const TextStyle(
-            //               color: MyColor.grey,
-            //               fontSize: 16,
-            //               fontWeight: FontWeight.w500,
-            //             ),
-            //           ),
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
-
             const SizedBox(height: 45),
             const Padding(
               padding: EdgeInsets.only(left: 34),
@@ -752,7 +640,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             Padding(
               padding: const EdgeInsets.only(left: 37, right: 58),
               child: TextFormField(
-                controller: registerProvider.phoneNumberController.controller,
+                controller: phoneNumberController,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter phone number';
@@ -784,8 +672,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             Padding(
               padding: const EdgeInsets.only(left: 37, right: 58),
               child: TextFormField(
-                controller:
-                    registerProvider.whatsAppNumberController.controller,
+                controller: whatsAppNumberController,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter whatsapp number';
@@ -830,7 +717,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             Padding(
               padding: const EdgeInsets.only(left: 37, right: 58),
               child: TextFormField(
-                controller: registerProvider.collageStateController.controller,
+                controller: collageStateController,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter collage state';
@@ -862,7 +749,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             Padding(
               padding: const EdgeInsets.only(left: 37, right: 58),
               child: TextFormField(
-                controller: registerProvider.collageNameController.controller,
+                controller: collageNameController,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter collage name';
@@ -894,7 +781,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             Padding(
               padding: const EdgeInsets.only(left: 37, right: 58),
               child: TextFormField(
-                controller: registerProvider.branchNameController.controller,
+                controller: branchNameController,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter branch';
@@ -926,7 +813,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             Padding(
               padding: const EdgeInsets.only(left: 37, right: 58),
               child: TextFormField(
-                controller: registerProvider.passingYearController.controller,
+                controller: passingYearController,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter passing year.';
@@ -971,7 +858,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             Padding(
               padding: const EdgeInsets.only(left: 37, right: 58),
               child: TextFormField(
-                controller: registerProvider.passwordController.controller,
+                controller: passwordController,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter password';
@@ -1011,8 +898,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             Padding(
               padding: const EdgeInsets.only(left: 37, right: 58),
               child: TextFormField(
-                controller:
-                    registerProvider.conformPasswordController.controller,
+                controller: conformPasswordController,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter password';
@@ -1054,61 +940,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 height: 55.0,
                 width: 230,
                 child: ElevatedButton(
-                  onPressed: () async {
-                    print("our random id is " + uuid);
-                    //  String? day;
-                    // String? month;
-                    // String? year;
-
-                    // String? countryPicker;
-                    // String? statePicker;
-                    // String? cityPicker;
-                    // print(day);
-                    // print(month);
-                    // print(year);
-                    print(countryPicker);
-                    print(statePicker);
-                    print(cityPicker);
+                  onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       // If the form is valid, you can proceed with the input
-                      if (registerProvider.passwordController.controller.text
-                              .toString() !=
-                          registerProvider
-                              .conformPasswordController.controller.text
-                              .toString()) {
-                        return showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              title:
-                                  const Text('please enter correct password'),
-                              actions: <Widget>[
-                                TextButton(
-                                  onPressed: () {
-                                    log(uuid);
-                                    Navigator.of(context)
-                                        .pop(); // Close the dialog
-                                  },
-                                  child: Text('OK'),
-                                ),
-                              ],
-                            );
-                          },
-                        );
+                      if (passwordController.text.toString() !=
+                          conformPasswordController.text.toString()) {
+                        return log('please enter correct password');
                       }
                       Map<String, dynamic> body = {
                         "full_name":
-                            "${registerProvider.firstnameController.controller.text} ${registerProvider.lastnameController.controller.text}",
+                            "${firstnameController.text} ${lastnameController.text}",
                         "father_name":
-                            "${registerProvider.fatherFirstController.controller.text} ${registerProvider.fatherLastController.controller.text}",
+                            "${fatherFirstController.text} ${fatherLastController.text}",
                         "gender": genderSelector.toString(),
-                        "email": registerProvider
-                            .emailController.controller.text
-                            .toString(),
+                        "email": emailController.text.toString(),
                         "date_of_birth":
-                            "${year.toString()}-${month.toString()}-${day.toString()}",
+                            "${dateOfBirthDayController.text}-${dateOfBirthMonthController.text}-${dateOfBirthYearController.text}",
                         "birth_place":
-                            "${countryPicker} ${statePicker} ${cityPicker}",
+                            "${birthStateController.text} ${birthcityController.text}",
                         "phone_number": phoneNumberController.text.toString(),
                         "whatsapp_number":
                             whatsAppNumberController.text.toString(),
@@ -1122,7 +971,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => LoginScreen())));
+                                  builder: (context) => const LoginScreen())));
                     }
                   },
                   style: ElevatedButton.styleFrom(
