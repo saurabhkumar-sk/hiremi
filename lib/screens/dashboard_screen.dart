@@ -49,7 +49,7 @@ class _DashbordScreenState extends State<DashbordScreen> {
               backgroundColor: Colors.white,
               surfaceTintColor: Colors.transparent,
               title: const Text(
-                'For the verification process',
+                'For the verification\n process',
                 textAlign: TextAlign.center,
               ),
               actionsPadding: const EdgeInsets.only(top: 15, bottom: 25),

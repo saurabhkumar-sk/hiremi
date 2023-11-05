@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_layout/components/database.dart';
+import 'package:flutter_layout/screens/job_description.dart';
 import 'package:flutter_layout/utils/my_colors.dart';
 import 'package:flutter_layout/utils/my_images.dart';
 
@@ -73,7 +74,7 @@ class _FresherJobScreenState extends State<FresherJobScreen> {
                   const SizedBox(height: 70),
                   ListView.builder(
                     shrinkWrap: true,
-                    itemCount: 5,
+                    itemCount: fresherJob.length,
                     itemBuilder: (BuildContext context, int index) {
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 20),
@@ -86,7 +87,7 @@ class _FresherJobScreenState extends State<FresherJobScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  fresherJob.first.title,
+                                  fresherJob[index].title,
                                   style: const TextStyle(
                                     fontWeight: FontWeight.w700,
                                     fontSize: 16,
@@ -114,7 +115,7 @@ class _FresherJobScreenState extends State<FresherJobScreen> {
                                       ),
                                     ),
                                     Text(
-                                      fresherJob.first.company,
+                                      fresherJob[index].company,
                                       style: const TextStyle(
                                         fontWeight: FontWeight.w500,
                                         fontSize: 12,
@@ -145,7 +146,7 @@ class _FresherJobScreenState extends State<FresherJobScreen> {
                                       ),
                                     ),
                                     Text(
-                                      fresherJob.first.panIndia,
+                                      fresherJob[index].panIndia,
                                       style: const TextStyle(
                                         fontWeight: FontWeight.w500,
                                         fontSize: 12,
@@ -179,7 +180,7 @@ class _FresherJobScreenState extends State<FresherJobScreen> {
                                           ),
                                         ),
                                         Text(
-                                          fresherJob.first.lpa,
+                                          fresherJob[index].lpa,
                                           style: const TextStyle(
                                             fontWeight: FontWeight.w500,
                                             fontSize: 12,
@@ -190,30 +191,45 @@ class _FresherJobScreenState extends State<FresherJobScreen> {
                                       ],
                                     ),
                                     Positioned(
-                                      top: 0,
-                                      left: 160,
-                                      child: ElevatedButton(
-                                        style: const ButtonStyle(
-                                            backgroundColor:
-                                                MaterialStatePropertyAll(
-                                                    Color(0xFFBD232B))),
-                                        onPressed: () {},
-                                        child: const Row(
-                                          children: [
-                                            Text(
-                                              'View details  ',
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w700,
-                                                fontSize: 12,
+                                      left: 170,
+                                      top: 18,
+                                      child: SizedBox(
+                                        height: 30,
+                                        child: ElevatedButton(
+                                          style: const ButtonStyle(
+                                              backgroundColor:
+                                                  MaterialStatePropertyAll(
+                                                      Color(0xFFBD232B))),
+                                          onPressed: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    JobDescriptionScreen(
+                                                  index: index,
+                                                ),
                                               ),
-                                            ),
-                                            Icon(
-                                              Icons.arrow_forward_ios,
-                                              color: Colors.white,
-                                              size: 20,
-                                            )
-                                          ],
+                                            );
+                                          },
+                                          child: const Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                'View details  ',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.w700,
+                                                  fontSize: 12,
+                                                ),
+                                              ),
+                                              Icon(
+                                                Icons.arrow_forward_ios,
+                                                color: Colors.white,
+                                                size: 20,
+                                              )
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),

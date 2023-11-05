@@ -30,4 +30,28 @@ List<Fresherjob> fresherJob = [
     panIndia: 'PAN India',
     lpa: '10 LPA',
   ),
+  Fresherjob(
+    title: 'Business Development Associate',
+    company: 'Hiremi',
+    panIndia: 'PAN India',
+    lpa: '10 LPA',
+  ),
+  Fresherjob(
+    title: 'Business Development Associate',
+    company: 'Hiremi',
+    panIndia: 'PAN India',
+    lpa: '10 LPA',
+  ),
+  Fresherjob(
+    title: 'Business Development Associate',
+    company: 'Hiremi',
+    panIndia: 'PAN India',
+    lpa: '10 LPA',
+  ),
+  Fresherjob(
+    title: 'Business Development Associate',
+    company: 'Hiremi',
+    panIndia: 'PAN India',
+    lpa: '10 LPA',
+  ),
 ];
