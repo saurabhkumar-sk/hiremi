@@ -162,11 +162,30 @@ class _JobDescriptionScreenState extends State<JobDescriptionScreen> {
               ),
             ),
             ListView.builder(
+              shrinkWrap: true,
               itemCount: 1,
               itemBuilder: (BuildContext context, int index) {
-                return ;
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      essentialDetailsList[index].essentialDetails,
+                    )
+                  ],
+                );
               },
             ),
+            // ...List.generate(
+
+            //   essentialDetailsList.length,
+            //   (index) => Column(
+            //     children: [
+            //       Text(
+            //         essentialDetailsList[index].essentialDetails,
+            //       )
+            //     ],
+            //   ),
+            // ),
           ],
         ),
       ),
