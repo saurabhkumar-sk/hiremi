@@ -5,6 +5,7 @@ import 'package:flutter_layout/models/login_model.dart';
 import 'package:flutter_layout/utils/api.dart';
 import 'package:flutter_layout/models/api_user.dart';
 import 'package:flutter_layout/api_services/base_services.dart';
+import 'package:http/http.dart';
 
 class UserService extends BaseService {
   Future<List<ApiUser>?> getUsersApi() async {
@@ -42,30 +43,32 @@ class UserService extends BaseService {
     }
   }
 
-  bool loginUser(String fullName, String password) {
+  bool loginUser(String email, String password) {
     for (userModel user in responceData) {
-      if (user.email == fullName.trim() && user.password == password.trim()) {
+      if (user.email == email && user.password == password) {
+        log("success");
         // Successful login
         return true;
       }
     }
+    log("failure");
     // Login failed
     return false;
   }
 
+  uniqueId(String email, String password) {
+    for (userModel user in responceData) {
+      if (user.email == email && user.password == password) {
+        return user.uid;
+      }
+    }
+  }
 //post
 
-  Future<bool> createPostApi(Map<String, dynamic> body) async {
+  Future<Response> createPostApi(Map<String, dynamic> body) async {
     final response = await postHttp(api: ApiUrls.registration, data: body);
     log(response.body);
 
-    if (response.statusCode == 201) {
-      log('Post Created sucessfully', name: 'createPostApi');
-      return true;
-    } else {
-      final errorMessage = 'Some error occurred: ${response.reasonPhrase}';
-      log('Some error occured', name: 'error createPostApi');
-      return false;
-    }
+    return response;
   }
 }

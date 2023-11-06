@@ -17,11 +17,11 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  pushToScreen(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => const DashbordScreen()),
-    );
-  }
+  // pushToScreen(BuildContext context) {
+  //   Navigator.of(context).push(
+  //     MaterialPageRoute(builder: (_) => const DashbordScreen()),
+  //   );
+  // }
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   UserService _userService = UserService();
@@ -77,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         color: MyColor.borderColor,
                       ),
                     ),
-                    hintText: 'User Name',
+                    hintText: 'email',
                     hintStyle: TextStyle(
                       color: MyColor.grey,
                       fontSize: 20,
@@ -169,13 +169,23 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: ElevatedButton(
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        _userService.getapi();
+                        await _userService.getapi();
+
+                        var uid = _userService.uniqueId(
+                            emailController.text.trim(),
+                            passwordController.text.trim());
                         // pushToScreen(context);
                         bool loginSuccess = _userService.loginUser(
-                            emailController.text, passwordController.text);
+                            emailController.text.trim(),
+                            passwordController.text.trim());
 
                         if (loginSuccess) {
-                          pushToScreen(context);
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                                builder: (_) => DashbordScreen(
+                                      uid: uid,
+                                    )),
+                          );
                         } else {
                           showDialog(
                             context: context,

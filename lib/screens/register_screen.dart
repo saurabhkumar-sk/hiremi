@@ -24,6 +24,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return shortUid;
   }
 
+  String apiError = '';
   var uuid = generateUid();
   String genderSelector = "";
 
@@ -1067,30 +1068,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         "address":
                             registerProvider.addressController.controller.text
                       };
-                      bool ragisterSuccess =
-                          await ragisterApi.createPostApi(body);
+                      final responce = await ragisterApi.createPostApi(body);
                       // Navigator.push(
                       //     context,
                       //     MaterialPageRoute(
                       //         builder: (context) => LoginScreen())));
-                      if (ragisterSuccess) {
+                      if (responce.statusCode == 201) {
+                        log(responce.body);
                         // ignore: use_build_context_synchronously
                         Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => LoginScreen()));
                       } else {
+                        log('error occurred while creating');
+                        final error = responce.body;
                         // ignore: use_build_context_synchronously
                         return showDialog(
                           context: context,
                           builder: (context) {
                             return AlertDialog(
-                              title: const Text(
-                                  'please enter correct information \n must check email and phone number'),
+                              title: const Text('error'),
+                              content: Text(error.toString()),
                               actions: <Widget>[
                                 TextButton(
                                   onPressed: () {
-                                    log(uuid);
                                     Navigator.of(context)
                                         .pop(); // Close the dialog
                                   },
