@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:flutter_layout/models/login_model.dart';
 import 'package:flutter_layout/utils/api.dart';
 import 'package:flutter_layout/models/api_user.dart';
 import 'package:flutter_layout/api_services/base_services.dart';
+import 'package:http/http.dart';
 
 class UserService extends BaseService {
   Future<List<ApiUser>?> getUsersApi() async {
@@ -24,16 +26,49 @@ class UserService extends BaseService {
     }
   }
 
+  List<userModel> responceData = [];
+
+  Future<List<userModel>> getapi() async {
+    final responce = await getHttp(ApiUrls.registration);
+    var data = jsonDecode(responce.body.toString());
+    print(responce.statusCode);
+    if (responce.statusCode == 200) {
+      for (Map<String, dynamic> i in data) {
+        responceData.add(userModel.fromJson(i));
+      }
+      print(responceData.toString());
+      return responceData;
+    } else {
+      return responceData;
+    }
+  }
+
+  bool loginUser(String email, String password) {
+    for (userModel user in responceData) {
+      if (user.email == email && user.password == password) {
+        log("success");
+        // Successful login
+        return true;
+      }
+    }
+    log("failure");
+    // Login failed
+    return false;
+  }
+
+  uniqueId(String email, String password) {
+    for (userModel user in responceData) {
+      if (user.email == email && user.password == password) {
+        return user.uid;
+      }
+    }
+  }
 //post
 
-  Future<void> createPostApi(Map<String, dynamic> body) async {
-    final response = await postHttp(api: ApiUrls.posts, data: body);
+  Future<Response> createPostApi(Map<String, dynamic> body) async {
+    final response = await postHttp(api: ApiUrls.registration, data: body);
     log(response.body);
 
-    if (response.statusCode == 201) {
-      log('Post Created sucessfully', name: 'createPostApi');
-    } else {
-      log('Some error occured', name: 'error createPostApi');
-    }
+    return response;
   }
 }

@@ -1,6 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_layout/api_services/user_services.dart';
 import 'package:flutter_layout/screens/hello.dart';
 import 'package:flutter_layout/screens/profile_screen.dart';
 import 'package:flutter_layout/screens/user_verification_screen.dart';
@@ -8,7 +9,8 @@ import 'package:flutter_layout/utils/my_colors.dart';
 import 'package:flutter_layout/utils/my_images.dart';
 
 class DashbordScreen extends StatefulWidget {
-  const DashbordScreen({super.key});
+  String uid;
+  DashbordScreen({super.key, required this.uid});
 
   @override
   State<DashbordScreen> createState() => _DashbordScreenState();
@@ -147,7 +149,7 @@ class _DashbordScreenState extends State<DashbordScreen> {
               ),
             ),
             const SizedBox(height: 10),
-            const Stack(
+            Stack(
               children: [
                 Row(
                   children: [
@@ -176,7 +178,7 @@ class _DashbordScreenState extends State<DashbordScreen> {
                           ),
                         ),
                         Text(
-                          'ID : 10000001',
+                          'ID : ${widget.uid}',
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 16,
