@@ -24,7 +24,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return shortUid;
   }
 
-  String apiError = '';
+  String errorTextVal = '';
   var uuid = generateUid();
   String genderSelector = "";
 
@@ -36,6 +36,46 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String? countryPicker;
   String? statePicker;
   String? cityPicker;
+
+  String selectedState = 'Madhya Pradesh';
+
+  // Define a list of states
+  List<String> indianStates = [
+    'Andhra Pradesh',
+    'Arunachal Pradesh',
+    'Assam',
+    'Bihar',
+    'Chhattisgarh',
+    'Goa',
+    'Gujarat',
+    'Haryana',
+    'Himachal Pradesh',
+    'Jharkhand',
+    'Karnataka',
+    'Kerala',
+    'Madhya Pradesh'
+        'Maharashtra',
+    'Manipur',
+    'Meghalaya',
+    'Mizoram',
+    'Nagaland',
+    'Odisha',
+    'Punjab',
+    'Rajasthan',
+    'Sikkim',
+    'Tamil Nadu',
+    'Telangana',
+    'Tripura',
+    'Uttar Pradesh',
+    'Uttarakhand',
+    'West Bengal',
+    'Andaman and Nicobar Islands',
+    'Chandigarh',
+    'Dadra and Nagar Haveli and Daman and Diu',
+    'Lakshadweep',
+    'Delhi',
+    'Puducherry',
+  ];
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
@@ -50,10 +90,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
         lastDate: DateTime(2025),
       );
       if (datePicker != null) {
-        setState(() {
-          registerProvider.dateOfBirthController.controller.text =
-              datePicker.toString().split(" ")[0];
-        });
+        if (datePicker.isAfter(DateTime.now())) {
+        } else {
+          setState(() {
+            registerProvider.dateOfBirthController.controller.text =
+                datePicker.toString().split(" ")[0];
+          });
+        }
       }
     }
 
@@ -421,6 +464,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
               padding: const EdgeInsets.only(left: 37, right: 58),
               child: TextFormField(
                 controller: registerProvider.emailController.controller,
+                onChanged: (value) {
+                  setState(() {
+                    if (value.contains(' ')) {
+                      errorTextVal = "Don't use blank spaces";
+                    } else if (!value.contains('@gmail.com')) {
+                      errorTextVal = "use @gmail.com in the email";
+                    } else {
+                      errorTextVal = '';
+                    }
+                  });
+                },
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter an email';
@@ -434,19 +488,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   return null;
                 },
                 textInputAction: TextInputAction.done,
-                decoration: const InputDecoration(
-                  enabledBorder: UnderlineInputBorder(
+                decoration: InputDecoration(
+                  errorText: errorTextVal.isEmpty ? null : errorTextVal,
+                  enabledBorder: const UnderlineInputBorder(
                     borderSide: BorderSide(
                       color: MyColor.borderColor,
                     ),
                   ),
-                  focusedBorder: UnderlineInputBorder(
+                  focusedBorder: const UnderlineInputBorder(
                     borderSide: BorderSide(
                       color: MyColor.borderColor,
                     ),
                   ),
                   hintText: 'email@gmail.com',
-                  hintStyle: TextStyle(
+                  hintStyle: const TextStyle(
                     color: MyColor.grey,
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
@@ -642,6 +697,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
             Padding(
               padding: const EdgeInsets.only(left: 37, right: 58),
               child: TextFormField(
+                maxLength: 10,
+                keyboardType: TextInputType.number,
                 controller: registerProvider.phoneNumberController.controller,
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -674,6 +731,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
             Padding(
               padding: const EdgeInsets.only(left: 37, right: 58),
               child: TextFormField(
+                maxLength: 10,
+                keyboardType: TextInputType.number,
                 controller:
                     registerProvider.whatsAppNumberController.controller,
                 validator: (value) {
@@ -762,38 +821,47 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
             ),
             const SizedBox(height: 8),
-            Padding(
-              padding: const EdgeInsets.only(left: 37, right: 58),
-              child: TextFormField(
-                controller: registerProvider.collageStateController.controller,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter collage state';
-                  }
-                  return null; // Return null if the input is valid
-                },
-                textInputAction: TextInputAction.done,
-                decoration: const InputDecoration(
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: MyColor.borderColor,
-                    ),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: MyColor.borderColor,
-                    ),
-                  ),
-                  hintText: 'College State',
-                  hintStyle: TextStyle(
-                    color: MyColor.grey,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w500,
+            Row(
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(left: 34),
+                  child: Text(
+                    "Collage State",
+                    style: TextStyle(fontSize: 15.0, color: MyColor.grey),
                   ),
                 ),
-              ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 28, right: 58),
+                  child: PopupMenuButton<String>(
+                    itemBuilder: (BuildContext context) {
+                      return indianStates.map((String state) {
+                        return PopupMenuItem<String>(
+                          value: state,
+                          child: Text(state),
+                        );
+                      }).toList();
+                    },
+                    onSelected: (String value) {
+                      setState(() {
+                        selectedState = value;
+                      });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        selectedState,
+                        style: const TextStyle(
+                            fontSize: 15.0, color: MyColor.grey),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.only(left: 37, right: 58),
+              child: Divider(),
+            ),
             Padding(
               padding: const EdgeInsets.only(left: 37, right: 58),
               child: TextFormField(
@@ -861,6 +929,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
             Padding(
               padding: const EdgeInsets.only(left: 37, right: 58),
               child: TextFormField(
+                maxLength: 4,
+                keyboardType: TextInputType.number,
                 controller: registerProvider.passingYearController.controller,
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -1051,9 +1121,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             .phoneNumberController.controller.text,
                         "whatsapp_number": registerProvider
                             .whatsAppNumberController.controller.text,
-                        "college_state": registerProvider
-                            .collageStateController.controller.text
-                            .toString(),
+                        "college_state": selectedState,
                         "college_name": registerProvider
                             .collageNameController.controller.text
                             .toString(),

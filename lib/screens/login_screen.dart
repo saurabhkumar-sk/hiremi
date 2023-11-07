@@ -17,6 +17,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  String errorTextVal = "";
   // pushToScreen(BuildContext context) {
   //   Navigator.of(context).push(
   //     MaterialPageRoute(builder: (_) => const DashbordScreen()),
@@ -60,19 +61,31 @@ class _LoginScreenState extends State<LoginScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 63),
                 child: TextFormField(
                   controller: emailController,
+                  onChanged: (value) {
+                    setState(() {
+                      if (value.contains(' ')) {
+                        errorTextVal = "Don't use blank spaces";
+                      } else if (!value.contains('@gmail.com')) {
+                        errorTextVal = "use @gmail.com in the email";
+                      } else {
+                        errorTextVal = '';
+                      }
+                    });
+                  },
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'plese enter email';
                     }
                     return null; // Return null if the input is valid
                   },
-                  decoration: const InputDecoration(
-                    enabledBorder: UnderlineInputBorder(
+                  decoration: InputDecoration(
+                    errorText: errorTextVal.isEmpty ? null : errorTextVal,
+                    enabledBorder: const UnderlineInputBorder(
                       borderSide: BorderSide(
                         color: MyColor.borderColor,
                       ),
                     ),
-                    focusedBorder: UnderlineInputBorder(
+                    focusedBorder: const UnderlineInputBorder(
                       borderSide: BorderSide(
                         color: MyColor.borderColor,
                       ),

@@ -153,24 +153,24 @@ class _DashbordScreenState extends State<DashbordScreen> {
               children: [
                 Row(
                   children: [
-                    SizedBox(width: 35),
-                    CircleAvatar(
+                    const SizedBox(width: 35),
+                    const CircleAvatar(
                       backgroundColor: Colors.transparent,
                       backgroundImage: AssetImage(MyImages.profileImage),
                       radius: 35,
                     ),
-                    SizedBox(width: 20),
+                    const SizedBox(width: 20),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'Hii  !!',
                           style: TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 20,
                           ),
                         ),
-                        Text(
+                        const Text(
                           'Rishu',
                           style: TextStyle(
                             fontWeight: FontWeight.w700,
@@ -179,7 +179,7 @@ class _DashbordScreenState extends State<DashbordScreen> {
                         ),
                         Text(
                           'ID : ${widget.uid}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 16,
                           ),
@@ -188,7 +188,7 @@ class _DashbordScreenState extends State<DashbordScreen> {
                     ),
                   ],
                 ),
-                Positioned(
+                const Positioned(
                   right: 51,
                   child: Badge(
                     smallSize: 30,
