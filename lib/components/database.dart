@@ -1,4 +1,5 @@
 //User verification datails screen  Ex-Developer list
+import 'package:flutter_layout/models/essential_details.dart';
 import 'package:flutter_layout/models/fresher_job.dart';
 
 List<String> exDeveloperlist = [
@@ -54,4 +55,20 @@ List<Fresherjob> fresherJob = [
     panIndia: 'PAN India',
     lpa: '10 LPA',
   ),
+];
+
+//Job description List
+//Essential Details
+List<EssentialJob> essentialDetailsList = [
+  EssentialJob(
+    essentialDetails: 'ESSENTIAL DETAILS :',
+    bussiness: 'Bussiness Development Associate',
+    companyName: 'Company Name: Growupp.',
+    qualification:
+        'Educational Qualification: BE/B.TECH/M.TECH/ MCA/MBA/BCA etc.',
+    branch: 'Branch: All Branch',
+    batch: 'Batch: Graduates and Post Graduates Batch.',
+    criteria: 'Criteria: Throughout 50% & above, No Backlogs.',
+    profile: 'Profile: Business Development Associate (BDA)',
+  )
 ];

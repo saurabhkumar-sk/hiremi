@@ -204,16 +204,20 @@ class _UserVerificationScreenState extends State<UserVerificationScreen> {
                 ),
               ),
               const SizedBox(height: 10),
-              DropdownMenu<String>(
-                hintText: 'Ex-Developer',
-                width: 340,
-                onSelected: (String? value) {
-                  setState(() {});
-                },
-                dropdownMenuEntries: exDeveloperlist
-                    .map<DropdownMenuEntry<String>>((String value) {
-                  return DropdownMenuEntry<String>(value: value, label: value);
-                }).toList(),
+              SizedBox(
+                width: 200,
+                child: DropdownMenu<String>(
+                  hintText: 'Ex-Developer',
+                  width: 340,
+                  onSelected: (String? value) {
+                    setState(() {});
+                  },
+                  dropdownMenuEntries: exDeveloperlist
+                      .map<DropdownMenuEntry<String>>((String value) {
+                    return DropdownMenuEntry<String>(
+                        value: value, label: value);
+                  }).toList(),
+                ),
               ),
               const SizedBox(height: 15),
               const Text(
