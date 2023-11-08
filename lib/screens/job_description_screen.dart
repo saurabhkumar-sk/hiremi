@@ -57,136 +57,220 @@ class _JobDescriptionScreenState extends State<JobDescriptionScreen> {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(left: 24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.only(left: 11),
-              child: Text(
-                fresherJob[widget.index].title,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 18,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.only(left: 11),
+                child: Text(
+                  fresherJob[widget.index].title,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 18,
+                  ),
                 ),
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                TextButton.icon(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.location_on,
-                    color: MyColor.grey7474,
-                    size: 17,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  TextButton.icon(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.location_on,
+                      color: MyColor.grey7474,
+                      size: 17,
+                    ),
+                    label: Text(
+                      fresherJob[widget.index].panIndia,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 12,
+                        fontFamily: 'Poppins',
+                        color: MyColor.grey7474,
+                      ),
+                    ),
                   ),
-                  label: Text(
+                  Text(
                     fresherJob[widget.index].panIndia,
                     style: const TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 12,
                       fontFamily: 'Poppins',
-                      color: MyColor.grey7474,
+                      color: Colors.black,
                     ),
                   ),
-                ),
-                Text(
-                  fresherJob[widget.index].panIndia,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 12,
-                    fontFamily: 'Poppins',
-                    color: Colors.black,
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  TextButton.icon(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.money,
+                      color: MyColor.grey7474,
+                      size: 17,
+                    ),
+                    label: const Text(
+                      'CTC:',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 12,
+                        fontFamily: 'Poppins',
+                        color: MyColor.grey7474,
+                      ),
+                    ),
                   ),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                TextButton.icon(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.money,
-                    color: MyColor.grey7474,
-                    size: 17,
-                  ),
-                  label: const Text(
-                    'CTC:',
-                    style: TextStyle(
+                  Text(
+                    fresherJob.first.lpa,
+                    style: const TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 12,
                       fontFamily: 'Poppins',
-                      color: MyColor.grey7474,
+                      color: Colors.black,
                     ),
                   ),
-                ),
-                Text(
-                  fresherJob.first.lpa,
-                  style: const TextStyle(
+                ],
+              ),
+              const Padding(
+                padding: EdgeInsets.only(left: 35),
+                child: Text(
+                  'Terms & condition applied for freshers.',
+                  style: TextStyle(
                     fontWeight: FontWeight.w500,
-                    fontSize: 12,
+                    fontSize: 11,
                     fontFamily: 'Poppins',
                     color: Colors.black,
                   ),
                 ),
-              ],
-            ),
-            const Padding(
-              padding: EdgeInsets.only(left: 35),
-              child: Text(
-                'Terms & condition applied for freshers.',
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 11,
-                  fontFamily: 'Poppins',
-                  color: Colors.black,
+              ),
+              const Padding(
+                padding: EdgeInsets.only(right: 45),
+                child: Divider(),
+              ),
+              const Padding(
+                padding: EdgeInsets.only(left: 11),
+                child: Text(
+                  'About the job',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 18,
+                  ),
                 ),
               ),
-            ),
-            const Padding(
-              padding: EdgeInsets.only(right: 45),
-              child: Divider(),
-            ),
-            const Padding(
-              padding: EdgeInsets.only(left: 11),
-              child: Text(
-                'About the job',
-                style: TextStyle(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 18,
-                ),
+              ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: 1,
+                itemBuilder: (BuildContext context, int index) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        essentialDetailsList[index].essentialDetails,
+                      ),
+                      Text(essentialDetailsList[index].bussiness),
+                      Text(essentialDetailsList[index].companyName),
+                      Text(essentialDetailsList[index].qualification),
+                      Text(essentialDetailsList[index].branch),
+                      Text(essentialDetailsList[index].criteria),
+                      Text(essentialDetailsList[index].profile),
+                      const Text('Package for freshers'),
+                      Text(packgeforfresher[index].ctcEBT),
+                      Text(packgeforfresher[index].ctcBDA),
+                      Text(packgeforfresher[index].location),
+                      Text(packgeforfresher[index].bond),
+                      const Text('BASIC REQUIREMENTS:'),
+                      Text(basicRequirement[index].text),
+                      Text(basicRequirement[index].text2),
+                      Text(basicRequirement[index].text3),
+                      Text(basicRequirement[index].text4),
+                      Text(basicRequirement[index].text5),
+                      Text(basicRequirement[index].text6),
+                      const Text('Skill(s) required:'),
+                      Wrap(
+                        children: [
+                          ElevatedButton(
+                            style: const ButtonStyle(
+                              elevation: MaterialStatePropertyAll(0),
+                              backgroundColor: MaterialStatePropertyAll(
+                                Color.fromARGB(255, 217, 215, 215),
+                              ),
+                            ),
+                            onPressed: () {},
+                            child: const Text('sales'),
+                          ),
+                          const SizedBox(width: 10),
+                          ElevatedButton(
+                            style: const ButtonStyle(
+                              elevation: MaterialStatePropertyAll(0),
+                              backgroundColor: MaterialStatePropertyAll(
+                                Color.fromARGB(255, 217, 215, 215),
+                              ),
+                            ),
+                            onPressed: () {},
+                            child: const Text('Marketing'),
+                          ),
+                          const SizedBox(width: 10),
+                          ElevatedButton(
+                            style: const ButtonStyle(
+                              elevation: MaterialStatePropertyAll(0),
+                              backgroundColor: MaterialStatePropertyAll(
+                                Color.fromARGB(255, 217, 215, 215),
+                              ),
+                            ),
+                            onPressed: () {},
+                            child: const Text('project management'),
+                          ),
+                          const SizedBox(width: 10),
+                          ElevatedButton(
+                            style: const ButtonStyle(
+                              elevation: MaterialStatePropertyAll(0),
+                              backgroundColor: MaterialStatePropertyAll(
+                                Color.fromARGB(255, 217, 215, 215),
+                              ),
+                            ),
+                            onPressed: () {},
+                            child: const Text('communication skills'),
+                          ),
+                          const SizedBox(width: 10),
+                          ElevatedButton(
+                            style: const ButtonStyle(
+                              elevation: MaterialStatePropertyAll(0),
+                              backgroundColor: MaterialStatePropertyAll(
+                                Color.fromARGB(255, 217, 215, 215),
+                              ),
+                            ),
+                            onPressed: () {},
+                            child: const Text('Management'),
+                          ),
+                          ElevatedButton(
+                            style: const ButtonStyle(
+                              elevation: MaterialStatePropertyAll(0),
+                              backgroundColor: MaterialStatePropertyAll(
+                                Color.fromARGB(255, 217, 215, 215),
+                              ),
+                            ),
+                            onPressed: () {},
+                            child: const Text(
+                              'convincing skills',
+                              style: TextStyle(
+                                color: MyColor.black,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  );
+                },
               ),
-            ),
-            ListView.builder(
-              shrinkWrap: true,
-              itemCount: 1,
-              itemBuilder: (BuildContext context, int index) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      essentialDetailsList[index].essentialDetails,
-                    )
-                  ],
-                );
-              },
-            ),
-            // ...List.generate(
-
-            //   essentialDetailsList.length,
-            //   (index) => Column(
-            //     children: [
-            //       Text(
-            //         essentialDetailsList[index].essentialDetails,
-            //       )
-            //     ],
-            //   ),
-            // ),
-          ],
+            ],
+          ),
         ),
       ),
     );

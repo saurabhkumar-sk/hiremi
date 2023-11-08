@@ -72,3 +72,25 @@ List<EssentialJob> essentialDetailsList = [
     profile: 'Profile: Business Development Associate (BDA)',
   )
 ];
+
+List<PackageForFresher> packgeforfresher = [
+  PackageForFresher(
+      ctcEBT:
+          'CTC (BDT): 6.00 LPA (3.60 lakh fixed pay + 2.40 lakh performance pay)',
+      ctcBDA:
+          'CTC (BDA): 10.00 LPA (4.00 lakh fixed pay + 6.00 lakh performance pay)',
+      location: 'PAN INDIA',
+      bond: '3 months')
+];
+
+List<BasicRequirement> basicRequirement = [
+  BasicRequirement(
+    text: 'Good interpersonal & communication skills ',
+    text2: 'convincing skills ',
+    text3: 'Smart, proactive, presentable & dedicated',
+    text4: 'Flexible to relocate',
+    text5: 'Able to handle stress and pressure',
+    text6:
+        'Highly motivated individuals who are performance-driven and goal-oriented',
+  )
+];
