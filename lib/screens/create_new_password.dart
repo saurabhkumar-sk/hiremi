@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_layout/screens/dashboard_screen.dart';
-import 'package:flutter_layout/screens/login_screen.dart';
 import 'package:flutter_layout/utils/my_colors.dart';
 import 'package:flutter_layout/utils/my_images.dart';
 

@@ -65,7 +65,7 @@ List<EssentialJob> essentialDetailsList = [
     bussiness: 'Bussiness Development Associate',
     companyName: 'Company Name: Growupp.',
     qualification:
-        'Educational Qualification: BE/B.TECH/M.TECH/ MCA/MBA/BCA etc.',
+        'Educational Qualification: BE/B.TECH/M.TECH/MCA/MBA/BCA etc.',
     branch: 'Branch: All Branch',
     batch: 'Batch: Graduates and Post Graduates Batch.',
     criteria: 'Criteria: Throughout 50% & above, No Backlogs.',

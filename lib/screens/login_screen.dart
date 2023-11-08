@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_layout/api_services/user_services.dart';
-import 'package:flutter_layout/models/api_user.dart';
 import 'package:flutter_layout/screens/dashboard_screen.dart';
 import 'package:flutter_layout/screens/forget_password_screen.dart';
 import 'package:flutter_layout/screens/register_screen.dart';
@@ -24,7 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
   // }
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  UserService _userService = UserService();
+  final UserService _userService = UserService();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -180,6 +179,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             passwordController.text.trim());
 
                         if (loginSuccess) {
+                          // ignore: use_build_context_synchronously
                           Navigator.of(context).push(
                             MaterialPageRoute(
                                 builder: (_) => DashbordScreen(
@@ -187,6 +187,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     )),
                           );
                         } else {
+                          // ignore: use_build_context_synchronously
                           showDialog(
                             context: context,
                             builder: (context) {
@@ -199,7 +200,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       Navigator.of(context)
                                           .pop(); // Close the dialog
                                     },
-                                    child: Text('OK'),
+                                    child: const Text('OK'),
                                   ),
                                 ],
                               );

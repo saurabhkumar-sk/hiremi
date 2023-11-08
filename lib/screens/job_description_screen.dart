@@ -15,41 +15,37 @@ class _JobDescriptionScreenState extends State<JobDescriptionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: SizedBox(
-          // height: 20,
-          // width: 20,
-          child: GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: ClipOval(
-              child: Card(
-                elevation: 5,
-                shadowColor: Colors.black,
-                shape: const RoundedRectangleBorder(
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: ClipOval(
+            child: Card(
+              elevation: 5,
+              shadowColor: Colors.black,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(25)),
+              ),
+              surfaceTintColor: Colors.transparent,
+              child: Container(
+                decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(25)),
-                ),
-                surfaceTintColor: Colors.transparent,
-                child: Container(
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(25)),
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.topRight,
-                      transform: GradientRotation(20),
-                      colors: [
-                        Color(0xFFF13640),
-                        Color(0xFFBD2930),
-                      ],
-                    ),
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.topRight,
+                    transform: GradientRotation(20),
+                    colors: [
+                      Color(0xFFF13640),
+                      Color(0xFFBD2930),
+                    ],
                   ),
-                  child: const Padding(
-                    padding: EdgeInsets.only(right: 6),
-                    child: Icon(
-                      Icons.arrow_back_ios_new,
-                      size: 30,
-                      color: Colors.white,
-                    ),
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.only(right: 6),
+                  child: Icon(
+                    Icons.arrow_back_ios_new,
+                    size: 30,
+                    color: Colors.white,
                   ),
                 ),
               ),
@@ -74,67 +70,69 @@ class _JobDescriptionScreenState extends State<JobDescriptionScreen> {
                   ),
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  TextButton.icon(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.location_on,
-                      color: MyColor.grey7474,
-                      size: 17,
-                    ),
-                    label: Text(
-                      fresherJob[widget.index].panIndia,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 12,
-                        fontFamily: 'Poppins',
-                        color: MyColor.grey7474,
+              TextButton.icon(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.location_on,
+                  color: MyColor.grey7474,
+                  size: 17,
+                ),
+                label: Text.rich(
+                  TextSpan(
+                    children: [
+                      const TextSpan(
+                        text: 'Location:   ',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 12,
+                          fontFamily: 'Poppins',
+                          color: MyColor.grey7474,
+                        ),
                       ),
-                    ),
+                      TextSpan(
+                        text: fresherJob[widget.index].panIndia,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 12,
+                          fontFamily: 'Poppins',
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
                   ),
-                  Text(
-                    fresherJob[widget.index].panIndia,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 12,
-                      fontFamily: 'Poppins',
-                      color: Colors.black,
-                    ),
-                  ),
-                ],
+                ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  TextButton.icon(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.money,
-                      color: MyColor.grey7474,
-                      size: 17,
-                    ),
-                    label: const Text(
-                      'CTC:',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 12,
-                        fontFamily: 'Poppins',
-                        color: MyColor.grey7474,
+              TextButton.icon(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.money,
+                  color: MyColor.grey7474,
+                  size: 17,
+                ),
+                label: Text.rich(
+                  TextSpan(
+                    children: [
+                      const TextSpan(
+                        text: 'CTC :   ',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 12,
+                          fontFamily: 'Poppins',
+                          color: MyColor.grey7474,
+                        ),
                       ),
-                    ),
+                      TextSpan(
+                        text: fresherJob[widget.index].lpa,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 12,
+                          fontFamily: 'Poppins',
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
                   ),
-                  Text(
-                    fresherJob.first.lpa,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 12,
-                      fontFamily: 'Poppins',
-                      color: Colors.black,
-                    ),
-                  ),
-                ],
+                ),
               ),
               const Padding(
                 padding: EdgeInsets.only(left: 35),
@@ -144,7 +142,7 @@ class _JobDescriptionScreenState extends State<JobDescriptionScreen> {
                     fontWeight: FontWeight.w500,
                     fontSize: 11,
                     fontFamily: 'Poppins',
-                    color: Colors.black,
+                    color: MyColor.grey7474,
                   ),
                 ),
               ),
@@ -162,6 +160,7 @@ class _JobDescriptionScreenState extends State<JobDescriptionScreen> {
                   ),
                 ),
               ),
+              const SizedBox(height: 18),
               ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
@@ -172,94 +171,351 @@ class _JobDescriptionScreenState extends State<JobDescriptionScreen> {
                     children: [
                       Text(
                         essentialDetailsList[index].essentialDetails,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 12,
+                        ),
                       ),
-                      Text(essentialDetailsList[index].bussiness),
-                      Text(essentialDetailsList[index].companyName),
-                      Text(essentialDetailsList[index].qualification),
-                      Text(essentialDetailsList[index].branch),
-                      Text(essentialDetailsList[index].criteria),
-                      Text(essentialDetailsList[index].profile),
-                      const Text('Package for freshers'),
-                      Text(packgeforfresher[index].ctcEBT),
-                      Text(packgeforfresher[index].ctcBDA),
-                      Text(packgeforfresher[index].location),
-                      Text(packgeforfresher[index].bond),
-                      const Text('BASIC REQUIREMENTS:'),
-                      Text(basicRequirement[index].text),
-                      Text(basicRequirement[index].text2),
-                      Text(basicRequirement[index].text3),
-                      Text(basicRequirement[index].text4),
-                      Text(basicRequirement[index].text5),
-                      Text(basicRequirement[index].text6),
-                      const Text('Skill(s) required:'),
+                      Text(
+                        '\u2022 ${essentialDetailsList[index].bussiness}',
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: MyColor.black,
+                        ),
+                      ),
+                      Text(
+                        '\u2022 ${essentialDetailsList[index].companyName}',
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: MyColor.black,
+                        ),
+                      ),
+                      ConstrainedBox(
+                        constraints: BoxConstraints.tight(
+                          const Size(300, 35),
+                        ),
+                        child: Text(
+                          textAlign: TextAlign.justify,
+                          '\u2022 ${essentialDetailsList[index].qualification}',
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                            color: MyColor.black,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        '\u2022 ${essentialDetailsList[index].branch}',
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: MyColor.black,
+                        ),
+                      ),
+                      Text(
+                        '\u2022 ${essentialDetailsList[index].criteria}',
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: MyColor.black,
+                        ),
+                      ),
+                      Text(
+                        '\u2022 ${essentialDetailsList[index].profile}',
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: MyColor.black,
+                        ),
+                      ),
+                      const Text(
+                        'Package for freshers :',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 12,
+                        ),
+                      ),
+                      Text(
+                        '\u2022 ${packgeforfresher[index].ctcEBT}',
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: MyColor.black,
+                        ),
+                      ),
+                      Text(
+                        '\u2022 ${packgeforfresher[index].ctcBDA}',
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: MyColor.black,
+                        ),
+                      ),
+                      Text.rich(
+                        TextSpan(
+                          children: [
+                            const TextSpan(
+                              text: 'Location :  ',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 12,
+                              ),
+                            ),
+                            TextSpan(
+                              text: fresherJob[widget.index].panIndia,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 12,
+                                fontFamily: 'Poppins',
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Text.rich(
+                        TextSpan(
+                          children: [
+                            const TextSpan(
+                              text: 'Bond : ',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 12,
+                              ),
+                            ),
+                            TextSpan(
+                              text: fresherJob[widget.index].panIndia,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 12,
+                                fontFamily: 'Poppins',
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      const Text(
+                        'BASIC REQUIREMENTS:',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 12,
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      Text(
+                        '\u2022 ${basicRequirement[index].text}',
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: MyColor.black,
+                        ),
+                      ),
+                      Text(
+                        '\u2022 ${basicRequirement[index].text2}',
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: MyColor.black,
+                        ),
+                      ),
+                      Text(
+                        '\u2022 ${basicRequirement[index].text3}',
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: MyColor.black,
+                        ),
+                      ),
+                      Text(
+                        '\u2022 ${basicRequirement[index].text4}',
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: MyColor.black,
+                        ),
+                      ),
+                      Text(
+                        '\u2022 ${basicRequirement[index].text5}',
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: MyColor.black,
+                        ),
+                      ),
+                      Text(
+                        '\u2022 ${basicRequirement[index].text6}',
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: MyColor.black,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      const Text(
+                        'Skill(s) required:',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 18,
+                        ),
+                      ),
                       Wrap(
                         children: [
-                          ElevatedButton(
-                            style: const ButtonStyle(
-                              elevation: MaterialStatePropertyAll(0),
-                              backgroundColor: MaterialStatePropertyAll(
-                                Color.fromARGB(255, 217, 215, 215),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 12),
+                            child: SizedBox(
+                              height: 28,
+                              child: ElevatedButton(
+                                style: const ButtonStyle(
+                                  padding: MaterialStatePropertyAll(
+                                      EdgeInsets.all(7)),
+                                  elevation: MaterialStatePropertyAll(0),
+                                  backgroundColor: MaterialStatePropertyAll(
+                                    Color.fromARGB(255, 217, 215, 215),
+                                  ),
+                                ),
+                                onPressed: () {},
+                                child: const Text(
+                                  'sales',
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w600,
+                                    color: MyColor.black,
+                                  ),
+                                ),
                               ),
                             ),
-                            onPressed: () {},
-                            child: const Text('sales'),
                           ),
-                          const SizedBox(width: 10),
-                          ElevatedButton(
-                            style: const ButtonStyle(
-                              elevation: MaterialStatePropertyAll(0),
-                              backgroundColor: MaterialStatePropertyAll(
-                                Color.fromARGB(255, 217, 215, 215),
+                          const SizedBox(width: 20),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 12),
+                            child: SizedBox(
+                              height: 28,
+                              child: ElevatedButton(
+                                style: const ButtonStyle(
+                                  padding: MaterialStatePropertyAll(
+                                      EdgeInsets.all(7)),
+                                  elevation: MaterialStatePropertyAll(0),
+                                  backgroundColor: MaterialStatePropertyAll(
+                                    Color.fromARGB(255, 217, 215, 215),
+                                  ),
+                                ),
+                                onPressed: () {},
+                                child: const Text(
+                                  'Marketing',
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w600,
+                                    color: MyColor.black,
+                                  ),
+                                ),
                               ),
                             ),
-                            onPressed: () {},
-                            child: const Text('Marketing'),
                           ),
-                          const SizedBox(width: 10),
-                          ElevatedButton(
-                            style: const ButtonStyle(
-                              elevation: MaterialStatePropertyAll(0),
-                              backgroundColor: MaterialStatePropertyAll(
-                                Color.fromARGB(255, 217, 215, 215),
+                          const SizedBox(width: 20),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 12),
+                            child: SizedBox(
+                              height: 28,
+                              child: ElevatedButton(
+                                style: const ButtonStyle(
+                                  padding: MaterialStatePropertyAll(
+                                      EdgeInsets.all(7)),
+                                  elevation: MaterialStatePropertyAll(0),
+                                  backgroundColor: MaterialStatePropertyAll(
+                                    Color.fromARGB(255, 217, 215, 215),
+                                  ),
+                                ),
+                                onPressed: () {},
+                                child: const Text(
+                                  'project management',
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w600,
+                                    color: MyColor.black,
+                                  ),
+                                ),
                               ),
                             ),
-                            onPressed: () {},
-                            child: const Text('project management'),
                           ),
-                          const SizedBox(width: 10),
-                          ElevatedButton(
-                            style: const ButtonStyle(
-                              elevation: MaterialStatePropertyAll(0),
-                              backgroundColor: MaterialStatePropertyAll(
-                                Color.fromARGB(255, 217, 215, 215),
+                          const SizedBox(width: 20),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 12),
+                            child: SizedBox(
+                              height: 28,
+                              child: ElevatedButton(
+                                style: const ButtonStyle(
+                                  padding: MaterialStatePropertyAll(
+                                      EdgeInsets.all(7)),
+                                  elevation: MaterialStatePropertyAll(0),
+                                  backgroundColor: MaterialStatePropertyAll(
+                                    Color.fromARGB(255, 217, 215, 215),
+                                  ),
+                                ),
+                                onPressed: () {},
+                                child: const Text(
+                                  'convincing skills',
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w600,
+                                    color: MyColor.black,
+                                  ),
+                                ),
                               ),
                             ),
-                            onPressed: () {},
-                            child: const Text('communication skills'),
                           ),
-                          const SizedBox(width: 10),
-                          ElevatedButton(
-                            style: const ButtonStyle(
-                              elevation: MaterialStatePropertyAll(0),
-                              backgroundColor: MaterialStatePropertyAll(
-                                Color.fromARGB(255, 217, 215, 215),
+                          const SizedBox(width: 20),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 12),
+                            child: SizedBox(
+                              height: 28,
+                              child: ElevatedButton(
+                                style: const ButtonStyle(
+                                  padding: MaterialStatePropertyAll(
+                                      EdgeInsets.all(7)),
+                                  elevation: MaterialStatePropertyAll(0),
+                                  backgroundColor: MaterialStatePropertyAll(
+                                    Color.fromARGB(255, 217, 215, 215),
+                                  ),
+                                ),
+                                onPressed: () {},
+                                child: const Text(
+                                  'Management',
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w600,
+                                    color: MyColor.black,
+                                  ),
+                                ),
                               ),
                             ),
-                            onPressed: () {},
-                            child: const Text('Management'),
                           ),
-                          ElevatedButton(
-                            style: const ButtonStyle(
-                              elevation: MaterialStatePropertyAll(0),
-                              backgroundColor: MaterialStatePropertyAll(
-                                Color.fromARGB(255, 217, 215, 215),
-                              ),
-                            ),
-                            onPressed: () {},
-                            child: const Text(
-                              'convincing skills',
-                              style: TextStyle(
-                                color: MyColor.black,
+                          const SizedBox(width: 20),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 12),
+                            child: SizedBox(
+                              height: 28,
+                              child: ElevatedButton(
+                                style: const ButtonStyle(
+                                  padding: MaterialStatePropertyAll(
+                                      EdgeInsets.all(7)),
+                                  elevation: MaterialStatePropertyAll(0),
+                                  backgroundColor: MaterialStatePropertyAll(
+                                    Color.fromARGB(255, 217, 215, 215),
+                                  ),
+                                ),
+                                onPressed: () {},
+                                child: const Text(
+                                  'convincing skills',
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w600,
+                                    color: MyColor.black,
+                                  ),
+                                ),
                               ),
                             ),
                           ),
@@ -269,6 +525,7 @@ class _JobDescriptionScreenState extends State<JobDescriptionScreen> {
                   );
                 },
               ),
+              const SizedBox(height: 50),
             ],
           ),
         ),

@@ -1,16 +1,16 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_layout/api_services/user_services.dart';
 import 'package:flutter_layout/screens/hello.dart';
 import 'package:flutter_layout/screens/profile_screen.dart';
 import 'package:flutter_layout/screens/user_verification_screen.dart';
 import 'package:flutter_layout/utils/my_colors.dart';
 import 'package:flutter_layout/utils/my_images.dart';
 
+// ignore: must_be_immutable
 class DashbordScreen extends StatefulWidget {
-  String uid;
   DashbordScreen({super.key, required this.uid});
+  String uid;
 
   @override
   State<DashbordScreen> createState() => _DashbordScreenState();
@@ -153,24 +153,24 @@ class _DashbordScreenState extends State<DashbordScreen> {
               children: [
                 Row(
                   children: [
-                    SizedBox(width: 35),
-                    CircleAvatar(
+                    const SizedBox(width: 35),
+                    const CircleAvatar(
                       backgroundColor: Colors.transparent,
                       backgroundImage: AssetImage(MyImages.profileImage),
                       radius: 35,
                     ),
-                    SizedBox(width: 20),
+                    const SizedBox(width: 20),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'Hii  !!',
                           style: TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 20,
                           ),
                         ),
-                        Text(
+                        const Text(
                           'Rishu',
                           style: TextStyle(
                             fontWeight: FontWeight.w700,
@@ -179,7 +179,7 @@ class _DashbordScreenState extends State<DashbordScreen> {
                         ),
                         Text(
                           'ID : ${widget.uid}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 16,
                           ),
@@ -188,7 +188,7 @@ class _DashbordScreenState extends State<DashbordScreen> {
                     ),
                   ],
                 ),
-                Positioned(
+                const Positioned(
                   right: 51,
                   child: Badge(
                     smallSize: 30,
