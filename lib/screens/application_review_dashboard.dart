@@ -1,8 +1,8 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_layout/screens/fresher_job_screen.dart';
 import 'package:flutter_layout/screens/hello.dart';
-import 'package:flutter_layout/screens/profile_screen.dart';
 import 'package:flutter_layout/utils/my_colors.dart';
 import 'package:flutter_layout/utils/my_images.dart';
 
@@ -350,7 +350,7 @@ class _ApplicationRevievDashbordScreenState
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const ProfileScreen(),
+                                builder: (context) => const FresherJobScreen(),
                               ),
                             );
                           },

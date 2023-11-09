@@ -1,239 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_layout/components/database.dart';
-import 'package:flutter_layout/components/term_and_condition.dart';
+import 'package:flutter_layout/screens/dashboard_screen.dart';
 import 'package:flutter_layout/utils/my_colors.dart';
 
-class JobDescriptionScreen extends StatefulWidget {
-  const JobDescriptionScreen({super.key, required this.index});
+class JobRoleDescriptionScreen extends StatefulWidget {
+  const JobRoleDescriptionScreen({super.key, required this.index});
   final int index;
 
   @override
-  State<JobDescriptionScreen> createState() => _JobDescriptionScreenState();
+  State<JobRoleDescriptionScreen> createState() =>
+      _JobRoleDescriptionScreenState();
 }
 
-class _JobDescriptionScreenState extends State<JobDescriptionScreen> {
+class _JobRoleDescriptionScreenState extends State<JobRoleDescriptionScreen> {
   bool dialogShown = false;
-
-  @override
-  void initState() {
-    super.initState();
-
-    if (!dialogShown) {
-      Stream<int>.periodic(const Duration(milliseconds: 100), (t) => t)
-          .take(1)
-          .listen((t) {
-        showDialog(
-          barrierDismissible: true,
-          useSafeArea: true,
-          context: context,
-          builder: (BuildContext dialogContext) {
-            dialogShown = true;
-            return AlertDialog(
-              backgroundColor: Colors.white,
-              surfaceTintColor: Colors.transparent,
-              title: const Text(
-                'Enter job  code',
-                textAlign: TextAlign.center,
-              ),
-              actionsPadding: const EdgeInsets.only(top: 15, bottom: 25),
-              actionsAlignment: MainAxisAlignment.center,
-              actions: [
-                Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          SizedBox(
-                            height: 48,
-                            width: 46,
-                            child: TextFormField(
-                              onSaved: (newValue) {},
-                              onChanged: (value) {
-                                if (value.length == 1) {
-                                  FocusScope.of(context).nextFocus();
-                                }
-                              },
-                              style: Theme.of(context).textTheme.headlineSmall,
-                              decoration: InputDecoration(
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(11),
-                                  borderSide: const BorderSide(
-                                    width: 4,
-                                    color: MyColor.borderColor,
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(11),
-                                  borderSide: const BorderSide(
-                                    width: 4,
-                                    color: MyColor.borderColor,
-                                  ),
-                                ),
-                              ),
-                              keyboardType: TextInputType.number,
-                              textAlign: TextAlign.center,
-                              inputFormatters: [
-                                LengthLimitingTextInputFormatter(1),
-                                FilteringTextInputFormatter.digitsOnly,
-                              ],
-                            ),
-                          ),
-                          const SizedBox(width: 15),
-                          SizedBox(
-                            height: 48,
-                            width: 46,
-                            child: TextFormField(
-                              onSaved: (newValue) {},
-                              onChanged: (value) {
-                                if (value.length == 1) {
-                                  FocusScope.of(context).nextFocus();
-                                }
-                              },
-                              style: Theme.of(context).textTheme.headlineSmall,
-                              decoration: InputDecoration(
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(11),
-                                  borderSide: const BorderSide(
-                                    width: 4,
-                                    color: MyColor.borderColor,
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(11),
-                                  borderSide: const BorderSide(
-                                    width: 4,
-                                    color: MyColor.borderColor,
-                                  ),
-                                ),
-                              ),
-                              keyboardType: TextInputType.number,
-                              textAlign: TextAlign.center,
-                              inputFormatters: [
-                                LengthLimitingTextInputFormatter(1),
-                                FilteringTextInputFormatter.digitsOnly,
-                              ],
-                            ),
-                          ),
-                          const SizedBox(width: 15),
-                          SizedBox(
-                            height: 48,
-                            width: 46,
-                            child: TextFormField(
-                              onSaved: (newValue) {},
-                              onChanged: (value) {
-                                if (value.length == 1) {
-                                  FocusScope.of(context).nextFocus();
-                                }
-                              },
-                              style: Theme.of(context).textTheme.headlineSmall,
-                              decoration: InputDecoration(
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(11),
-                                  borderSide: const BorderSide(
-                                    width: 4,
-                                    color: MyColor.borderColor,
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(11),
-                                  borderSide: const BorderSide(
-                                    width: 4,
-                                    color: MyColor.borderColor,
-                                  ),
-                                ),
-                              ),
-                              keyboardType: TextInputType.number,
-                              textAlign: TextAlign.center,
-                              inputFormatters: [
-                                LengthLimitingTextInputFormatter(1),
-                                FilteringTextInputFormatter.digitsOnly,
-                              ],
-                            ),
-                          ),
-                          const SizedBox(width: 15),
-                          SizedBox(
-                            height: 48,
-                            width: 46,
-                            child: TextFormField(
-                              onSaved: (newValue) {},
-                              onChanged: (value) {
-                                if (value.length == 1) {
-                                  FocusScope.of(context).nextFocus();
-                                }
-                              },
-                              style: Theme.of(context).textTheme.headlineSmall,
-                              decoration: InputDecoration(
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(11),
-                                  borderSide: const BorderSide(
-                                    width: 4,
-                                    color: MyColor.borderColor,
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(11),
-                                  borderSide: const BorderSide(
-                                    width: 4,
-                                    color: MyColor.borderColor,
-                                  ),
-                                ),
-                              ),
-                              keyboardType: TextInputType.number,
-                              textAlign: TextAlign.center,
-                              inputFormatters: [
-                                LengthLimitingTextInputFormatter(1),
-                                FilteringTextInputFormatter.digitsOnly,
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    SizedBox(
-                      height: 40,
-                      width: 150,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) => const TermAndCondition(),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFFF13640),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            )),
-                        child: const Text(
-                          "Sumbit",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 20,
-                          ),
-                        ),
-                      ),
-                    ),
-                  
-                  ],
-                ),
-              ],
-              titleTextStyle: const TextStyle(
-                fontWeight: FontWeight.w800,
-                fontSize: 18,
-                color: MyColor.pink,
-              ),
-            );
-          },
-        );
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -680,7 +460,7 @@ class _JobDescriptionScreenState extends State<JobDescriptionScreen> {
                                 ),
                                 onPressed: () {},
                                 child: const Text(
-                                  'Communication skills',
+                                  'convincing skills',
                                   style: TextStyle(
                                     fontSize: 10,
                                     fontWeight: FontWeight.w600,
@@ -749,6 +529,36 @@ class _JobDescriptionScreenState extends State<JobDescriptionScreen> {
                 },
               ),
               const SizedBox(height: 50),
+              Center(
+                child: SizedBox(
+                  height: 50,
+                  width: 236,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DashbordScreen(uid: '1234'),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFFF13640),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        )),
+                    child: const Text(
+                      "Apply",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 18,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
             ],
           ),
         ),

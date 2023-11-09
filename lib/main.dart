@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_layout/components/congratulations.dart';
 import 'package:flutter_layout/components/database.dart';
+import 'package:flutter_layout/components/sorry_for_rejection.dart';
+import 'package:flutter_layout/components/sorry_you_are_rejected.dart';
 import 'package:flutter_layout/provider/register_provider.dart';
 import 'package:flutter_layout/provider/provider.dart';
 import 'package:flutter_layout/screens/job_description_screen.dart';
@@ -26,7 +29,7 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Poppins',
           useMaterial3: true,
         ),
-        home: const SplashScreen(),
+        home: const SorryYouAreRejected(),
       ),
     );
   }

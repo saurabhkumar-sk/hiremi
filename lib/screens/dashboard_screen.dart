@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_layout/screens/fresher_job_screen.dart';
 import 'package:flutter_layout/screens/hello.dart';
-import 'package:flutter_layout/screens/profile_screen.dart';
 import 'package:flutter_layout/screens/user_verification_screen.dart';
 import 'package:flutter_layout/utils/my_colors.dart';
 import 'package:flutter_layout/utils/my_images.dart';
