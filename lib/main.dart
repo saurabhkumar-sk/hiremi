@@ -26,9 +26,7 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Poppins',
           useMaterial3: true,
         ),
-        home: JobDescriptionScreen(
-          index: essentialDetailsList.length,
-        ),
+        home: const SplashScreen(),
       ),
     );
   }

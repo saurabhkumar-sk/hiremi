@@ -1,23 +1,23 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_layout/screens/fresher_job_screen.dart';
 import 'package:flutter_layout/screens/hello.dart';
 import 'package:flutter_layout/screens/profile_screen.dart';
-import 'package:flutter_layout/screens/user_verification_screen.dart';
 import 'package:flutter_layout/utils/my_colors.dart';
 import 'package:flutter_layout/utils/my_images.dart';
 
 // ignore: must_be_immutable
-class DashbordScreen extends StatefulWidget {
-  DashbordScreen({super.key, required this.uid});
+class ApplicationRevievDashbordScreen extends StatefulWidget {
+  ApplicationRevievDashbordScreen({super.key, required this.uid});
   String uid;
 
   @override
-  State<DashbordScreen> createState() => _DashbordScreenState();
+  State<ApplicationRevievDashbordScreen> createState() =>
+      _ApplicationRevievDashbordScreenState();
 }
 
-class _DashbordScreenState extends State<DashbordScreen> {
+class _ApplicationRevievDashbordScreenState
+    extends State<ApplicationRevievDashbordScreen> {
   final controller = TextEditingController();
   late BuildContext oldDialogContext;
 
@@ -48,45 +48,30 @@ class _DashbordScreenState extends State<DashbordScreen> {
           context: context,
           builder: (BuildContext dialogContext) {
             dialogShown = true;
-            return AlertDialog(
+            return const AlertDialog(
               backgroundColor: Colors.white,
               surfaceTintColor: Colors.transparent,
-              title: const Text(
-                'For the verification\n process',
+              title: Text(
+                '\n\nYour Application is\n under review',
                 textAlign: TextAlign.center,
               ),
-              actionsPadding: const EdgeInsets.only(top: 15, bottom: 25),
+              actionsPadding: EdgeInsets.only(top: 30, bottom: 5),
               actionsAlignment: MainAxisAlignment.center,
               actions: [
                 SizedBox(
                   height: 55.0,
                   width: 236,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const UserVerificationScreen(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFFF13640),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        )),
-                    child: const Text(
-                      "click here",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 20,
-                      ),
+                  child: Text(
+                    "For Enquire : suport@hiremi.in",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                      // fontSize: 20,
                     ),
                   ),
                 ),
               ],
-              titleTextStyle: const TextStyle(
+              titleTextStyle: TextStyle(
                 fontWeight: FontWeight.w800,
                 fontSize: 18,
                 color: MyColor.pink,
@@ -365,7 +350,7 @@ class _DashbordScreenState extends State<DashbordScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const FresherJobScreen(),
+                                builder: (context) => const ProfileScreen(),
                               ),
                             );
                           },

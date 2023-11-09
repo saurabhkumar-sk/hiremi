@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_layout/components/database.dart';
+import 'package:flutter_layout/screens/user_verification_screen.dart';
 import 'package:flutter_layout/utils/my_colors.dart';
 
 class JobDescriptionScreen extends StatefulWidget {
@@ -11,6 +12,72 @@ class JobDescriptionScreen extends StatefulWidget {
 }
 
 class _JobDescriptionScreenState extends State<JobDescriptionScreen> {
+  bool dialogShown = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (!dialogShown) {
+      Stream<int>.periodic(const Duration(milliseconds: 100), (t) => t)
+          .take(1)
+          .listen((t) {
+        showDialog(
+          barrierDismissible: true,
+          useSafeArea: true,
+          context: context,
+          builder: (BuildContext dialogContext) {
+            dialogShown = true;
+            return AlertDialog(
+              backgroundColor: Colors.white,
+              surfaceTintColor: Colors.transparent,
+              title: const Text(
+                'For the verification\n process',
+                textAlign: TextAlign.center,
+              ),
+              actionsPadding: const EdgeInsets.only(top: 15, bottom: 25),
+              actionsAlignment: MainAxisAlignment.center,
+              actions: [
+                SizedBox(
+                  height: 55.0,
+                  width: 236,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const UserVerificationScreen(),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFFF13640),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        )),
+                    child: const Text(
+                      "click here",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+              titleTextStyle: const TextStyle(
+                fontWeight: FontWeight.w800,
+                fontSize: 18,
+                color: MyColor.pink,
+              ),
+            );
+          },
+        );
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

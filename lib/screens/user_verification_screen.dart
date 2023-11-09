@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_layout/components/database.dart';
-import 'package:flutter_layout/screens/fresher_job_screen.dart';
+import 'package:flutter_layout/screens/application_review_dashboard.dart';
 import 'package:flutter_layout/utils/my_colors.dart';
 import 'package:flutter_layout/utils/my_images.dart';
 
@@ -12,24 +12,35 @@ class UserVerificationScreen extends StatefulWidget {
 }
 
 class _UserVerificationScreenState extends State<UserVerificationScreen> {
-  TimeOfDay time = TimeOfDay.now();
-  String? times;
-  String? minutes;
-  String? year;
+  TextEditingController scheduleDateController = TextEditingController();
+  TextEditingController scheduleTimeController = TextEditingController();
 
+//Date Picker
+  void selectDatePicker() async {
+    DateTime? datePicker = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2025),
+    );
+    if (datePicker != null) {
+      setState(() {
+        scheduleDateController.text = datePicker.toString().split(" ")[0];
+      });
+    }
+  }
+
+  //Time Picker
   void selectTimePicker() async {
-    TimeOfDay? timeOfDay = await showTimePicker(
+    final TimeOfDay? timePicker = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.now(),
+      initialEntryMode: TimePickerEntryMode.input,
     );
-
-    if (timeOfDay != null && timeOfDay != time) {
-      final finalTime = timeOfDay.hour;
-      final finalMinutes = timeOfDay.minute;
-
+    if (timePicker != null) {
       setState(() {
-        times = finalTime.toString();
-        minutes = finalMinutes.toString();
+        scheduleTimeController.text =
+            '${timePicker.hour} : ${timePicker.minute}';
       });
     }
   }
@@ -204,19 +215,22 @@ class _UserVerificationScreenState extends State<UserVerificationScreen> {
                 ),
               ),
               const SizedBox(height: 10),
-              SizedBox(
-                width: 200,
-                child: DropdownMenu<String>(
-                  hintText: 'Ex-Developer',
-                  width: 340,
-                  onSelected: (String? value) {
-                    setState(() {});
-                  },
-                  dropdownMenuEntries: exDeveloperlist
-                      .map<DropdownMenuEntry<String>>((String value) {
-                    return DropdownMenuEntry<String>(
-                        value: value, label: value);
-                  }).toList(),
+              Padding(
+                padding: const EdgeInsets.only(right: 10),
+                child: SizedBox(
+                  width: 200,
+                  child: DropdownMenu<String>(
+                    hintText: 'Ex-Developer',
+                    // width: 340,
+                    onSelected: (String? value) {
+                      setState(() {});
+                    },
+                    dropdownMenuEntries: exDeveloperlist
+                        .map<DropdownMenuEntry<String>>((String value) {
+                      return DropdownMenuEntry<String>(
+                          value: value, label: value);
+                    }).toList(),
+                  ),
                 ),
               ),
               const SizedBox(height: 15),
@@ -304,6 +318,7 @@ class _UserVerificationScreenState extends State<UserVerificationScreen> {
                     width: MediaQuery.of(context).size.width * 0.35,
 
                     child: TextFormField(
+                      controller: scheduleDateController,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please enter date';
@@ -322,15 +337,10 @@ class _UserVerificationScreenState extends State<UserVerificationScreen> {
                             color: MyColor.borderColor,
                           ),
                         ),
-                        hintText: '30 Oct',
+                        hintText: DateTime.now().toString().split(" ")[0],
                         suffixIcon: IconButton(
                           onPressed: () {
-                            showDatePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime(2000),
-                              lastDate: DateTime(2030),
-                            );
+                            selectDatePicker();
                           },
                           icon: const Icon(
                             Icons.expand_more,
@@ -350,13 +360,14 @@ class _UserVerificationScreenState extends State<UserVerificationScreen> {
                     width: MediaQuery.of(context).size.width * 0.35,
 
                     child: TextFormField(
+                      controller: scheduleTimeController,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please enter valid time';
                         }
                         return null;
                       },
-                      keyboardType: TextInputType.datetime,
+                      keyboardType: TextInputType.none,
                       textInputAction: TextInputAction.done,
                       decoration: InputDecoration(
                         enabledBorder: const UnderlineInputBorder(
@@ -369,18 +380,7 @@ class _UserVerificationScreenState extends State<UserVerificationScreen> {
                             color: MyColor.borderColor,
                           ),
                         ),
-                        prefixIcon: Padding(
-                            padding: const EdgeInsets.only(top: 15, left: 12),
-                            child: Text(
-                              times == null || minutes == null
-                                  ? '6 PM'
-                                  : '$times : $minutes',
-                              style: const TextStyle(
-                                color: MyColor.grey,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            )),
+                        hintText: '6 PM',
                         suffixIcon: IconButton(
                           onPressed: () {
                             selectTimePicker();
@@ -415,17 +415,11 @@ class _UserVerificationScreenState extends State<UserVerificationScreen> {
                   width: 170,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const FresherJobScreen(),
-                        ),
-                      ).then(
-                        (value) => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const FresherJobScreen(),
-                          ),
+                          builder: (context) =>
+                              ApplicationRevievDashbordScreen(uid: '123'),
                         ),
                       );
                     },
