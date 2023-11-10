@@ -5,6 +5,7 @@ class MyImages {
   static const experience = 'assets/images/suitcase 5.png';
   static const mentorship = 'assets/images/mortarboard 1.png';
   static const profileImage = 'assets/images/Ellipse 1.png';
+  static const femaleProfileImage = 'assets/images/Ellipse 7.png';
   static const saly = 'assets/images/Saly-1.png';
   static const forgetPasswordImage =
       'assets/images/wepik-export-202310211110200bE2 1.png';
