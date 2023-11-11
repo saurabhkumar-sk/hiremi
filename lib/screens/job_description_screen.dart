@@ -27,6 +27,7 @@ class _JobDescriptionScreenState extends State<JobDescriptionScreen> {
           barrierDismissible: true,
           useSafeArea: true,
           context: context,
+        
           builder: (BuildContext dialogContext) {
             dialogShown = true;
             return AlertDialog(
@@ -218,7 +219,6 @@ class _JobDescriptionScreenState extends State<JobDescriptionScreen> {
                         ),
                       ),
                     ),
-                  
                   ],
                 ),
               ],
