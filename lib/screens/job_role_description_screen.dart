@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_layout/components/database.dart';
 import 'package:flutter_layout/screens/dashboard_screen.dart';
+import 'package:flutter_layout/screens/dashboard_thank_apply.dart';
 import 'package:flutter_layout/utils/my_colors.dart';
 
 class JobRoleDescriptionScreen extends StatefulWidget {
@@ -528,17 +529,18 @@ class _JobRoleDescriptionScreenState extends State<JobRoleDescriptionScreen> {
                   );
                 },
               ),
-              const SizedBox(height: 50),
+              const SizedBox(height: 30),
               Center(
                 child: SizedBox(
                   height: 50,
                   width: 236,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => DashbordScreen(uid: '1234'),
+                          builder: (context) =>
+                              DashboardThankApply(uid: '1234'),
                         ),
                       );
                     },

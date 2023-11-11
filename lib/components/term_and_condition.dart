@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_layout/components/thanks_for_applying.dart';
+import 'package:flutter_layout/screens/job_role_description_screen.dart';
 import 'package:flutter_layout/utils/my_colors.dart';
 
 class TermAndCondition extends StatefulWidget {
@@ -89,7 +90,9 @@ class _TermAndConditionState extends State<TermAndCondition> {
                   setState(() {
                     showDialog(
                       context: context,
-                      builder: (context) => const ThanksForApplying(),
+                      builder: (context) => const JobRoleDescriptionScreen(
+                        index: 1,
+                      ),
                     );
                   });
                 },
