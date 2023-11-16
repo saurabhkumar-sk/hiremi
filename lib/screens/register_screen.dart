@@ -1,4 +1,9 @@
 import 'dart:developer';
+import 'package:flutter_layout/provider/collage_list.dart';
+import 'package:flutter_layout/screens/collage_list.dart';
+import 'package:flutter_layout/utils/branch_name_list.dart';
+import 'package:flutter_layout/utils/indian_state_list.dart';
+import 'package:flutter_layout/utils/passing_year_list.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_layout/api_services/user_services.dart';
@@ -17,6 +22,15 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   UserService ragisterApi = UserService();
+
+  bool genderMale = false;
+  bool genderFemale = false;
+  bool genderOther = false;
+
+  String selectCollage = 'Select Collage';
+
+  String? collagename;
+
   static String generateUid() {
     final uuid = Uuid();
     final fullUuid = uuid.v4(); // Generate a Version 4 (random) UUID
@@ -38,49 +52,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String? cityPicker;
 
   String selectedState = 'Madhya Pradesh';
-
-  // Define a list of states
-  List<String> indianStates = [
-    'Andhra Pradesh',
-    'Arunachal Pradesh',
-    'Assam',
-    'Bihar',
-    'Chhattisgarh',
-    'Goa',
-    'Gujarat',
-    'Haryana',
-    'Himachal Pradesh',
-    'Jharkhand',
-    'Karnataka',
-    'Kerala',
-    'Madhya Pradesh'
-        'Maharashtra',
-    'Manipur',
-    'Meghalaya',
-    'Mizoram',
-    'Nagaland',
-    'Odisha',
-    'Punjab',
-    'Rajasthan',
-    'Sikkim',
-    'Tamil Nadu',
-    'Telangana',
-    'Tripura',
-    'Uttar Pradesh',
-    'Uttarakhand',
-    'West Bengal',
-    'Andaman and Nicobar Islands',
-    'Chandigarh',
-    'Dadra and Nagar Haveli and Daman and Diu',
-    'Lakshadweep',
-    'Delhi',
-    'Puducherry',
-  ];
-
+  String selectedBranch = 'Civil Engineering';
+  String selectPassingYear = "2024";
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final registerProvider = Provider.of<RegisterProvider>(context);
+    var collageProvider = Provider.of<CollageListProvider>(context);
+    String selectCollage = collageProvider.selectCollage;
+
+    if (collageProvider.selectCollage == "Select Collage") {
+      collagename = null;
+    } else {
+      collagename = collageProvider.selectCollage;
+    }
 
     void selectDatePicker() async {
       DateTime? datePicker = await showDatePicker(
@@ -381,6 +366,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 children: [
                   InkWell(
                       onTap: () {
+                        genderMale = true;
+                        genderFemale = false;
+                        genderOther = false;
                         genderSelector = "Male";
                         registerProvider.toggleGenderSelectionmale();
                       },
@@ -396,13 +384,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     child: Container(
                       height: 12,
                       width: 12,
-                      color: registerProvider.isMaleSelected
-                          ? MyColor.green
-                          : MyColor.grey,
+                      color: genderMale ? MyColor.green : MyColor.grey,
                     ),
                   ),
                   InkWell(
                       onTap: () {
+                        genderFemale = true;
+                        genderMale = false;
+
+                        genderOther = false;
                         genderSelector = 'Female';
                         registerProvider.toggleGenderSelectionfemail();
                       },
@@ -418,13 +408,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     child: Container(
                       height: 12,
                       width: 12,
-                      color: registerProvider.isFemaleSelected
-                          ? MyColor.green
-                          : MyColor.grey,
+                      color: genderFemale ? MyColor.green : MyColor.grey,
                     ),
                   ),
                   InkWell(
                       onTap: () {
+                        genderOther = true;
+                        genderFemale = false;
+                        genderMale = false;
+
                         genderSelector = "other";
                         registerProvider.toggleGenderSelectionOther();
                       },
@@ -440,9 +432,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       child: Container(
                     height: 12,
                     width: 12,
-                    color: registerProvider.isotherSelected
-                        ? MyColor.green
-                        : MyColor.grey,
+                    color: genderOther ? MyColor.green : MyColor.grey,
                   )),
                 ],
               ),
@@ -557,6 +547,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ),
                   suffixIconColor: MyColor.grey,
+                  prefixIcon: IconButton(
+                    onPressed: () {
+                      selectDatePicker();
+                    },
+                    icon: const Icon(
+                      Icons.calendar_month_outlined,
+                    ),
+                  ),
+                  prefixIconColor: MyColor.grey,
                 ),
               ),
             ),
@@ -589,97 +588,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 },
               ),
             ),
-
-            // Padding(
-            //   padding: const EdgeInsets.only(left: 34, right: 12),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-            //     children: [
-            //       SizedBox(
-            //         // width: 148,
-
-            //         width: MediaQuery.of(context).size.width * 0.35,
-            //         child: TextFormField(
-            //           controller: birthStateController,
-            //           validator: (value) {
-            //             if (value!.isEmpty) {
-            //               return 'Please enter birth state';
-            //             }
-            //             return null; // Return null if the input is valid
-            //           },
-            //           textInputAction: TextInputAction.done,
-            //           decoration: InputDecoration(
-            //             enabledBorder: const UnderlineInputBorder(
-            //               borderSide: BorderSide(
-            //                 color: MyColor.borderColor,
-            //               ),
-            //             ),
-            //             focusedBorder: const UnderlineInputBorder(
-            //               borderSide: BorderSide(
-            //                 color: MyColor.borderColor,
-            //               ),
-            //             ),
-            //             hintText: 'State',
-            //             suffixIcon: IconButton(
-            //               onPressed: () {},
-            //               icon: const Icon(
-            //                 Icons.expand_more,
-            //               ),
-            //             ),
-            //             suffixIconColor: MyColor.grey,
-            //             hintStyle: const TextStyle(
-            //               color: MyColor.grey,
-            //               fontSize: 16,
-            //               fontWeight: FontWeight.w500,
-            //             ),
-            //           ),
-            //         ),
-            //       ),
-            //       const SizedBox(width: 41),
-            //       SizedBox(
-            //         // width: 148,
-            //         width: MediaQuery.of(context).size.width * 0.35,
-
-            //         child: TextFormField(
-            //           controller: birthcityController,
-            //           validator: (value) {
-            //             if (value!.isEmpty) {
-            //               return 'Please enter birth city';
-            //             }
-            //             return null; // Return null if the input is valid
-            //           },
-            //           textInputAction: TextInputAction.done,
-            //           decoration: InputDecoration(
-            //             enabledBorder: const UnderlineInputBorder(
-            //               borderSide: BorderSide(
-            //                 color: MyColor.borderColor,
-            //               ),
-            //             ),
-            //             focusedBorder: const UnderlineInputBorder(
-            //               borderSide: BorderSide(
-            //                 color: MyColor.borderColor,
-            //               ),
-            //             ),
-            //             hintText: 'City',
-            //             suffixIcon: IconButton(
-            //               onPressed: () {},
-            //               icon: const Icon(
-            //                 Icons.expand_more,
-            //               ),
-            //             ),
-            //             suffixIconColor: MyColor.grey,
-            //             hintStyle: const TextStyle(
-            //               color: MyColor.grey,
-            //               fontSize: 16,
-            //               fontWeight: FontWeight.w500,
-            //             ),
-            //           ),
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
-
             const SizedBox(height: 45),
             const Padding(
               padding: EdgeInsets.only(left: 34),
@@ -834,7 +742,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   padding: const EdgeInsets.only(left: 28, right: 58),
                   child: PopupMenuButton<String>(
                     itemBuilder: (BuildContext context) {
-                      return indianStates.map((String state) {
+                      return IndianStates.states.map((String state) {
                         return PopupMenuItem<String>(
                           value: state,
                           child: Text(state),
@@ -847,117 +755,166 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       });
                     },
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        selectedState,
-                        style: const TextStyle(
-                            fontSize: 15.0, color: MyColor.grey),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 19, vertical: 8),
+                      child: SizedBox(
+                        width: 95,
+                        child: Text(
+                          selectedState,
+                          style: const TextStyle(
+                              fontSize: 15.0, color: MyColor.grey),
+                        ),
                       ),
                     ),
                   ),
                 ),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 37, right: 58),
+            const Padding(
+              padding: EdgeInsets.only(left: 37, right: 58),
               child: Divider(),
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 37, right: 58),
-              child: TextFormField(
-                controller: registerProvider.collageNameController.controller,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter collage name';
-                  }
-                  return null; // Return null if the input is valid
-                },
-                textInputAction: TextInputAction.done,
-                decoration: const InputDecoration(
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: MyColor.borderColor,
-                    ),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: MyColor.borderColor,
-                    ),
-                  ),
-                  hintText: 'Collage Name',
-                  hintStyle: TextStyle(
-                    color: MyColor.grey,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w500,
+            Row(
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(left: 34),
+                  child: Text(
+                    "Collage name",
+                    style: TextStyle(fontSize: 15.0, color: MyColor.grey),
                   ),
                 ),
-              ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 28, right: 58),
+                  child: TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => CollageListScreen(
+                                    onCollageSelected: (collageName) {
+                                      collageProvider.selectCollage =
+                                          collageName;
+                                      collagename = collageName;
+
+                                      //  print(collageName);
+                                      print(collagename);
+                                    },
+                                  )),
+                        );
+                      },
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 100,
+                              child: Text(
+                                selectCollage,
+                                style: const TextStyle(
+                                    fontSize: 15.0, color: MyColor.grey),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )),
+                ),
+              ],
+            ),
+            const Padding(
+              padding: EdgeInsets.only(left: 37, right: 58),
+              child: Divider(),
             ),
             const SizedBox(height: 8),
-            Padding(
-              padding: const EdgeInsets.only(left: 37, right: 58),
-              child: TextFormField(
-                controller: registerProvider.branchNameController.controller,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter branch';
-                  }
-                  return null; // Return null if the input is valid
-                },
-                textInputAction: TextInputAction.done,
-                decoration: const InputDecoration(
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: MyColor.borderColor,
-                    ),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: MyColor.borderColor,
-                    ),
-                  ),
-                  hintText: 'Branch Name',
-                  hintStyle: TextStyle(
-                    color: MyColor.grey,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w500,
+            Row(
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(left: 34),
+                  child: Text(
+                    "Branch name",
+                    style: TextStyle(fontSize: 15.0, color: MyColor.grey),
                   ),
                 ),
-              ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 28, right: 58),
+                  child: PopupMenuButton<String>(
+                    itemBuilder: (BuildContext context) {
+                      return BranchNameList.branchName.map((String state) {
+                        return PopupMenuItem<String>(
+                          value: state,
+                          child: Text(state),
+                        );
+                      }).toList();
+                    },
+                    onSelected: (String value) {
+                      setState(() {
+                        selectedBranch = value;
+                      });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 19, vertical: 8),
+                      child: SizedBox(
+                        width: 96,
+                        child: Text(
+                          selectedBranch,
+                          style: const TextStyle(
+                              fontSize: 15.0, color: MyColor.grey),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const Padding(
+              padding: EdgeInsets.only(left: 37, right: 58),
+              child: Divider(),
             ),
             const SizedBox(height: 8),
-            Padding(
-              padding: const EdgeInsets.only(left: 37, right: 58),
-              child: TextFormField(
-                maxLength: 4,
-                keyboardType: TextInputType.number,
-                controller: registerProvider.passingYearController.controller,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter passing year.';
-                  }
-                  return null; // Return null if the input is valid
-                },
-                textInputAction: TextInputAction.done,
-                decoration: const InputDecoration(
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: MyColor.borderColor,
-                    ),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: MyColor.borderColor,
-                    ),
-                  ),
-                  hintText: 'Passing Year',
-                  hintStyle: TextStyle(
-                    color: MyColor.grey,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w500,
+            Row(
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(left: 34),
+                  child: Text(
+                    "Passing year",
+                    style: TextStyle(fontSize: 15.0, color: MyColor.grey),
                   ),
                 ),
-              ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 28, right: 58),
+                  child: PopupMenuButton<String>(
+                    itemBuilder: (BuildContext context) {
+                      return PassingYearList.passingYear.map((String state) {
+                        return PopupMenuItem<String>(
+                          value: state,
+                          child: Text(state),
+                        );
+                      }).toList();
+                    },
+                    onSelected: (String value) {
+                      setState(() {
+                        selectPassingYear = value;
+                      });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 19, vertical: 8),
+                      child: SizedBox(
+                        width: 96,
+                        child: Text(
+                          selectPassingYear,
+                          style: const TextStyle(
+                              fontSize: 15.0, color: MyColor.grey),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const Padding(
+              padding: EdgeInsets.only(left: 37, right: 58),
+              child: Divider(),
             ),
             const SizedBox(height: 35),
             const Padding(
@@ -1122,15 +1079,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         "whatsapp_number": registerProvider
                             .whatsAppNumberController.controller.text,
                         "college_state": selectedState,
-                        "college_name": registerProvider
-                            .collageNameController.controller.text
-                            .toString(),
-                        "branch_name": registerProvider
-                            .branchNameController.controller.text
-                            .toString(),
-                        "passing_year": registerProvider
-                            .passingYearController.controller.text
-                            .toString(),
+                        "college_name": collagename,
+                        "branch_name": selectedBranch,
+                        "passing_year": selectPassingYear,
                         "password":
                             registerProvider.passwordController.controller.text,
                         "address":

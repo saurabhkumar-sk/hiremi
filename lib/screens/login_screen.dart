@@ -117,6 +117,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     }
                     return null; // Return null if the input is valid
                   },
+                  obscureText:
+                      true, // Set to true to obscure the text for password input
+                  obscuringCharacter: '*',
                   textInputAction: TextInputAction.done,
                   controller: passwordController,
                   decoration: const InputDecoration(
@@ -200,12 +203,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                     )),
                           );
                         } else {
+                          // ignore: use_build_context_synchronously
                           showDialog(
                             context: context,
                             builder: (context) {
                               return AlertDialog(
                                 title: const Text(
-                                    'Please enter correct information'),
+                                    'Please enter Correct email or Password'),
                                 actions: <Widget>[
                                   TextButton(
                                     onPressed: () {
@@ -251,12 +255,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) => const RegisterScreen(),
-                      //   ),
-                      // );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const RegisterScreen(),
+                        ),
+                      );
                     },
                     child: const Text(
                       'Register Now',
