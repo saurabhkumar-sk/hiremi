@@ -1,22 +1,22 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_layout/components/thanks_for_applying.dart';
 import 'package:flutter_layout/screens/fresher_job_screen.dart';
 import 'package:flutter_layout/screens/hello.dart';
-import 'package:flutter_layout/screens/user_verification_screen.dart';
 import 'package:flutter_layout/utils/my_colors.dart';
 import 'package:flutter_layout/utils/my_images.dart';
 
 // ignore: must_be_immutable
-class DashbordScreen extends StatefulWidget {
-  DashbordScreen({super.key, required this.uid});
+class DashboardThankApply extends StatefulWidget {
+  DashboardThankApply({super.key, required this.uid});
   String uid;
 
   @override
-  State<DashbordScreen> createState() => _DashbordScreenState();
+  State<DashboardThankApply> createState() => _DashboardThankApplyState();
 }
 
-class _DashbordScreenState extends State<DashbordScreen> {
+class _DashboardThankApplyState extends State<DashboardThankApply> {
   final controller = TextEditingController();
   late BuildContext oldDialogContext;
 
@@ -47,48 +47,50 @@ class _DashbordScreenState extends State<DashbordScreen> {
           context: context,
           builder: (BuildContext dialogContext) {
             dialogShown = true;
-            return AlertDialog(
-              backgroundColor: Colors.white,
-              surfaceTintColor: Colors.transparent,
-              title: const Text(
-                'For the verification\n process',
-                textAlign: TextAlign.center,
-              ),
-              actionsPadding: const EdgeInsets.only(top: 15, bottom: 25),
-              actionsAlignment: MainAxisAlignment.center,
-              actions: [
-                SizedBox(
-                  height: 55.0,
-                  width: 236,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const UserVerificationScreen(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFFF13640),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        )),
-                    child: const Text(
-                      "click here",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 20,
-                      ),
-                    ),
+            return const Padding(
+              padding: EdgeInsets.all(12),
+              child: AlertDialog(
+                surfaceTintColor: Colors.transparent,
+                title: Text(
+                  'Thank you for apply in Hiremi',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w800,
+                    color: MyColor.pink,
                   ),
                 ),
-              ],
-              titleTextStyle: const TextStyle(
-                fontWeight: FontWeight.w800,
-                fontSize: 18,
-                color: MyColor.pink,
+                content: Text.rich(
+                  textAlign: TextAlign.center,
+                  TextSpan(
+                    children: [
+                      TextSpan(
+                        text: 'You\'ve applied for the ',
+                        style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w500,
+                          color: MyColor.black,
+                        ),
+                      ),
+                      TextSpan(
+                        text: 'Business Development Associate ',
+                        style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w700,
+                          color: MyColor.black,
+                        ),
+                      ),
+                      TextSpan(
+                        text: 'position. We\'ll update you after the interview',
+                        style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w500,
+                          color: MyColor.black,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             );
           },

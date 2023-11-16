@@ -3,20 +3,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_layout/screens/fresher_job_screen.dart';
 import 'package:flutter_layout/screens/hello.dart';
-import 'package:flutter_layout/screens/user_verification_screen.dart';
 import 'package:flutter_layout/utils/my_colors.dart';
 import 'package:flutter_layout/utils/my_images.dart';
 
 // ignore: must_be_immutable
-class DashbordScreen extends StatefulWidget {
-  DashbordScreen({super.key, required this.uid});
+class FemaleDashbordScreen extends StatefulWidget {
+  FemaleDashbordScreen({super.key, required this.uid});
   String uid;
 
   @override
-  State<DashbordScreen> createState() => _DashbordScreenState();
+  State<FemaleDashbordScreen> createState() => _FemaleDashbordScreenState();
 }
 
-class _DashbordScreenState extends State<DashbordScreen> {
+class _FemaleDashbordScreenState extends State<FemaleDashbordScreen> {
   final controller = TextEditingController();
   late BuildContext oldDialogContext;
 
@@ -26,76 +25,11 @@ class _DashbordScreenState extends State<DashbordScreen> {
   void _changeIconColor(int index) {
     setState(() {
       _currentIndex = index;
-      // Update the icon colors based on the selected index
       _iconColor = MyColor.grey;
     });
   }
 
   bool dialogShown = false;
-
-  @override
-  void initState() {
-    super.initState();
-
-    if (!dialogShown) {
-      Stream<int>.periodic(const Duration(milliseconds: 100), (t) => t)
-          .take(1)
-          .listen((t) {
-        showDialog(
-          barrierDismissible: true,
-          useSafeArea: true,
-          context: context,
-          builder: (BuildContext dialogContext) {
-            dialogShown = true;
-            return AlertDialog(
-              backgroundColor: Colors.white,
-              surfaceTintColor: Colors.transparent,
-              title: const Text(
-                'For the verification\n process',
-                textAlign: TextAlign.center,
-              ),
-              actionsPadding: const EdgeInsets.only(top: 15, bottom: 25),
-              actionsAlignment: MainAxisAlignment.center,
-              actions: [
-                SizedBox(
-                  height: 55.0,
-                  width: 236,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const UserVerificationScreen(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFFF13640),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        )),
-                    child: const Text(
-                      "click here",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 20,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-              titleTextStyle: const TextStyle(
-                fontWeight: FontWeight.w800,
-                fontSize: 18,
-                color: MyColor.pink,
-              ),
-            );
-          },
-        );
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -156,7 +90,7 @@ class _DashbordScreenState extends State<DashbordScreen> {
                     const SizedBox(width: 35),
                     const CircleAvatar(
                       backgroundColor: Colors.transparent,
-                      backgroundImage: AssetImage(MyImages.profileImage),
+                      backgroundImage: AssetImage(MyImages.femaleProfileImage),
                       radius: 35,
                     ),
                     const SizedBox(width: 20),
@@ -171,7 +105,7 @@ class _DashbordScreenState extends State<DashbordScreen> {
                           ),
                         ),
                         const Text(
-                          'Rishu',
+                          'Kajal',
                           style: TextStyle(
                             fontWeight: FontWeight.w700,
                             fontSize: 20,
@@ -181,7 +115,7 @@ class _DashbordScreenState extends State<DashbordScreen> {
                           'ID : ${widget.uid}',
                           style: const TextStyle(
                             fontWeight: FontWeight.w600,
-                            fontSize: 16,
+                            fontSize: 15,
                           ),
                         ),
                       ],
