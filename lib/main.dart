@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_layout/provider/collage_list.dart';
 import 'package:flutter_layout/provider/register_provider.dart';
 import 'package:flutter_layout/provider/provider.dart';
 import 'package:flutter_layout/screens/splash_screen.dart';
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => UserProvider()),
         ChangeNotifierProvider(create: (context) => RegisterProvider()),
+        ChangeNotifierProvider(create: (context) => CollageListProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
