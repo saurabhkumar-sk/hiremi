@@ -25,13 +25,20 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
             Padding(
               padding: const EdgeInsets.only(top: 39, left: 27, right: 300),
               child: SizedBox(
-                height: 38,
-                  width: 32,
+                height: 50,
+                width: 50,
                 child: GestureDetector(
                   onTap: () {
                     Navigator.pop(context);
                   },
                   child: ClipOval(
+                    child: Card(
+                      elevation: 5,
+                      shadowColor: Colors.black,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(25)),
+                      ),
+                      surfaceTintColor: Colors.transparent,
                       child: Container(
                         decoration: const BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(25)),
@@ -46,7 +53,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                           ),
                         ),
                         child: const Padding(
-                          padding: EdgeInsets.only(right: 10),
+                          padding: EdgeInsets.only(right: 6),
                           child: Icon(
                             Icons.arrow_back_ios_new,
                             size: 30,
@@ -55,6 +62,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                         ),
                       ),
                     ),
+                  ),
                 ),
               ),
             ),

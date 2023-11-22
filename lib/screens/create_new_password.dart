@@ -21,32 +21,40 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
             Padding(
               padding: const EdgeInsets.only(top: 39, left: 27, right: 300),
               child: SizedBox(
-                height: 38,
-                width: 32,
+                height: 50,
+                width: 50,
                 child: GestureDetector(
                   onTap: () {
                     Navigator.pop(context);
                   },
                   child: ClipOval(
-                    child: Container(
-                      decoration: const BoxDecoration(
+                    child: Card(
+                      elevation: 5,
+                      shadowColor: Colors.black,
+                      shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(25)),
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.topRight,
-                          transform: GradientRotation(20),
-                          colors: [
-                            Color(0xFFF13640),
-                            Color(0xFFBD2930),
-                          ],
-                        ),
                       ),
-                      child: const Padding(
-                        padding: EdgeInsets.only(right: 10),
-                        child: Icon(
-                          Icons.arrow_back_ios_new,
-                          size: 30,
-                          color: Colors.white,
+                      surfaceTintColor: Colors.transparent,
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                          gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.topRight,
+                            transform: GradientRotation(20),
+                            colors: [
+                              Color(0xFFF13640),
+                              Color(0xFFBD2930),
+                            ],
+                          ),
+                        ),
+                        child: const Padding(
+                          padding: EdgeInsets.only(right: 6),
+                          child: Icon(
+                            Icons.arrow_back_ios_new,
+                            size: 30,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
@@ -169,7 +177,6 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
                     MaterialPageRoute(
                       builder: (context) => DashbordScreen(uid: 'saurabh'),
                     ),
-                    
                   );
                 },
                 style: ElevatedButton.styleFrom(

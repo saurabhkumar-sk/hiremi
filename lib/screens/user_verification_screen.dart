@@ -14,7 +14,7 @@ class UserVerificationScreen extends StatefulWidget {
 class _UserVerificationScreenState extends State<UserVerificationScreen> {
   TextEditingController scheduleDateController = TextEditingController();
   TextEditingController scheduleTimeController = TextEditingController();
-  bool rateYourComm = false;
+  List<bool> selectedStates = [true, true, true, false, false];
 
 //Date Picker
   void selectDatePicker() async {
@@ -249,13 +249,13 @@ class _UserVerificationScreenState extends State<UserVerificationScreen> {
                     5,
                     (index) => GestureDetector(
                       onTap: () {
-                        rateYourComm = !rateYourComm;
+                        selectedStates[index] = !selectedStates[index];
                         setState(() {});
                       },
                       child: Container(
                         margin: const EdgeInsets.only(right: 20, top: 10),
                         decoration: BoxDecoration(
-                          color: rateYourComm
+                          color: selectedStates[index]
                               ? MyColor.greyBottomappBar
                               : Colors.green,
                           borderRadius: BorderRadius.circular(10),
