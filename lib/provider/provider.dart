@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_layout/models/api_user.dart';
 import 'package:flutter_layout/api_services/user_services.dart';
+import 'package:flutter_layout/utils/api.dart';
 
 class UserProvider extends ChangeNotifier {
   final service = UserService();
@@ -29,7 +30,7 @@ class UserProvider extends ChangeNotifier {
         "body": _body,
         "userId": _userId
       };
-      await service.createPostApi(data);
+      await service.createPostApi(data, ApiUrls.forgetPaassword);
     } catch (e, s) {
       log(e.toString(), name: 'error catch createPost', stackTrace: s);
     }

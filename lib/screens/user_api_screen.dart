@@ -12,7 +12,6 @@ class ApiUserScreen extends StatefulWidget {
 class _ApiUserScreenState extends State<ApiUserScreen> {
   final service = UserService();
 
- 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,10 +45,6 @@ class _ApiUserScreenState extends State<ApiUserScreen> {
                             Text(
                                 'Date of birth :${snapshot.data![index].dateOfBirth}'),
                             Text(
-                                'BirthPlace : ${snapshot.data![index].birthPlace}'),
-                            Text(
-                                'phoneNumbar : ${snapshot.data![index].phoneNumbar}'),
-                            Text(
                                 'whatsappNumber :${snapshot.data![index].whatsappNumber}'),
                             Text(
                                 'collegeState : ${snapshot.data![index].collegeState}'),
@@ -61,15 +56,6 @@ class _ApiUserScreenState extends State<ApiUserScreen> {
                                 'passingYear : ${snapshot.data![index].passingYear.toString()}'),
                             Text(
                                 'password : ${snapshot.data![index].password}'),
-                            Text(
-                                'internship : ${snapshot.data![index].internship.toString()}'),
-                            Text(
-                                'freshers : ${snapshot.data![index].freshers.toString()}'),
-                            Text(
-                                'experience : ${snapshot.data![index].experience.toString()}'),
-                            Text(
-                                'mentroship : ${snapshot.data![index].mentroship.toString()}'),
-                            Text('status : ${snapshot.data![index].status}'),
                           ],
                         );
                       },

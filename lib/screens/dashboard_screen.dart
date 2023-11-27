@@ -1,22 +1,28 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_layout/api_services/user_services.dart';
+import 'package:flutter_layout/provider/register_provider.dart';
 import 'package:flutter_layout/screens/fresher_job_screen.dart';
 import 'package:flutter_layout/screens/hello.dart';
 import 'package:flutter_layout/screens/user_verification_screen.dart';
 import 'package:flutter_layout/utils/my_colors.dart';
 import 'package:flutter_layout/utils/my_images.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class DashbordScreen extends StatefulWidget {
-  DashbordScreen({super.key, required this.uid});
-  String uid;
+  const DashbordScreen({super.key});
 
   @override
   State<DashbordScreen> createState() => _DashbordScreenState();
 }
 
 class _DashbordScreenState extends State<DashbordScreen> {
+  UserService _userService = new UserService();
+
   final controller = TextEditingController();
   late BuildContext oldDialogContext;
 
@@ -31,70 +37,125 @@ class _DashbordScreenState extends State<DashbordScreen> {
     });
   }
 
-  bool dialogShown = false;
+  bool dialogShown = true;
 
+  String loginEmail = "";
+  String loginPassword = "";
+  bool? isVerified;
+  String? id;
+  String uid = 'ID : 10000001';
   @override
   void initState() {
+    initialize();
+    getUidAndVerification();
+
     super.initState();
 
-    if (!dialogShown) {
+    if (dialogShown) {
       Stream<int>.periodic(const Duration(milliseconds: 100), (t) => t)
           .take(1)
           .listen((t) {
         showDialog(
-          barrierDismissible: true,
+          barrierDismissible: false, // Set to false to make it not removable
+
           useSafeArea: true,
           context: context,
           builder: (BuildContext dialogContext) {
             dialogShown = true;
-            return AlertDialog(
-              backgroundColor: Colors.white,
-              surfaceTintColor: Colors.transparent,
-              title: const Text(
-                'For the verification\n process',
-                textAlign: TextAlign.center,
-              ),
-              actionsPadding: const EdgeInsets.only(top: 15, bottom: 25),
-              actionsAlignment: MainAxisAlignment.center,
-              actions: [
-                SizedBox(
-                  height: 55.0,
-                  width: 236,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const UserVerificationScreen(),
+            return WillPopScope(
+              onWillPop: () async {
+                // Exit the app
+                SystemNavigator.pop();
+                return Future.value(false);
+              },
+              child: AlertDialog(
+                backgroundColor: Colors.white,
+                surfaceTintColor: Colors.transparent,
+                title: const Text(
+                  'For the verification\n process',
+                  textAlign: TextAlign.center,
+                ),
+                actionsPadding: const EdgeInsets.only(top: 15, bottom: 25),
+                actionsAlignment: MainAxisAlignment.center,
+                actions: [
+                  SizedBox(
+                    height: 55.0,
+                    width: 236,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                const UserVerificationScreen(),
+                          ),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFFF13640),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          )),
+                      child: const Text(
+                        "click here",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 20,
                         ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFFF13640),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        )),
-                    child: const Text(
-                      "click here",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 20,
                       ),
                     ),
                   ),
+                ],
+                titleTextStyle: const TextStyle(
+                  fontWeight: FontWeight.w800,
+                  fontSize: 18,
+                  color: MyColor.pink,
                 ),
-              ],
-              titleTextStyle: const TextStyle(
-                fontWeight: FontWeight.w800,
-                fontSize: 18,
-                color: MyColor.pink,
               ),
             );
           },
         );
       });
     }
+  }
+
+  Future<void> checkLoginStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    loginEmail = prefs.getString('email') ?? '';
+    loginPassword = prefs.getString('password') ?? '';
+    print(loginEmail + "and" + loginPassword);
+  }
+
+  Future<void> initialize() async {
+    await checkLoginStatus();
+
+    await getUidAndVerification(); // Make sure to use 'await' here
+    // Set the state after getting the uid and verification status
+    setState(() {
+      if (isVerified == true) {
+        uid = "ID : $id";
+      } else {
+        uid = 'ID : 10000001';
+      }
+    });
+    // Rest of your code...
+  }
+
+  Future<void> getUidAndVerification() async {
+    await _userService.getapi();
+
+    // Checking if the user is verified or not
+    isVerified = _userService.verificationStatus(
+      loginEmail.toString(),
+    );
+    print({isVerified, "verification Status"});
+
+    // Getting uuid
+    id = _userService.uniqueId(
+      loginEmail.toString(),
+    );
+    print({id, "unique id"});
   }
 
   @override
@@ -177,12 +238,28 @@ class _DashbordScreenState extends State<DashbordScreen> {
                             fontSize: 20,
                           ),
                         ),
-                        Text(
-                          'ID : ${widget.uid}',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16,
-                          ),
+                        Row(
+                          children: [
+                            Text(
+                              uid,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 8,
+                            ),
+                            isVerified == true
+                                ? const Icon(
+                                    Icons.verified,
+                                    color: Colors.green,
+                                  )
+                                : const Icon(
+                                    Icons.warning,
+                                    color: Colors.red,
+                                  )
+                          ],
                         ),
                       ],
                     ),

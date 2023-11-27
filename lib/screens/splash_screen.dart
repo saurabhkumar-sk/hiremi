@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_layout/screens/dashboard_screen.dart';
 import 'package:flutter_layout/screens/login_screen.dart';
 import 'package:flutter_layout/utils/my_images.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -10,14 +12,29 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  void checkLoginStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isLogged = prefs.getBool('isLogged') ?? false;
+
+    if (isLogged) {
+      // User is already logged in, navigate to the dashboard or another screen
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => DashbordScreen()),
+      );
+    } else {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LoginScreen()),
+      );
+    }
+  }
+
   @override
   void initState() {
     Future.delayed(const Duration(seconds: 1)).then((value) {
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const LoginScreen(),
-          ));
+      // Check login status from SharedPreferences
+      checkLoginStatus();
     });
     super.initState();
   }
@@ -31,3 +48,4 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 }
+// Check login status from SharedPreferences

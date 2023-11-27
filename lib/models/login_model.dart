@@ -15,6 +15,7 @@ class userModel {
   int? passingYear;
   String? password;
   bool? verified;
+  int? otp;
   String? candidateStatus;
   String? paymentStatus;
 
@@ -35,6 +36,7 @@ class userModel {
       this.passingYear,
       this.password,
       this.verified,
+      this.otp,
       this.candidateStatus,
       this.paymentStatus});
 
@@ -55,30 +57,32 @@ class userModel {
     passingYear = json['passing_year'];
     password = json['password'];
     verified = json['verified'];
+    otp = json['otp'];
     candidateStatus = json['candidate_status'];
     paymentStatus = json['payment_status'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['uid'] = uid;
-    data['full_name'] = fullName;
-    data['father_name'] = fatherName;
-    data['email'] = email;
-    data['date_of_birth'] = dateOfBirth;
-    data['gender'] = gender;
-    data['address'] = address;
-    data['phone_number'] = phoneNumber;
-    data['whatsapp_number'] = whatsappNumber;
-    data['college_state'] = collegeState;
-    data['college_name'] = collegeName;
-    data['branch_name'] = branchName;
-    data['passing_year'] = passingYear;
-    data['password'] = password;
-    data['verified'] = verified;
-    data['candidate_status'] = candidateStatus;
-    data['payment_status'] = paymentStatus;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['uid'] = this.uid;
+    data['full_name'] = this.fullName;
+    data['father_name'] = this.fatherName;
+    data['email'] = this.email;
+    data['date_of_birth'] = this.dateOfBirth;
+    data['gender'] = this.gender;
+    data['address'] = this.address;
+    data['phone_number'] = this.phoneNumber;
+    data['whatsapp_number'] = this.whatsappNumber;
+    data['college_state'] = this.collegeState;
+    data['college_name'] = this.collegeName;
+    data['branch_name'] = this.branchName;
+    data['passing_year'] = this.passingYear;
+    data['password'] = this.password;
+    data['verified'] = this.verified;
+    data['otp'] = this.otp;
+    data['candidate_status'] = this.candidateStatus;
+    data['payment_status'] = this.paymentStatus;
     return data;
   }
 }

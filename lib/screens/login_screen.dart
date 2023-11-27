@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_layout/api_services/user_services.dart';
+import 'package:flutter_layout/provider/register_provider.dart';
 import 'package:flutter_layout/screens/dashboard_screen.dart';
 import 'package:flutter_layout/screens/forget_password_screen.dart';
 import 'package:flutter_layout/screens/register_screen.dart';
 import 'package:flutter_layout/utils/my_colors.dart';
 import 'package:flutter_layout/utils/my_images.dart';
+import 'package:http/http.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -14,19 +18,24 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
   String errorTextVal = "";
-  // pushToScreen(BuildContext context) {
-  //   Navigator.of(context).push(
-  //     MaterialPageRoute(builder: (_) => const DashbordScreen()),
-  //   );
-  // }
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final UserService _userService = UserService();
   @override
   Widget build(BuildContext context) {
+    final registerProvider = Provider.of<RegisterProvider>(context);
+
+    // shared preferences
+    void saveUserData(String email, String password) async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setBool('isLogged', true);
+      prefs.setString('email', email);
+      prefs.setString('password', password);
+      print(prefs.getString('email'));
+      print(prefs.getBool('isLogged'));
+    }
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Form(
@@ -59,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 63),
                 child: TextFormField(
-                  controller: emailController,
+                  controller: registerProvider.loginEmailController.controller,
                   onChanged: (value) {
                     setState(() {
                       if (value.contains(' ')) {
@@ -120,7 +129,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       true, // Set to true to obscure the text for password input
                   obscuringCharacter: '*',
                   textInputAction: TextInputAction.done,
-                  controller: passwordController,
+                  controller:
+                      registerProvider.loginPasswordController.controller,
                   decoration: const InputDecoration(
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
@@ -186,21 +196,26 @@ class _LoginScreenState extends State<LoginScreen> {
                       if (_formKey.currentState!.validate()) {
                         await _userService.getapi();
 
-                        var uid = _userService.uniqueId(
-                            emailController.text.trim(),
-                            passwordController.text.trim());
                         // pushToScreen(context);
                         bool loginSuccess = _userService.loginUser(
-                            emailController.text.trim(),
-                            passwordController.text.trim());
+                            registerProvider
+                                .loginEmailController.controller.text
+                                .trim(),
+                            registerProvider
+                                .loginPasswordController.controller.text
+                                .trim());
 
                         if (loginSuccess) {
+                          saveUserData(
+                              registerProvider
+                                  .loginEmailController.controller.text
+                                  .trim(),
+                              registerProvider
+                                  .passwordController.controller.text
+                                  .trim());
                           // ignore: use_build_context_synchronously
                           Navigator.of(context).push(
-                            MaterialPageRoute(
-                                builder: (_) => DashbordScreen(
-                                      uid: uid,
-                                    )),
+                            MaterialPageRoute(builder: (_) => DashbordScreen()),
                           );
                         } else {
                           // ignore: use_build_context_synchronously
@@ -210,6 +225,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               return AlertDialog(
                                 title: const Text(
                                     'Please enter Correct email or Password'),
+                                content: const Text(
+                                    'Try forget password and try again'),
                                 actions: <Widget>[
                                   TextButton(
                                     onPressed: () {
@@ -253,7 +270,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       fontSize: 12,
                     ),
                   ),
-                  GestureDetector(
+                  InkWell(
                     onTap: () {
                       Navigator.push(
                         context,

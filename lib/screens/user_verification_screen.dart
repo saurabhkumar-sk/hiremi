@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_layout/api_services/user_services.dart';
 import 'package:flutter_layout/components/database.dart';
 import 'package:flutter_layout/screens/application_review_dashboard.dart';
+import 'package:flutter_layout/screens/dashboard_screen.dart';
+import 'package:flutter_layout/utils/api.dart';
 import 'package:flutter_layout/utils/my_colors.dart';
 import 'package:flutter_layout/utils/my_images.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class UserVerificationScreen extends StatefulWidget {
   const UserVerificationScreen({super.key});
@@ -12,9 +16,13 @@ class UserVerificationScreen extends StatefulWidget {
 }
 
 class _UserVerificationScreenState extends State<UserVerificationScreen> {
+  UserService _userService = UserService();
   TextEditingController scheduleDateController = TextEditingController();
   TextEditingController scheduleTimeController = TextEditingController();
-  bool rateYourComm = false;
+  TextEditingController collageIdController = TextEditingController();
+  TextEditingController descreptionController = TextEditingController();
+  double? rateYourComm;
+  String yourSkill = "";
 
 //Date Picker
   void selectDatePicker() async {
@@ -187,6 +195,7 @@ class _UserVerificationScreenState extends State<UserVerificationScreen> {
                 ),
               ),
               TextFormField(
+                controller: collageIdController,
                 keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(
                   enabledBorder: UnderlineInputBorder(
@@ -224,7 +233,7 @@ class _UserVerificationScreenState extends State<UserVerificationScreen> {
                     hintText: 'Ex-Developer',
                     // width: 340,
                     onSelected: (String? value) {
-                      setState(() {});
+                      yourSkill = value!;
                     },
                     dropdownMenuEntries: exDeveloperlist
                         .map<DropdownMenuEntry<String>>((String value) {
@@ -245,25 +254,22 @@ class _UserVerificationScreenState extends State<UserVerificationScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  ...List.generate(
-                    5,
-                    (index) => GestureDetector(
-                      onTap: () {
-                        rateYourComm = !rateYourComm;
-                        setState(() {});
-                      },
-                      child: Container(
-                        margin: const EdgeInsets.only(right: 20, top: 10),
-                        decoration: BoxDecoration(
-                          color: rateYourComm
-                              ? MyColor.greyBottomappBar
-                              : Colors.green,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        height: 28,
-                        width: 36,
-                      ),
+                  RatingBar.builder(
+                    initialRating: 3,
+                    minRating: 1,
+                    direction: Axis.horizontal,
+                    allowHalfRating: false,
+                    itemCount: 5,
+                    itemPadding: const EdgeInsets.symmetric(
+                        horizontal: 4.0, vertical: 5),
+                    itemBuilder: (context, _) => const Icon(
+                      Icons.star,
+                      color: Colors.green,
                     ),
+                    onRatingUpdate: (rating) {
+                      rateYourComm = rating;
+                      print(rateYourComm);
+                    },
                   ),
                 ],
               ),
@@ -277,6 +283,7 @@ class _UserVerificationScreenState extends State<UserVerificationScreen> {
               ),
               const SizedBox(height: 5),
               TextFormField(
+                controller: descreptionController,
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
                   focusedBorder: OutlineInputBorder(
@@ -423,14 +430,22 @@ class _UserVerificationScreenState extends State<UserVerificationScreen> {
                   height: 40,
                   width: 170,
                   child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              ApplicationRevievDashbordScreen(uid: '123'),
-                        ),
-                      );
+                    onPressed: () async {
+                      Map<String, dynamic> body = {
+                        "college_id_number": "1",
+                        "communication_skills": "5",
+                        "status": "dskdsokosk"
+                      };
+                      // Navigator.pushReplacement(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) =>
+                      //         DashbordScreen(),
+                      //   ),
+                      // );
+                      var response = await _userService.createPostApi(
+                          body, ApiUrls.verificationDetails);
+                      print(response.statusCode);
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFFF13640),

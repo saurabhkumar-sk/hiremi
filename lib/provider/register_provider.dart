@@ -20,6 +20,17 @@ class RegisterProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // isVerified is use to check if the user is verified or not
+
+  bool? _isVerified;
+
+  bool? get isVerified => _isVerified;
+
+  set isVerified(bool? value) {
+    _isVerified = value;
+    notifyListeners();
+  }
+
   MyTextEditingController _firstnameController = MyTextEditingController();
   MyTextEditingController _lastnameController = MyTextEditingController();
   MyTextEditingController _fatherFirstController = MyTextEditingController();
@@ -41,6 +52,14 @@ class RegisterProvider extends ChangeNotifier {
   MyTextEditingController _passwordController = MyTextEditingController();
   MyTextEditingController _conformPasswordController =
       MyTextEditingController();
+
+// for login controller
+  MyTextEditingController _loginEmailController = MyTextEditingController();
+  MyTextEditingController _loginPasswordController = MyTextEditingController();
+
+  MyTextEditingController get loginEmailController => _loginEmailController;
+  MyTextEditingController get loginPasswordController =>
+      _loginPasswordController;
 
   MyTextEditingController get firstnameController => _firstnameController;
   MyTextEditingController get lastnameController => _lastnameController;
@@ -68,6 +87,8 @@ class RegisterProvider extends ChangeNotifier {
 
   // Create a function to reset all controllers
   void resetControllers() {
+    _loginEmailController.controller.clear();
+    _loginPasswordController.controller.clear();
     _firstnameController.controller.clear();
     _lastnameController.controller.clear();
     _fatherFirstController.controller.clear();

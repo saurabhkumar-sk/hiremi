@@ -3,15 +3,24 @@ import 'dart:developer';
 
 import 'package:flutter_layout/utils/api.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BaseService {
+  Future<String?> getStoredCSRFToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('csrfToken');
+  }
+
   Future getHttp(String api) async {
-    final url = ApiUrls.baseUrl + api;
+    final url = ApiUrls.registration;
     log(url, name: 'getHttp');
 
     final response = await http.get(
       Uri.parse(url),
-      headers: {'content-type': 'application/json'},
+      headers: {
+        'content-type': 'application/json',
+        //  'Host': 'suraj.ojha20145@gmail.com',
+      },
     );
 
     return response;
@@ -21,17 +30,21 @@ class BaseService {
     required String api,
     required Map<String, dynamic> data,
   }) async {
-    final url = ApiUrls.baseUrl + api;
+    final url = api;
     log(url, name: 'postHttp');
 
     final body = json.encode(data);
 
+    final csrfToken = await getStoredCSRFToken();
+    print(csrfToken);
     final response = await http.post(
       Uri.parse(url),
       headers: {
-        'content-type': 'application/json',
+        'Content-Type': 'application/json; charset=utf-8',
+        'Cookie': csrfToken.toString(),
+        //'X-CSRFToken': csrfToken.toString(),
       },
-      body: body,
+      body: utf8.encode(body),
     );
 
     return response;
