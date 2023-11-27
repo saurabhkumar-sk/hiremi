@@ -87,14 +87,12 @@ class _TermAndConditionState extends State<TermAndCondition> {
               width: 101,
               child: ElevatedButton(
                 onPressed: () {
-                  setState(() {
-                    showDialog(
-                      context: context,
-                      builder: (context) => const JobRoleDescriptionScreen(
-                        index: 1,
-                      ),
-                    );
-                  });
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            const JobRoleDescriptionScreen(index: 1),
+                      ));
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFF13640),
