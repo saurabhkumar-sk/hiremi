@@ -1,6 +1,10 @@
 import 'dart:developer';
 import 'package:flutter_layout/provider/collage_list.dart';
+import 'package:flutter_layout/provider/select_passing_year.dart';
+import 'package:flutter_layout/provider/selected_branch.dart';
+import 'package:flutter_layout/provider/selected_state_provider.dart';
 import 'package:flutter_layout/screens/collage_list.dart';
+import 'package:flutter_layout/utils/api.dart';
 import 'package:flutter_layout/utils/branch_name_list.dart';
 import 'package:flutter_layout/utils/indian_state_list.dart';
 import 'package:flutter_layout/utils/passing_year_list.dart';
@@ -33,13 +37,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   static String generateUid() {
     final uuid = Uuid();
-    final fullUuid = uuid.v4(); // Generate a Version 4 (random) UUID
-    final shortUid = fullUuid.substring(0, 8); // Extract the first 8 characters
+    final fullUuid = uuid.v1();
+    // Generate a Version 4 (random) UUID
+    final shortUid = fullUuid.substring(0, 8);
+    // Extract the first 8 characters
     return shortUid;
   }
 
   String errorTextVal = '';
-  var uuid = generateUid();
+  var uniqueid = generateUid().substring(0, 8);
+
   String genderSelector = "";
 
   DateTime date = DateTime.now();
@@ -51,15 +58,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String? statePicker;
   String? cityPicker;
 
-  String selectedState = 'Madhya Pradesh';
-  String selectedBranch = 'Civil Engineering';
-  String selectPassingYear = "2024";
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final registerProvider = Provider.of<RegisterProvider>(context);
     var collageProvider = Provider.of<CollageListProvider>(context);
+    var selectedBranch = Provider.of<SelectedBranch>(context);
+    var selectedPassingYear = Provider.of<SelectPassingYear>(context);
+
     String selectCollage = collageProvider.selectCollage;
+
+    SelectState selectedState = Provider.of<SelectState>(context);
 
     if (collageProvider.selectCollage == "Select Collage") {
       collagename = null;
@@ -77,10 +86,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
       if (datePicker != null) {
         if (datePicker.isAfter(DateTime.now())) {
         } else {
-          setState(() {
-            registerProvider.dateOfBirthController.controller.text =
-                datePicker.toString().split(" ")[0];
-          });
+          registerProvider.dateOfBirthController.controller.text =
+              datePicker.toString().split(" ")[0];
         }
       }
     }
@@ -739,7 +746,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 28, right: 58),
+                  padding: const EdgeInsets.only(left: 28, right: 20),
                   child: PopupMenuButton<String>(
                     itemBuilder: (BuildContext context) {
                       return IndianStates.states.map((String state) {
@@ -750,9 +757,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       }).toList();
                     },
                     onSelected: (String value) {
-                      setState(() {
-                        selectedState = value;
-                      });
+                      selectedState.selectedState = value;
+                      print(selectedState.selectedState);
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
@@ -760,7 +766,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       child: SizedBox(
                         width: 95,
                         child: Text(
-                          selectedState,
+                          selectedState.selectedState,
                           style: const TextStyle(
                               fontSize: 15.0, color: MyColor.grey),
                         ),
@@ -784,7 +790,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 28, right: 58),
+                  padding: const EdgeInsets.only(left: 28, right: 10),
                   child: TextButton(
                       onPressed: () {
                         Navigator.push(
@@ -835,7 +841,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 28, right: 58),
+                  padding: const EdgeInsets.only(left: 28, right: 10),
                   child: PopupMenuButton<String>(
                     itemBuilder: (BuildContext context) {
                       return BranchNameList.branchName.map((String state) {
@@ -846,9 +852,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       }).toList();
                     },
                     onSelected: (String value) {
-                      setState(() {
-                        selectedBranch = value;
-                      });
+                      selectedBranch.selectedBranch = value;
+                      print(selectedBranch.selectedBranch);
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
@@ -856,7 +861,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       child: SizedBox(
                         width: 96,
                         child: Text(
-                          selectedBranch,
+                          selectedBranch.selectedBranch,
                           style: const TextStyle(
                               fontSize: 15.0, color: MyColor.grey),
                         ),
@@ -881,7 +886,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 28, right: 58),
+                  padding: const EdgeInsets.only(left: 28, right: 20),
                   child: PopupMenuButton<String>(
                     itemBuilder: (BuildContext context) {
                       return PassingYearList.passingYear.map((String state) {
@@ -892,9 +897,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       }).toList();
                     },
                     onSelected: (String value) {
-                      setState(() {
-                        selectPassingYear = value;
-                      });
+                      selectedPassingYear.selectPassingYear = value;
+                      print(selectedPassingYear.selectPassingYear);
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
@@ -902,7 +906,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       child: SizedBox(
                         width: 96,
                         child: Text(
-                          selectPassingYear,
+                          selectedPassingYear.selectPassingYear,
                           style: const TextStyle(
                               fontSize: 15.0, color: MyColor.grey),
                         ),
@@ -1017,7 +1021,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 width: 230,
                 child: ElevatedButton(
                   onPressed: () async {
-                    print("our random id is " + uuid);
+                    print("our random id is " + uniqueid);
                     //  String? day;
                     // String? month;
                     // String? year;
@@ -1049,7 +1053,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               actions: <Widget>[
                                 TextButton(
                                   onPressed: () {
-                                    log(uuid);
+                                    log(uniqueid);
                                     Navigator.of(context)
                                         .pop(); // Close the dialog
                                   },
@@ -1061,7 +1065,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         );
                       }
                       Map<String, dynamic> body = {
-                        "uid": uuid,
+                        "uid": uniqueid,
                         "full_name":
                             "${registerProvider.firstnameController.controller.text} ${registerProvider.lastnameController.controller.text}",
                         "father_name":
@@ -1078,16 +1082,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             .phoneNumberController.controller.text,
                         "whatsapp_number": registerProvider
                             .whatsAppNumberController.controller.text,
-                        "college_state": selectedState,
+                        "college_state": selectedState.selectedState,
                         "college_name": collagename,
-                        "branch_name": selectedBranch,
-                        "passing_year": selectPassingYear,
+                        "branch_name": selectedBranch.selectedBranch,
+                        "passing_year": selectedPassingYear.selectPassingYear,
                         "password":
                             registerProvider.passwordController.controller.text,
                         "address":
                             registerProvider.addressController.controller.text
                       };
-                      final responce = await ragisterApi.createPostApi(body);
+                      final responce = await ragisterApi.createPostApi(
+                          body, ApiUrls.registration);
+                      print(responce.statusCode);
                       // Navigator.push(
                       //     context,
                       //     MaterialPageRoute(

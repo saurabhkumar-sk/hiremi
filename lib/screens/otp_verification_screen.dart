@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_layout/api_services/user_services.dart';
+import 'package:flutter_layout/provider/forget_password_controller.dart';
 import 'package:flutter_layout/screens/create_new_password.dart';
+
+import 'package:flutter_layout/utils/api.dart';
 import 'package:flutter_layout/utils/my_colors.dart';
 import 'package:flutter_layout/utils/my_images.dart';
+import 'package:provider/provider.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
   const OtpVerificationScreen({super.key});
@@ -12,8 +17,17 @@ class OtpVerificationScreen extends StatefulWidget {
 }
 
 class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
+  final UserService _userService = UserService();
+  final TextEditingController fieldOne = TextEditingController();
+  final TextEditingController fieldTwo = TextEditingController();
+  final TextEditingController fieldThree = TextEditingController();
+  final TextEditingController fieldFour = TextEditingController();
+  final TextEditingController fieldFive = TextEditingController();
+  final TextEditingController fieldSix = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    final forgetPasswordProvider = Provider.of<ForgetPasswordProvider>(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -77,7 +91,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
               ),
               child: const Text(
                 textAlign: TextAlign.center,
-                'Please Enter The 4 Digit Code Sent To acharyarishi79@gmail.com',
+                'Please Enter The 6 Digit Code Sent To your email address',
                 style: TextStyle(
                   fontWeight: FontWeight.w400,
                   fontSize: 16,
@@ -86,154 +100,29 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
             ),
             const SizedBox(height: 25),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 45),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  SizedBox(
-                    height: 48,
-                    width: 46,
-                    child: TextFormField(
-                      onSaved: (newValue) {},
-                      onChanged: (value) {
-                        if (value.length == 1) {
-                          FocusScope.of(context).nextFocus();
-                        }
-                      },
-                      style: Theme.of(context).textTheme.headlineSmall,
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(11),
-                          borderSide: const BorderSide(
-                            width: 4,
-                            color: MyColor.borderColor,
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(11),
-                          borderSide: const BorderSide(
-                            width: 4,
-                            color: MyColor.borderColor,
-                          ),
-                        ),
-                      ),
-                      keyboardType: TextInputType.number,
-                      textAlign: TextAlign.center,
-                      inputFormatters: [
-                        LengthLimitingTextInputFormatter(1),
-                        FilteringTextInputFormatter.digitsOnly,
-                      ],
-                    ),
-                  ),
-                  const SizedBox(width: 24),
-                  SizedBox(
-                    height: 48,
-                    width: 46,
-                    child: TextFormField(
-                      onSaved: (newValue) {},
-                      onChanged: (value) {
-                        if (value.length == 1) {
-                          FocusScope.of(context).nextFocus();
-                        }
-                      },
-                      style: Theme.of(context).textTheme.headlineSmall,
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(11),
-                          borderSide: const BorderSide(
-                            width: 4,
-                            color: MyColor.borderColor,
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(11),
-                          borderSide: const BorderSide(
-                            width: 4,
-                            color: MyColor.borderColor,
-                          ),
-                        ),
-                      ),
-                      keyboardType: TextInputType.number,
-                      textAlign: TextAlign.center,
-                      inputFormatters: [
-                        LengthLimitingTextInputFormatter(1),
-                        FilteringTextInputFormatter.digitsOnly,
-                      ],
-                    ),
-                  ),
-                  const SizedBox(width: 24),
-                  SizedBox(
-                    height: 48,
-                    width: 46,
-                    child: TextFormField(
-                      onSaved: (newValue) {},
-                      onChanged: (value) {
-                        if (value.length == 1) {
-                          FocusScope.of(context).nextFocus();
-                        }
-                      },
-                      style: Theme.of(context).textTheme.headlineSmall,
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(11),
-                          borderSide: const BorderSide(
-                            width: 4,
-                            color: MyColor.borderColor,
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(11),
-                          borderSide: const BorderSide(
-                            width: 4,
-                            color: MyColor.borderColor,
-                          ),
-                        ),
-                      ),
-                      keyboardType: TextInputType.number,
-                      textAlign: TextAlign.center,
-                      inputFormatters: [
-                        LengthLimitingTextInputFormatter(1),
-                        FilteringTextInputFormatter.digitsOnly,
-                      ],
-                    ),
-                  ),
-                  const SizedBox(width: 24),
-                  SizedBox(
-                    height: 48,
-                    width: 46,
-                    child: TextFormField(
-                      onSaved: (newValue) {},
-                      onChanged: (value) {
-                        if (value.length == 1) {
-                          FocusScope.of(context).nextFocus();
-                        }
-                      },
-                      style: Theme.of(context).textTheme.headlineSmall,
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(11),
-                          borderSide: const BorderSide(
-                            width: 4,
-                            color: MyColor.borderColor,
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(11),
-                          borderSide: const BorderSide(
-                            width: 4,
-                            color: MyColor.borderColor,
-                          ),
-                        ),
-                      ),
-                      keyboardType: TextInputType.number,
-                      textAlign: TextAlign.center,
-                      inputFormatters: [
-                        LengthLimitingTextInputFormatter(1),
-                        FilteringTextInputFormatter.digitsOnly,
-                      ],
-                    ),
-                  )
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: TextFormField(
+                controller: fieldOne,
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  LengthLimitingTextInputFormatter(6), // Limit to 6 digits
                 ],
+                decoration: InputDecoration(
+                  labelText: 'Enter otp',
+                  hintText: 'please enter the 6 Digit Code ',
+                  prefixIcon: Icon(Icons.lock),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.blue),
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.green),
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                ),
               ),
             ),
             const SizedBox(height: 50),
@@ -249,13 +138,96 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
               height: 55.0,
               width: 236,
               child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const CreateNewPasswordScreen(),
-                    ),
-                  );
+                onPressed: () async {
+                  // String otp = fieldOne.text.toString().trim();
+                  // print(otp);
+                  // print(forgetPasswordProvider.emailController.controller.text
+                  //     .toString());
+                  // await _userService.getapi();
+                  // var verifiedotp = _userService.otpValidation(
+                  //     forgetPasswordProvider.emailController.controller.text
+                  //         .toString());
+                  // print(verifiedotp);
+                  // if (otp.toString() == verifiedotp.toString()) {
+                  //   print("otp verification successful");
+                  //   // ignore: use_build_context_synchronously
+                  //   Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //       builder: (context) => const CreateNewPasswordScreen(),
+                  //     ),
+                  //   );
+                  // } else {
+                  //   print("otp verification unsuccessful");
+                  //   // ignore: use_build_context_synchronously
+                  //   return showDialog(
+                  //     context: context,
+                  //     builder: (context) {
+                  //       return AlertDialog(
+                  //         alignment: Alignment.center,
+                  //         title: const Text('error'),
+                  //         content: Text('please enter valid otp'),
+                  //         actions: <Widget>[
+                  //           TextButton(
+                  //             onPressed: () {
+                  //               Navigator.of(context).pop(); // Close the dialog
+                  //             },
+                  //             child: Text('OK'),
+                  //           ),
+                  //         ],
+                  //       );
+                  //     },
+                  //   );
+                  // }
+
+                  // int otp = int.parse(
+                  //   fieldOne.text.toString().trim() +
+                  //       fieldTwo.text.toString().trim() +
+                  //       fieldThree.text.toString().trim() +
+                  //       fieldFour.text.toString().trim() +
+                  //       fieldFive.text.toString().trim() +
+                  //       fieldSix.text.toString().trim(),
+                  // );
+                  // print(otp);
+                  String otp = fieldOne.text.toString().trim();
+                  print(otp);
+                  Map<String, dynamic> body = {
+                    "otp": otp,
+                  };
+
+                  final responce = await _userService.createPostApi(
+                      body, ApiUrls.otpValidation);
+                  print(responce.statusCode);
+                  print(responce.body);
+                  if (responce.statusCode == 200) {
+                    // ignore: use_build_context_synchronously
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const CreateNewPasswordScreen(),
+                      ),
+                    );
+                  } else {
+                    var error = responce.body;
+                    // ignore: use_build_context_synchronously
+                    return showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: const Text('error'),
+                          content: Text(error),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop(); // Close the dialog
+                              },
+                              child: Text('OK'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFF13640),

@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:flutter/services.dart';
 import 'package:flutter_layout/models/login_model.dart';
 import 'package:flutter_layout/utils/api.dart';
 import 'package:flutter_layout/models/api_user.dart';
@@ -57,18 +56,36 @@ class UserService extends BaseService {
     return false;
   }
 
-  uniqueId(String email, String password) {
+  uniqueId(String email) {
     for (userModel user in responceData) {
-      if (user.email == email && user.password == password) {
+      if (user.email == email) {
         return user.uid;
       }
     }
   }
 
+  otpValidation(String email) {
+    for (userModel user in responceData) {
+      if (user.email == email) {
+        return user.otp;
+      }
+    }
+  }
+
+  bool? verificationStatus(String email) {
+    for (userModel user in responceData) {
+      if (user.email == email) {
+        return user.verified; // User is verified
+      }
+    }
+
+    return false; // No matching user found
+  }
 //post
 
-  Future<Response> createPostApi(Map<String, dynamic> body) async {
-    final response = await postHttp(api: ApiUrls.registration, data: body);
+  Future<Response> createPostApi(
+      Map<String, dynamic> body, String apiUrl) async {
+    final response = await postHttp(api: apiUrl, data: body);
     log(response.body);
 
     return response;

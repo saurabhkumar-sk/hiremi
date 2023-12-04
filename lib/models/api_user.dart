@@ -1,67 +1,88 @@
 class ApiUser {
-  final int id;
-  final String fullName;
-  final String fatherName;
-  final String gender;
-  final String email;
-  final String dateOfBirth;
-  final String birthPlace;
-  final String phoneNumbar;
-  final String whatsappNumber;
-  final String collegeState;
-  final String collegeName;
-  final String branchName;
-  final int passingYear;
-  final String password;
-  final bool internship;
-  final bool freshers;
-  final int experience;
-  final bool mentroship;
-  final String status;
+  int? id;
+  String? uid;
+  String? fullName;
+  String? fatherName;
+  String? email;
+  String? dateOfBirth;
+  String? gender;
+  String? address;
+  String? phoneNumber;
+  String? whatsappNumber;
+  String? collegeState;
+  String? collegeName;
+  String? branchName;
+  int? passingYear;
+  String? password;
+  bool? verified;
+  int? otp;
+  String? candidateStatus;
+  String? paymentStatus;
 
-  ApiUser({
-    required this.id,
-    required this.fullName,
-    required this.fatherName,
-    required this.gender,
-    required this.email,
-    required this.dateOfBirth,
-    required this.birthPlace,
-    required this.phoneNumbar,
-    required this.whatsappNumber,
-    required this.collegeState,
-    required this.collegeName,
-    required this.branchName,
-    required this.passingYear,
-    required this.password,
-    required this.internship,
-    required this.freshers,
-    required this.experience,
-    required this.mentroship,
-    required this.status,
-  });
+  ApiUser(
+      {this.id,
+      this.uid,
+      this.fullName,
+      this.fatherName,
+      this.email,
+      this.dateOfBirth,
+      this.gender,
+      this.address,
+      this.phoneNumber,
+      this.whatsappNumber,
+      this.collegeState,
+      this.collegeName,
+      this.branchName,
+      this.passingYear,
+      this.password,
+      this.verified,
+      this.otp,
+      this.candidateStatus,
+      this.paymentStatus});
 
-  factory ApiUser.fromJson(Map<String, dynamic> json) {
-    return ApiUser(
-      id: json['id'] as int,
-      fullName: json['full_name'],
-      fatherName: json['father_name'],
-      gender: json['gender'],
-      email: json['email'],
-      dateOfBirth: json['date_of_birth'],
-      birthPlace: json['birth_place'],
-      phoneNumbar: json['phone_number'],
-      whatsappNumber: json['whatsapp_number'],
-      collegeState: json['college_state'],
-      collegeName: json['college_name'],
-      branchName: json['branch_name'],
-      passingYear: json['passing_year'] as int,
-      password: json['password'],
-      internship: json['internship'] as bool,
-      freshers: json['freshers'] as bool,
-      experience: json['experience'] as int,
-      mentroship: json['mentroship'] as bool,
-      status: json['status'],
-    );
+  ApiUser.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    uid = json['uid'];
+    fullName = json['full_name'];
+    fatherName = json['father_name'];
+    email = json['email'];
+    dateOfBirth = json['date_of_birth'];
+    gender = json['gender'];
+    address = json['address'];
+    phoneNumber = json['phone_number'];
+    whatsappNumber = json['whatsapp_number'];
+    collegeState = json['college_state'];
+    collegeName = json['college_name'];
+    branchName = json['branch_name'];
+    passingYear = json['passing_year'];
+    password = json['password'];
+    verified = json['verified'];
+    otp = json['otp'];
+    candidateStatus = json['candidate_status'];
+    paymentStatus = json['payment_status'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['uid'] = this.uid;
+    data['full_name'] = this.fullName;
+    data['father_name'] = this.fatherName;
+    data['email'] = this.email;
+    data['date_of_birth'] = this.dateOfBirth;
+    data['gender'] = this.gender;
+    data['address'] = this.address;
+    data['phone_number'] = this.phoneNumber;
+    data['whatsapp_number'] = this.whatsappNumber;
+    data['college_state'] = this.collegeState;
+    data['college_name'] = this.collegeName;
+    data['branch_name'] = this.branchName;
+    data['passing_year'] = this.passingYear;
+    data['password'] = this.password;
+    data['verified'] = this.verified;
+    data['otp'] = this.otp;
+    data['candidate_status'] = this.candidateStatus;
+    data['payment_status'] = this.paymentStatus;
+    return data;
   }
 }
