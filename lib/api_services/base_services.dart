@@ -12,7 +12,7 @@ class BaseService {
   }
 
   Future getHttp(String api) async {
-    final url = ApiUrls.registration;
+    final url = api;
     log(url, name: 'getHttp');
 
     final response = await http.get(

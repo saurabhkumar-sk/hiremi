@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:flutter_layout/models/applicatio_status_model.dart';
+import 'package:flutter_layout/models/fresher_job_model.dart';
 import 'package:flutter_layout/models/login_model.dart';
 import 'package:flutter_layout/utils/api.dart';
 import 'package:flutter_layout/models/api_user.dart';
@@ -24,6 +26,75 @@ class UserService extends BaseService {
       log(e.toString(), name: 'error getUserApi', stackTrace: s);
       return null;
     }
+  }
+
+  List<FresherJobModel> fresherJobList = [];
+
+  Future<List<FresherJobModel>> getJobListApi() async {
+    try {
+      final response = await getHttp(ApiUrls.fresherJobs);
+      var data = jsonDecode(response.body.toString());
+      log(response.body, name: 'getJobListApi');
+      if (response.statusCode == 200) {
+        for (Map<String, dynamic> i in data) {
+          fresherJobList.add(FresherJobModel.fromJson(i));
+        }
+        print(fresherJobList.toString());
+        return fresherJobList;
+      } else {
+        return fresherJobList;
+      }
+    } catch (e, s) {
+      log(e.toString(), name: 'error getJobListApi', stackTrace: s);
+      return []; // or throw an exception based on your error handling
+    }
+  }
+
+  jobCodeRequired(int id) {
+    for (FresherJobModel user in fresherJobList) {
+      if (user.id == id) {
+        return user.jobCodeRequired;
+      }
+    }
+  }
+
+  jobcode(int id) {
+    for (FresherJobModel user in fresherJobList) {
+      if (user.id == id) {
+        return user.jobCode;
+      }
+    }
+  }
+
+  List<ApplicationStatus> applicationList = [];
+
+  Future<List<ApplicationStatus>> getApplicationStatus() async {
+    try {
+      final response = await getHttp(ApiUrls.jobApplication);
+      var data = jsonDecode(response.body.toString());
+      log(response.body, name: 'getJobListApi');
+      if (response.statusCode == 200) {
+        for (Map<String, dynamic> i in data) {
+          applicationList.add(ApplicationStatus.fromJson(i));
+        }
+        print(applicationList.toString());
+        return applicationList;
+      } else {
+        return applicationList;
+      }
+    } catch (e, s) {
+      log(e.toString(), name: 'error getJobListApi', stackTrace: s);
+      return []; // or throw an exception based on your error handling
+    }
+  }
+
+  bool isApplication(String email) {
+    for (ApplicationStatus user in applicationList) {
+      if (user.userEmail == email && user.accept == true) {
+        return true;
+      }
+    }
+    return false;
   }
 
   List<userModel> responceData = [];
@@ -64,6 +135,14 @@ class UserService extends BaseService {
     }
   }
 
+  userName(String email) {
+    for (userModel user in responceData) {
+      if (user.email == email) {
+        return user.fullName;
+      }
+    }
+  }
+
   otpValidation(String email) {
     for (userModel user in responceData) {
       if (user.email == email) {
@@ -90,4 +169,6 @@ class UserService extends BaseService {
 
     return response;
   }
+
+  initialize() {}
 }

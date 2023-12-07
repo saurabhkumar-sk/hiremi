@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_layout/components/database.dart';
+import 'package:flutter_layout/api_services/user_services.dart';
+
+import 'package:flutter_layout/models/fresher_job_model.dart';
 import 'package:flutter_layout/screens/job_description_screen.dart';
 import 'package:flutter_layout/utils/my_colors.dart';
 import 'package:flutter_layout/utils/my_images.dart';
@@ -12,6 +14,8 @@ class FresherJobScreen extends StatefulWidget {
 }
 
 class _FresherJobScreenState extends State<FresherJobScreen> {
+  final UserService _userService = UserService();
+
   @override
   Widget build(BuildContext context) {
     const neverScrollableScrollPhysics = NeverScrollableScrollPhysics();
@@ -73,186 +77,245 @@ class _FresherJobScreenState extends State<FresherJobScreen> {
                     ),
                   ),
                   const SizedBox(height: 70),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: neverScrollableScrollPhysics,
-                    itemCount: fresherJob.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: SizedBox(
-                          height: 210,
-                          // width: 351,
-                          child: Stack(
-                            children: [
-                              Card(
-                                color: const Color(0xFFF8F8F8),
-                                surfaceTintColor: Colors.transparent,
-                                elevation: 3,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 18.0, top: 23, bottom: 10),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                  FutureBuilder<List<FresherJobModel>>(
+                      future: _userService.getJobListApi(),
+                      builder: (context,
+                          AsyncSnapshot<List<FresherJobModel>> snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Padding(
+                            padding: EdgeInsets.only(top: 200),
+                            child: Center(child: CircularProgressIndicator()),
+                          );
+                        } else if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        } else if (!snapshot.hasData ||
+                            snapshot.data!.isEmpty) {
+                          return const SizedBox(
+                              height: 200,
+                              child: Center(child: Text('No data available')));
+                        } else {
+                          List<FresherJobModel> fresherJobList = snapshot.data!;
+                          return ListView.builder(
+                            shrinkWrap: true,
+                            physics: neverScrollableScrollPhysics,
+                            itemCount: fresherJobList.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10),
+                                child: SizedBox(
+                                  height: 210,
+                                  // width: 351,
+                                  child: Stack(
                                     children: [
-                                      Text(
-                                        fresherJob[index].title,
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 16,
-                                          fontFamily: 'Poppins',
+                                      Card(
+                                        color: const Color(0xFFF8F8F8),
+                                        surfaceTintColor: Colors.transparent,
+                                        elevation: 3,
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 18.0, top: 23, bottom: 10),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                fresherJobList[index]
+                                                        .jobProfile ??
+                                                    'unknown',
+                                                style: const TextStyle(
+                                                  fontWeight: FontWeight.w700,
+                                                  fontSize: 16,
+                                                  fontFamily: 'Poppins',
+                                                ),
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  TextButton.icon(
+                                                    onPressed: () {},
+                                                    icon: const Icon(
+                                                      Icons.business_outlined,
+                                                      color: MyColor.grey7474,
+                                                      size: 17,
+                                                    ),
+                                                    label: const Text(
+                                                      'Company:',
+                                                      style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        fontSize: 12,
+                                                        fontFamily: 'Poppins',
+                                                        color: MyColor.grey7474,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    fresherJobList[index]
+                                                            .companyName ??
+                                                        'null',
+                                                    style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontSize: 12,
+                                                      fontFamily: 'Poppins',
+                                                      color: Colors.black,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  TextButton.icon(
+                                                    onPressed: () {},
+                                                    icon: const Icon(
+                                                      Icons.location_on,
+                                                      color: MyColor.grey7474,
+                                                      size: 17,
+                                                    ),
+                                                    label: const Text(
+                                                      'Location:',
+                                                      style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        fontSize: 12,
+                                                        fontFamily: 'Poppins',
+                                                        color: MyColor.grey7474,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    fresherJobList[index]
+                                                            .jobLocation ??
+                                                        'unknown',
+                                                    style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontSize: 12,
+                                                      fontFamily: 'Poppins',
+                                                      color: Colors.black,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  TextButton.icon(
+                                                    onPressed: () {},
+                                                    icon: const Icon(
+                                                      Icons.money,
+                                                      color: MyColor.grey7474,
+                                                      size: 17,
+                                                    ),
+                                                    label: const Text(
+                                                      'CTC:',
+                                                      style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        fontSize: 12,
+                                                        fontFamily: 'Poppins',
+                                                        color: MyColor.grey7474,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    "${fresherJobList[index].jobCtc!} LPA",
+                                                    style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontSize: 12,
+                                                      fontFamily: 'Poppins',
+                                                      color: Colors.black,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          TextButton.icon(
-                                            onPressed: () {},
-                                            icon: const Icon(
-                                              Icons.business_outlined,
-                                              color: MyColor.grey7474,
-                                              size: 17,
-                                            ),
-                                            label: const Text(
-                                              'Company:',
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 12,
-                                                fontFamily: 'Poppins',
-                                                color: MyColor.grey7474,
-                                              ),
-                                            ),
-                                          ),
-                                          Text(
-                                            fresherJob[index].company,
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 12,
-                                              fontFamily: 'Poppins',
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          TextButton.icon(
-                                            onPressed: () {},
-                                            icon: const Icon(
-                                              Icons.location_on,
-                                              color: MyColor.grey7474,
-                                              size: 17,
-                                            ),
-                                            label: const Text(
-                                              'Location:',
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 12,
-                                                fontFamily: 'Poppins',
-                                                color: MyColor.grey7474,
-                                              ),
-                                            ),
-                                          ),
-                                          Text(
-                                            fresherJob[index].panIndia,
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 12,
-                                              fontFamily: 'Poppins',
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          TextButton.icon(
-                                            onPressed: () {},
-                                            icon: const Icon(
-                                              Icons.money,
-                                              color: MyColor.grey7474,
-                                              size: 17,
-                                            ),
-                                            label: const Text(
-                                              'CTC:',
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 12,
-                                                fontFamily: 'Poppins',
-                                                color: MyColor.grey7474,
-                                              ),
+                                      Positioned(
+                                        // left: 190,
+                                        top: 168,
+                                        right: 10,
+                                        child: SizedBox(
+                                          height: 27,
+                                          width: 145,
+                                          child: ElevatedButton(
+                                            style: const ButtonStyle(
+                                                backgroundColor:
+                                                    MaterialStatePropertyAll(
+                                                        Color(0xFFBD232B))),
+                                            onPressed: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      JobDescriptionScreen(
+                                                    id: fresherJobList[index]
+                                                        .id!,
+                                                    jobProfile:
+                                                        fresherJobList[index]
+                                                            .jobProfile!,
+                                                    jobLocation:
+                                                        fresherJobList[index]
+                                                            .jobLocation!,
+                                                    jobCtc:
+                                                        fresherJobList[index]
+                                                            .jobCtc!,
+                                                    companyName:
+                                                        fresherJobList[index]
+                                                            .companyName!,
+                                                    education:
+                                                        fresherJobList[index]
+                                                            .education!,
+                                                    jobDescreption:
+                                                        fresherJobList[index]
+                                                            .jobDescription!,
+                                                    termsAndConditions:
+                                                        fresherJobList[index]
+                                                            .termsAndConditions!,
+                                                    skillRequired:
+                                                        fresherJobList[index]
+                                                            .skillsRequired!,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                            child: const Row(
+                                              children: [
+                                                Text(
+                                                  'View details',
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.w700,
+                                                    fontSize: 12,
+                                                  ),
+                                                ),
+                                                Icon(
+                                                  Icons.arrow_forward_ios,
+                                                  color: Colors.white,
+                                                  size: 20,
+                                                )
+                                              ],
                                             ),
                                           ),
-                                          Text(
-                                            fresherJob[index].lpa,
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 12,
-                                              fontFamily: 'Poppins',
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                        ],
+                                        ),
                                       ),
                                     ],
                                   ),
                                 ),
-                              ),
-                              Positioned(
-                                // left: 190,
-                                top: 168,
-                                right: 10,
-                                child: SizedBox(
-                                  height: 27,
-                                  width: 145,
-                                  child: ElevatedButton(
-                                    style: const ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStatePropertyAll(
-                                                Color(0xFFBD232B))),
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              JobDescriptionScreen(
-                                            index: index,
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    child: const Row(
-                                      children: [
-                                        Text(
-                                          'View details',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w700,
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                        Icon(
-                                          Icons.arrow_forward_ios,
-                                          color: Colors.white,
-                                          size: 20,
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  ),
+                              );
+                            },
+                          );
+                        }
+                      }),
                 ],
               ),
               Positioned(

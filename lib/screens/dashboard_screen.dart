@@ -6,6 +6,8 @@ import 'package:flutter_layout/api_services/user_services.dart';
 import 'package:flutter_layout/provider/register_provider.dart';
 import 'package:flutter_layout/screens/fresher_job_screen.dart';
 import 'package:flutter_layout/screens/hello.dart';
+import 'package:flutter_layout/screens/login_screen.dart';
+import 'package:flutter_layout/screens/payment_method.dart';
 import 'package:flutter_layout/screens/user_verification_screen.dart';
 import 'package:flutter_layout/utils/my_colors.dart';
 import 'package:flutter_layout/utils/my_images.dart';
@@ -24,7 +26,6 @@ class _DashbordScreenState extends State<DashbordScreen> {
   UserService _userService = new UserService();
 
   final controller = TextEditingController();
-  late BuildContext oldDialogContext;
 
   int _currentIndex = 0;
   Color _iconColor = MyColor.grey;
@@ -37,21 +38,193 @@ class _DashbordScreenState extends State<DashbordScreen> {
     });
   }
 
-  bool dialogShown = true;
-
+  bool userVerificationScreen = true;
+  bool waitingForVerification = true;
+  bool applicationStatusShown = true;
   String loginEmail = "";
   String loginPassword = "";
   bool? isVerified;
   String? id;
+  String userName = "";
   String uid = 'ID : 10000001';
+  bool? isSubmitted;
+
+  void isSubmitForVerify() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    isSubmitted = prefs.getBool('isSubmitaForVerification');
+    print(prefs.getBool('isSubmitaForVerification'));
+  }
+
   @override
   void initState() {
+    isSubmitForVerify();
     initialize();
     getUidAndVerification();
 
     super.initState();
+  }
 
-    if (dialogShown) {
+  Future<void> checkLoginStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    loginEmail = prefs.getString('email') ?? '';
+    loginPassword = prefs.getString('password') ?? '';
+    print(loginEmail + "and" + loginPassword);
+  }
+
+  Future<void> initialize() async {
+    await checkLoginStatus();
+
+    await getUidAndVerification(); // Make sure to use 'await' here
+    // Set the state after getting the uid and verification status
+    setState(() {
+      if (isVerified == true) {
+        uid = "ID : $id";
+      } else {
+        uid = 'ID : 10000001';
+      }
+    });
+
+    // Rest of your code...
+    showVerificationDialogs();
+  }
+
+  void showVerificationDialogs() {
+    if (isSubmitted == false || isSubmitted == null) {
+      userVerificationScreen = true;
+      waitingForVerification = false;
+    }
+
+    if (isSubmitted == true) {
+      waitingForVerification = true;
+      userVerificationScreen = false;
+    }
+
+    // Check isVerified condition here to avoid unnecessary dialog
+    if (isVerified == true) {
+      userVerificationScreen = false;
+      waitingForVerification = false;
+    }
+    if (applicationStatusShown == true) {
+      userVerificationScreen = false;
+      waitingForVerification = false;
+    }
+    if (applicationStatusShown) {
+      Stream<int>.periodic(const Duration(milliseconds: 100), (t) => t)
+          .take(1)
+          .listen((t) {
+        showDialog(
+          barrierDismissible: false,
+          useSafeArea: true,
+          context: context,
+          builder: (BuildContext dialogContext) {
+            // ignore: deprecated_member_use
+            return WillPopScope(
+              onWillPop: () async {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => FresherJobScreen()),
+                );
+                return Future.value(false);
+              },
+              child: AlertDialog(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                surfaceTintColor: Colors.transparent,
+                title: Column(
+                  children: [
+                    Image.asset('assets/images/check (4) 1.png'),
+                    const Text(
+                      'congratulations',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w800,
+                        color: MyColor.black,
+                      ),
+                    ),
+                  ],
+                ),
+                content: const Text.rich(
+                  textAlign: TextAlign.center,
+                  TextSpan(
+                    children: [
+                      TextSpan(
+                        text:
+                            'You are selected from off campus\n for Business Development Associate\n\n',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: MyColor.black,
+                        ),
+                      ),
+                      TextSpan(
+                        text: 'Applied Date : 25/8/2023',
+                        style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w500,
+                          color: MyColor.black,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                actions: [
+                  Center(
+                    child: SizedBox(
+                      height: 34,
+                      width: 186,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const PaymentMethodScreen(),
+                            ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFFF13640),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            )),
+                        child: const Row(
+                          children: [
+                            Text(
+                              "Enroll Now    ",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 18,
+                              ),
+                            ),
+                            Icon(
+                              Icons.arrow_forward_ios,
+                              color: Colors.white,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  const Center(
+                    child: Text(
+                      '8:20 hr Left',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w800,
+                        fontSize: 18,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      });
+    }
+    if (userVerificationScreen) {
       Stream<int>.periodic(const Duration(milliseconds: 100), (t) => t)
           .take(1)
           .listen((t) {
@@ -60,8 +233,8 @@ class _DashbordScreenState extends State<DashbordScreen> {
 
           useSafeArea: true,
           context: context,
-          builder: (BuildContext dialogContext) {
-            dialogShown = true;
+          builder: (BuildContext context) {
+            // ignore: deprecated_member_use
             return WillPopScope(
               onWillPop: () async {
                 // Exit the app
@@ -118,33 +291,82 @@ class _DashbordScreenState extends State<DashbordScreen> {
         );
       });
     }
-  }
-
-  Future<void> checkLoginStatus() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    loginEmail = prefs.getString('email') ?? '';
-    loginPassword = prefs.getString('password') ?? '';
-    print(loginEmail + "and" + loginPassword);
-  }
-
-  Future<void> initialize() async {
-    await checkLoginStatus();
-
-    await getUidAndVerification(); // Make sure to use 'await' here
-    // Set the state after getting the uid and verification status
-    setState(() {
-      if (isVerified == true) {
-        uid = "ID : $id";
-      } else {
-        uid = 'ID : 10000001';
-      }
-    });
-    // Rest of your code...
+    if (waitingForVerification) {
+      Stream<int>.periodic(const Duration(milliseconds: 100), (t) => t)
+          .take(1)
+          .listen((t) {
+        showDialog(
+          barrierDismissible: false,
+          useSafeArea: true,
+          context: context,
+          builder: (BuildContext context) {
+            // ignore: deprecated_member_use
+            return WillPopScope(
+              onWillPop: () async {
+                // Exit the app
+                SystemNavigator.pop();
+                return Future.value(false);
+              },
+              child: const AlertDialog(
+                contentPadding: EdgeInsets.all(12), // Padding for the content
+                title: Text(
+                  'Thank you for applying to Hiremi',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w800,
+                    color: MyColor.pink,
+                  ),
+                ),
+                content: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 8),
+                  child: Text.rich(
+                    textAlign: TextAlign.center,
+                    TextSpan(
+                      children: [
+                        TextSpan(
+                          text: 'You\'ve applied for the ',
+                          style: TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w500,
+                            color: MyColor.black,
+                          ),
+                        ),
+                        TextSpan(
+                          text: 'Business Development Associate ',
+                          style: TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w700,
+                            color: MyColor.black,
+                          ),
+                        ),
+                        TextSpan(
+                          text:
+                              'position. We\'ll update you after the interview',
+                          style: TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w500,
+                            color: MyColor.black,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      });
+    }
   }
 
   Future<void> getUidAndVerification() async {
     await _userService.getapi();
+    await _userService.getApplicationStatus();
 
+    applicationStatusShown = _userService.isApplication(loginEmail);
+    print(applicationStatusShown);
     // Checking if the user is verified or not
     isVerified = _userService.verificationStatus(
       loginEmail.toString(),
@@ -156,11 +378,17 @@ class _DashbordScreenState extends State<DashbordScreen> {
       loginEmail.toString(),
     );
     print({id, "unique id"});
+
+    userName = _userService.userName(loginEmail.toString());
+    print({userName, "user name"});
   }
 
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
+      drawer: MyDrawer(),
       bottomNavigationBar: CurvedNavigationBar(
         items: <Widget>[
           Icon(CupertinoIcons.house_fill,
@@ -188,24 +416,29 @@ class _DashbordScreenState extends State<DashbordScreen> {
                 // right: 5,
                 // bottom: 8,
               ),
-              child: Container(
-                height: 22,
-                width: 22,
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(5)),
-                  gradient: LinearGradient(
-                    end: Alignment.topRight,
-                    transform: GradientRotation(20),
-                    colors: [
-                      Color(0xFFF13640),
-                      Color(0xFFBD2930),
-                    ],
+              child: InkWell(
+                onTap: () {
+                  _scaffoldKey.currentState?.openDrawer();
+                },
+                child: Container(
+                  height: 22,
+                  width: 22,
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                    gradient: LinearGradient(
+                      end: Alignment.topRight,
+                      transform: GradientRotation(20),
+                      colors: [
+                        Color(0xFFF13640),
+                        Color(0xFFBD2930),
+                      ],
+                    ),
                   ),
-                ),
-                child: const Icon(
-                  Icons.menu,
-                  color: Colors.white,
-                  size: 20,
+                  child: const Icon(
+                    Icons.menu,
+                    color: Colors.white,
+                    size: 20,
+                  ),
                 ),
               ),
             ),
@@ -231,9 +464,9 @@ class _DashbordScreenState extends State<DashbordScreen> {
                             fontSize: 20,
                           ),
                         ),
-                        const Text(
-                          'Rishu',
-                          style: TextStyle(
+                        Text(
+                          userName!,
+                          style: const TextStyle(
                             fontWeight: FontWeight.w700,
                             fontSize: 20,
                           ),
@@ -563,6 +796,72 @@ class _DashbordScreenState extends State<DashbordScreen> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class MyDrawer extends StatelessWidget {
+  void clearUserCredentials() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isLogged', false);
+    prefs.remove('email');
+    prefs.remove('password');
+    print(prefs.getString('email'));
+    print(prefs.getBool('isLogged'));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          const DrawerHeader(
+            decoration: BoxDecoration(
+              color: Color(0xFFBD2930),
+            ),
+            child: Center(
+              child: Text(
+                'Welcome to the hiremi',
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 20,
+                ),
+              ),
+            ),
+          ),
+          ListTile(
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  'Log out',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w100,
+                    fontSize: 20,
+                  ),
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
+                IconButton(
+                    onPressed: () {
+                      clearUserCredentials();
+
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => LoginScreen()));
+                    },
+                    icon: const Icon(Icons.logout))
+              ],
+            ),
+            onTap: () {
+              // Handle item 1 tap
+            },
+          ),
+        ],
       ),
     );
   }

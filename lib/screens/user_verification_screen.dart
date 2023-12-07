@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_layout/api_services/user_services.dart';
-import 'package:flutter_layout/components/database.dart';
+
 import 'package:flutter_layout/screens/application_review_dashboard.dart';
 import 'package:flutter_layout/screens/dashboard_screen.dart';
 import 'package:flutter_layout/utils/api.dart';
+import 'package:flutter_layout/utils/ex_devloper_list.dart';
 import 'package:flutter_layout/utils/my_colors.dart';
 import 'package:flutter_layout/utils/my_images.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserVerificationScreen extends StatefulWidget {
   const UserVerificationScreen({super.key});
@@ -21,8 +23,14 @@ class _UserVerificationScreenState extends State<UserVerificationScreen> {
   TextEditingController scheduleTimeController = TextEditingController();
   TextEditingController collageIdController = TextEditingController();
   TextEditingController descreptionController = TextEditingController();
+  TextEditingController yourSkillcontroller = TextEditingController();
   double? rateYourComm;
-  String yourSkill = "";
+
+  void saveUserData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isSubmitaForVerification', true);
+    print(prefs.getBool('isSubmitaForVerification'));
+  }
 
 //Date Picker
   void selectDatePicker() async {
@@ -48,8 +56,7 @@ class _UserVerificationScreenState extends State<UserVerificationScreen> {
     );
     if (timePicker != null) {
       setState(() {
-        scheduleTimeController.text =
-            '${timePicker.hour} : ${timePicker.minute}';
+        scheduleTimeController.text = '${timePicker.hour}:${timePicker.minute}';
       });
     }
   }
@@ -228,18 +235,24 @@ class _UserVerificationScreenState extends State<UserVerificationScreen> {
               Padding(
                 padding: const EdgeInsets.only(right: 10),
                 child: SizedBox(
-                  width: 200,
-                  child: DropdownMenu<String>(
-                    hintText: 'Ex-Developer',
-                    // width: 340,
-                    onSelected: (String? value) {
-                      yourSkill = value!;
-                    },
-                    dropdownMenuEntries: exDeveloperlist
-                        .map<DropdownMenuEntry<String>>((String value) {
-                      return DropdownMenuEntry<String>(
-                          value: value, label: value);
-                    }).toList(),
+                  width: 400,
+                  child: TextFormField(
+                    controller: yourSkillcontroller,
+                    decoration: InputDecoration(
+                      labelText: 'Enter Skill',
+                      prefixIcon: Icon(Icons.computer),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.green),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -333,40 +346,45 @@ class _UserVerificationScreenState extends State<UserVerificationScreen> {
                     // width: 148,
                     width: MediaQuery.of(context).size.width * 0.35,
 
-                    child: TextFormField(
-                      controller: scheduleDateController,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please enter date';
-                        }
-                        return null; // Return null if the input is valid
+                    child: InkWell(
+                      onTap: () {
+                        selectDatePicker();
                       },
-                      textInputAction: TextInputAction.done,
-                      decoration: InputDecoration(
-                        enabledBorder: const UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: MyColor.borderColor,
+                      child: TextFormField(
+                        controller: scheduleDateController,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter date';
+                          }
+                          return null; // Return null if the input is valid
+                        },
+                        textInputAction: TextInputAction.done,
+                        decoration: InputDecoration(
+                          enabledBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: MyColor.borderColor,
+                            ),
                           ),
-                        ),
-                        focusedBorder: const UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: MyColor.borderColor,
+                          focusedBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: MyColor.borderColor,
+                            ),
                           ),
-                        ),
-                        hintText: DateTime.now().toString().split(" ")[0],
-                        suffixIcon: IconButton(
-                          onPressed: () {
-                            selectDatePicker();
-                          },
-                          icon: const Icon(
-                            Icons.expand_more,
+                          hintText: DateTime.now().toString().split(" ")[0],
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              selectDatePicker();
+                            },
+                            icon: const Icon(
+                              Icons.expand_more,
+                            ),
                           ),
-                        ),
-                        suffixIconColor: MyColor.grey,
-                        hintStyle: const TextStyle(
-                          color: MyColor.grey,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
+                          suffixIconColor: MyColor.grey,
+                          hintStyle: const TextStyle(
+                            color: MyColor.grey,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
                     ),
@@ -375,41 +393,46 @@ class _UserVerificationScreenState extends State<UserVerificationScreen> {
                     // width: 148,
                     width: MediaQuery.of(context).size.width * 0.35,
 
-                    child: TextFormField(
-                      controller: scheduleTimeController,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please enter valid time';
-                        }
-                        return null;
+                    child: InkWell(
+                      onTap: () {
+                        selectTimePicker();
                       },
-                      keyboardType: TextInputType.none,
-                      textInputAction: TextInputAction.done,
-                      decoration: InputDecoration(
-                        enabledBorder: const UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: MyColor.borderColor,
+                      child: TextFormField(
+                        controller: scheduleTimeController,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter valid time';
+                          }
+                          return null;
+                        },
+                        keyboardType: TextInputType.none,
+                        textInputAction: TextInputAction.done,
+                        decoration: InputDecoration(
+                          enabledBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: MyColor.borderColor,
+                            ),
                           ),
-                        ),
-                        focusedBorder: const UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: MyColor.borderColor,
+                          focusedBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: MyColor.borderColor,
+                            ),
                           ),
-                        ),
-                        hintText: '6 PM',
-                        suffixIcon: IconButton(
-                          onPressed: () {
-                            selectTimePicker();
-                          },
-                          icon: const Icon(
-                            Icons.expand_more,
+                          hintText: '6 PM',
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              selectTimePicker();
+                            },
+                            icon: const Icon(
+                              Icons.expand_more,
+                            ),
                           ),
-                        ),
-                        suffixIconColor: MyColor.grey,
-                        hintStyle: const TextStyle(
-                          color: MyColor.grey,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
+                          suffixIconColor: MyColor.grey,
+                          hintStyle: const TextStyle(
+                            color: MyColor.grey,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
                     ),
@@ -432,9 +455,13 @@ class _UserVerificationScreenState extends State<UserVerificationScreen> {
                   child: ElevatedButton(
                     onPressed: () async {
                       Map<String, dynamic> body = {
-                        "college_id_number": "1",
-                        "communication_skills": "5",
-                        "status": "dskdsokosk"
+                        "college_id_number":
+                            collageIdController.text.toString(),
+                        "communication_skills": rateYourComm,
+                        "status": descreptionController.text.toString(),
+                        "skills": yourSkillcontroller.text.toString(),
+                        "schedule_date": scheduleDateController.text.toString(),
+                        "schedule_time": scheduleTimeController.text.toString(),
                       };
                       // Navigator.pushReplacement(
                       //   context,
@@ -446,6 +473,15 @@ class _UserVerificationScreenState extends State<UserVerificationScreen> {
                       var response = await _userService.createPostApi(
                           body, ApiUrls.verificationDetails);
                       print(response.statusCode);
+                      if (response.statusCode == 201) {
+                        saveUserData();
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DashbordScreen(),
+                          ),
+                        );
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFFF13640),

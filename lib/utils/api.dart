@@ -7,5 +7,7 @@ class ApiUrls {
   static const passwordReset = 'http://15.206.79.74:8000/password-reset/';
   static const verificationDetails =
       'http://15.206.79.74:8000/verification-details/';
+  static const fresherJobs = 'http://15.206.79.74:8000/api/fresherjob/';
+  static const jobApplication = 'http://15.206.79.74:8000/job-applications/';
   // static const posts = 'registers/';
 }
