@@ -1,16 +1,18 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:flutter_layout/utils/api.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BaseService {
+  // getting csrf token
+
   Future<String?> getStoredCSRFToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('csrfToken');
   }
 
+// for get api
   Future getHttp(String api) async {
     final url = api;
     log(url, name: 'getHttp');
@@ -19,12 +21,13 @@ class BaseService {
       Uri.parse(url),
       headers: {
         'content-type': 'application/json',
-        //  'Host': 'suraj.ojha20145@gmail.com',
       },
     );
 
     return response;
   }
+
+  //for  post api
 
   Future<http.Response> postHttp({
     required String api,
@@ -42,7 +45,6 @@ class BaseService {
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
         'Cookie': csrfToken.toString(),
-        //'X-CSRFToken': csrfToken.toString(),
       },
       body: utf8.encode(body),
     );

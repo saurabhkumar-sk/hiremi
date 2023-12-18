@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_layout/api_services/apis/api_response.dart';
+import 'package:flutter_layout/api_services/fresher_joblist.dart';
 import 'package:flutter_layout/api_services/user_services.dart';
 
 import 'package:flutter_layout/models/fresher_job_model.dart';
@@ -14,7 +16,7 @@ class FresherJobScreen extends StatefulWidget {
 }
 
 class _FresherJobScreenState extends State<FresherJobScreen> {
-  final UserService _userService = UserService();
+  final FresherJoblist _fresherJoblist = FresherJoblist();
 
   @override
   Widget build(BuildContext context) {
@@ -77,10 +79,11 @@ class _FresherJobScreenState extends State<FresherJobScreen> {
                     ),
                   ),
                   const SizedBox(height: 70),
-                  FutureBuilder<List<FresherJobModel>>(
-                      future: _userService.getJobListApi(),
+                  FutureBuilder<ApiResponse<List<FresherJobModel>>>(
+                      future: _fresherJoblist.getJobListApi(),
                       builder: (context,
-                          AsyncSnapshot<List<FresherJobModel>> snapshot) {
+                          AsyncSnapshot<ApiResponse<List<FresherJobModel>>>
+                              snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
                           return const Padding(
@@ -90,12 +93,13 @@ class _FresherJobScreenState extends State<FresherJobScreen> {
                         } else if (snapshot.hasError) {
                           return Text('Error: ${snapshot.error}');
                         } else if (!snapshot.hasData ||
-                            snapshot.data!.isEmpty) {
+                            snapshot.data!.data == null) {
                           return const SizedBox(
                               height: 200,
                               child: Center(child: Text('No data available')));
                         } else {
-                          List<FresherJobModel> fresherJobList = snapshot.data!;
+                          List<FresherJobModel> fresherJobList =
+                              snapshot.data!.data!;
                           return ListView.builder(
                             shrinkWrap: true,
                             physics: neverScrollableScrollPhysics,

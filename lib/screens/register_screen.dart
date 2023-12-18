@@ -1,14 +1,15 @@
 import 'dart:developer';
+import 'package:flutter_layout/api_services/api_urls/api_urls.dart';
 import 'package:flutter_layout/provider/collage_list.dart';
 import 'package:flutter_layout/provider/select_passing_year.dart';
 import 'package:flutter_layout/provider/selected_branch.dart';
 import 'package:flutter_layout/provider/selected_state_provider.dart';
 import 'package:flutter_layout/screens/collage_list.dart';
-import 'package:flutter_layout/utils/api.dart';
+
 import 'package:flutter_layout/utils/branch_name_list.dart';
 import 'package:flutter_layout/utils/indian_state_list.dart';
 import 'package:flutter_layout/utils/passing_year_list.dart';
-import 'package:uuid/uuid.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_layout/api_services/user_services.dart';
 import 'package:flutter_layout/provider/register_provider.dart';
@@ -35,17 +36,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   String? collagename;
 
-  static String generateUid() {
-    final uuid = Uuid();
-    final fullUuid = uuid.v1();
-    // Generate a Version 4 (random) UUID
-    final shortUid = fullUuid.substring(0, 8);
-    // Extract the first 8 characters
-    return shortUid;
-  }
-
   String errorTextVal = '';
-  var uniqueid = generateUid().substring(0, 8);
+  var uniqueid;
 
   String genderSelector = "";
 
@@ -1021,7 +1013,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 width: 230,
                 child: ElevatedButton(
                   onPressed: () async {
-                    print("our random id is " + uniqueid);
                     //  String? day;
                     // String? month;
                     // String? year;
@@ -1065,7 +1056,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         );
                       }
                       Map<String, dynamic> body = {
-                        "uid": uniqueid,
                         "full_name":
                             "${registerProvider.firstnameController.controller.text} ${registerProvider.lastnameController.controller.text}",
                         "father_name":
@@ -1091,6 +1081,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         "address":
                             registerProvider.addressController.controller.text
                       };
+                      print(body);
                       final responce = await ragisterApi.createPostApi(
                           body, ApiUrls.registration);
                       print(responce.statusCode);

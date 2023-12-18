@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_layout/api_services/api_urls/api_urls.dart';
+import 'package:flutter_layout/api_services/geting_ragistration_data.dart';
+import 'package:flutter_layout/api_services/uid_finding.dart';
 import 'package:flutter_layout/api_services/user_services.dart';
 
 import 'package:flutter_layout/screens/application_review_dashboard.dart';
 import 'package:flutter_layout/screens/dashboard_screen.dart';
-import 'package:flutter_layout/utils/api.dart';
+
 import 'package:flutter_layout/utils/ex_devloper_list.dart';
 import 'package:flutter_layout/utils/my_colors.dart';
 import 'package:flutter_layout/utils/my_images.dart';
@@ -18,14 +21,22 @@ class UserVerificationScreen extends StatefulWidget {
 }
 
 class _UserVerificationScreenState extends State<UserVerificationScreen> {
-  UserService _userService = UserService();
+  final GettingRagistrationData _gettingRagistrationData =
+      GettingRagistrationData();
+  final UidFinding _uidFinding = UidFinding();
+
+  final UserService _userService = UserService();
+
   TextEditingController scheduleDateController = TextEditingController();
   TextEditingController scheduleTimeController = TextEditingController();
   TextEditingController collageIdController = TextEditingController();
   TextEditingController descreptionController = TextEditingController();
   TextEditingController yourSkillcontroller = TextEditingController();
-  double? rateYourComm;
-
+  double rateYourComm = 3;
+  String? loginEmail;
+  int? indexId;
+  String? uid;
+  int? lastId;
   void saveUserData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('isSubmitaForVerification', true);
@@ -62,62 +73,28 @@ class _UserVerificationScreenState extends State<UserVerificationScreen> {
   }
 
   @override
+  void initState() {
+    checkLoginStatus();
+
+    super.initState();
+  }
+
+  Future<void> checkLoginStatus() async {
+    await _uidFinding.getVerificationdetail();
+    lastId = await _uidFinding.lastId() + 1;
+    print("last verification id is $lastId");
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    loginEmail = prefs.getString('email') ?? '';
+    print({loginEmail, "this is the login email"});
+
+    uid = lastId.toString().padLeft(7, '0');
+    print({uid, "this is a uid "});
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   leadingWidth: 60,
-      //   toolbarHeight: 54,
-      //   leading: Padding(
-      //     padding: const EdgeInsets.only(top: 5, left: 8, right: 8, bottom: 5),
-      //     child: SizedBox(
-      //       height: 40,
-      //       width: 40,
-      //       child: GestureDetector(
-      //         onTap: () {
-      //           Navigator.pop(context);
-      //         },
-      //         child: ClipOval(
-      //           child: Card(
-      //             elevation: 5,
-      //             shadowColor: Colors.black,
-      //             shape: const RoundedRectangleBorder(
-      //               borderRadius: BorderRadius.all(Radius.circular(25)),
-      //             ),
-      //             surfaceTintColor: Colors.transparent,
-      //             child: Container(
-      //               decoration: const BoxDecoration(
-      //                 borderRadius: BorderRadius.all(Radius.circular(25)),
-      //                 gradient: LinearGradient(
-      //                   begin: Alignment.topLeft,
-      //                   end: Alignment.topRight,
-      //                   transform: GradientRotation(20),
-      //                   colors: [
-      //                     Color(0xFFF13640),
-      //                     Color(0xFFBD2930),
-      //                   ],
-      //                 ),
-      //               ),
-      //               child: const Padding(
-      //                 padding: EdgeInsets.only(right: 6),
-      //                 child: Icon(
-      //                   Icons.arrow_back_ios_new,
-      //                   size: 30,
-      //                   color: Colors.white,
-      //                 ),
-      //               ),
-      //             ),
-      //           ),
-      //         ),
-      //       ),
-      //     ),
-      //   ),
-      //   centerTitle: true,
-      //   title: Image.asset(
-      //     MyImages.hirmilogo,
-      //     height: 186,
-      //   ),
-      // ),
-
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -462,6 +439,8 @@ class _UserVerificationScreenState extends State<UserVerificationScreen> {
                         "skills": yourSkillcontroller.text.toString(),
                         "schedule_date": scheduleDateController.text.toString(),
                         "schedule_time": scheduleTimeController.text.toString(),
+                        "uid": uid.toString(),
+                        "user_email": loginEmail,
                       };
                       // Navigator.pushReplacement(
                       //   context,
@@ -473,6 +452,7 @@ class _UserVerificationScreenState extends State<UserVerificationScreen> {
                       var response = await _userService.createPostApi(
                           body, ApiUrls.verificationDetails);
                       print(response.statusCode);
+                      print(response.body);
                       if (response.statusCode == 201) {
                         saveUserData();
                         Navigator.pushReplacement(

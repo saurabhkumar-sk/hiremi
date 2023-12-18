@@ -2,6 +2,9 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_layout/api_services/getApplication_status.dart';
+import 'package:flutter_layout/api_services/geting_ragistration_data.dart';
+import 'package:flutter_layout/api_services/uid_finding.dart';
 import 'package:flutter_layout/api_services/user_services.dart';
 import 'package:flutter_layout/provider/register_provider.dart';
 import 'package:flutter_layout/screens/fresher_job_screen.dart';
@@ -23,8 +26,10 @@ class DashbordScreen extends StatefulWidget {
 }
 
 class _DashbordScreenState extends State<DashbordScreen> {
-  UserService _userService = new UserService();
-
+  final GettingRagistrationData _gettingRagistrationData =
+      GettingRagistrationData();
+  final GetApplicationStatus _getApplicationStatus = GetApplicationStatus();
+  final UidFinding _uidFinding = UidFinding();
   final controller = TextEditingController();
 
   int _currentIndex = 0;
@@ -362,24 +367,24 @@ class _DashbordScreenState extends State<DashbordScreen> {
   }
 
   Future<void> getUidAndVerification() async {
-    await _userService.getapi();
-    await _userService.getApplicationStatus();
-
-    applicationStatusShown = _userService.isApplication(loginEmail);
+    await _gettingRagistrationData.getapi();
+    await _getApplicationStatus.getApplicationStatus();
+    await _uidFinding.getVerificationdetail();
+    applicationStatusShown = _getApplicationStatus.isApplication(loginEmail);
     print(applicationStatusShown);
     // Checking if the user is verified or not
-    isVerified = _userService.verificationStatus(
+    isVerified = _gettingRagistrationData.verificationStatus(
       loginEmail.toString(),
     );
     print({isVerified, "verification Status"});
 
     // Getting uuid
-    id = _userService.uniqueId(
+    id = _uidFinding.uniqueId(
       loginEmail.toString(),
     );
     print({id, "unique id"});
 
-    userName = _userService.userName(loginEmail.toString());
+    userName = _gettingRagistrationData.userName(loginEmail.toString());
     print({userName, "user name"});
   }
 

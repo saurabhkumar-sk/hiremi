@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_layout/api_services/geting_ragistration_data.dart';
 import 'package:flutter_layout/api_services/user_services.dart';
 import 'package:flutter_layout/provider/register_provider.dart';
 import 'package:flutter_layout/screens/dashboard_screen.dart';
@@ -21,7 +22,8 @@ class _LoginScreenState extends State<LoginScreen> {
   String errorTextVal = "";
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final UserService _userService = UserService();
+  final GettingRagistrationData _gettingRagistrationData =
+      GettingRagistrationData();
   @override
   Widget build(BuildContext context) {
     final registerProvider = Provider.of<RegisterProvider>(context);
@@ -194,10 +196,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: ElevatedButton(
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        await _userService.getapi();
+                        await _gettingRagistrationData.getapi();
 
                         // pushToScreen(context);
-                        bool loginSuccess = _userService.loginUser(
+                        bool loginSuccess = _gettingRagistrationData.loginUser(
                             registerProvider
                                 .loginEmailController.controller.text
                                 .trim(),

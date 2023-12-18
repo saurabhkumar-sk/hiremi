@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_layout/api_services/uid_finding.dart';
 import 'package:flutter_layout/screens/dashboard_screen.dart';
 import 'package:flutter_layout/screens/login_screen.dart';
 import 'package:flutter_layout/utils/my_images.dart';
@@ -18,11 +19,13 @@ class _SplashScreenState extends State<SplashScreen> {
 
     if (isLogged) {
       // User is already logged in, navigate to the dashboard or another screen
+      // ignore: use_build_context_synchronously
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => DashbordScreen()),
       );
     } else {
+      // ignore: use_build_context_synchronously
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => LoginScreen()),

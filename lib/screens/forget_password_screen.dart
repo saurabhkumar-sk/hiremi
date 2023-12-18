@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_layout/api_services/api_urls/api_urls.dart';
 import 'package:flutter_layout/api_services/user_services.dart';
 import 'package:flutter_layout/provider/forget_password_controller.dart';
 import 'package:flutter_layout/screens/otp_verification_screen.dart';
-import 'package:flutter_layout/utils/api.dart';
+
 import 'package:flutter_layout/utils/my_colors.dart';
 import 'package:flutter_layout/utils/my_images.dart';
 

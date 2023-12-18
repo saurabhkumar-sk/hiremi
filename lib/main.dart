@@ -8,8 +8,9 @@ import 'package:flutter_layout/provider/select_passing_year.dart';
 import 'package:flutter_layout/provider/selected_branch.dart';
 import 'package:flutter_layout/provider/selected_state_provider.dart';
 import 'package:flutter_layout/screens/fresher_job_screen.dart';
-import 'package:flutter_layout/screens/payment_method.dart';
 import 'package:flutter_layout/screens/splash_screen.dart';
+import 'package:flutter_layout/screens/user_verification_screen.dart';
+
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

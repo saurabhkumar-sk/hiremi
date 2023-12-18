@@ -2,27 +2,30 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_layout/api_services/api_urls/api_urls.dart';
+import 'package:flutter_layout/api_services/fresher_joblist.dart';
+import 'package:flutter_layout/api_services/getApplication_status.dart';
 import 'package:flutter_layout/api_services/user_services.dart';
 import 'package:flutter_layout/provider/job_descreption_provider.dart';
 
 import 'package:flutter_layout/screens/dashboard_screen.dart';
 import 'package:flutter_layout/screens/fresher_job_screen.dart';
-import 'package:flutter_layout/utils/api.dart';
+
 import 'package:flutter_layout/utils/my_colors.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class JobDescriptionScreen extends StatefulWidget {
-  String jobProfile;
-  String jobLocation;
-  String jobCtc;
-  String companyName;
-  String education;
-  String jobDescreption;
-  String termsAndConditions;
-  String skillRequired;
-  int id;
-  JobDescriptionScreen({
+  final String jobProfile;
+  final String jobLocation;
+  final String jobCtc;
+  final String companyName;
+  final String education;
+  final String jobDescreption;
+  final String termsAndConditions;
+  final String skillRequired;
+  final int id;
+  const JobDescriptionScreen({
     super.key,
     required this.jobProfile,
     required this.jobLocation,
@@ -40,8 +43,9 @@ class JobDescriptionScreen extends StatefulWidget {
 }
 
 class _JobDescriptionScreenState extends State<JobDescriptionScreen> {
+  final FresherJoblist _fresherJoblist = FresherJoblist();
+  final GetApplicationStatus _getApplicationStatus = GetApplicationStatus();
   final UserService _userService = UserService();
-
   final jobCodeController = TextEditingController();
 
   bool dialogShown = true;
@@ -67,11 +71,11 @@ class _JobDescriptionScreenState extends State<JobDescriptionScreen> {
 
   Future<void> jobCodeRequiredORnot() async {
     checkLoginStatus();
-    await _userService.getJobListApi();
-    await _userService.getApplicationStatus();
-    jobcode = _userService.jobcode(widget.id);
+    await _fresherJoblist.getJobListApi();
+    await _getApplicationStatus.getApplicationStatus();
+    jobcode = _fresherJoblist.jobcode(widget.id);
     print(jobcode);
-    isJobCodeRequired = _userService.jobCodeRequired(widget.id);
+    isJobCodeRequired = _fresherJoblist.jobCodeRequired(widget.id);
 
     if (isJobCodeRequired == "No") {
       dialogShown = false;
